@@ -1,5 +1,5 @@
 
-package br.com.instalador.view.VISAO.PROGRESSO;
+package br.com.instalador.view.PROGRESSO;
 
 import java.text.DecimalFormat;
 

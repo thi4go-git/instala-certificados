@@ -1,4 +1,4 @@
-package br.com.instalador.view.VISAO.TELAS;
+package br.com.instalador.view.TELAS;
 
 import br.com.instalador.controle.CERTIFICADO_CLASS;
 import br.com.instalador.controle.TelaController;
@@ -55,7 +55,7 @@ public final class Tela extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setEnabled(true);
         this.setVisible(true);
-        String caminhoIcon = "/IMAGENS/LOGO_SYSTEM.jpeg";
+        String caminhoIcon = "LOGO_SYSTEM.jpeg";
         this.setIconImage(createImage(caminhoIcon,
                 "tray icon"));
     }
@@ -241,7 +241,7 @@ public final class Tela extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Licenciado para Vandolima Contabilidade  ®", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
         jPanel1.setForeground(new java.awt.Color(204, 204, 204));
 
-        LOGO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENS/LOGO_1.jpeg"))); // NOI18N
+        LOGO.setIcon(new javax.swing.ImageIcon(getClass().getResource("LOGO_1.jpeg"))); // NOI18N
 
         TABELA_CERTIFICADOS.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         TABELA_CERTIFICADOS.setModel(new javax.swing.table.DefaultTableModel(

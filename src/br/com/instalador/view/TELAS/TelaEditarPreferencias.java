@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.instalador.view.VISAO.TELAS;
+package br.com.instalador.view.TELAS;
 
 import br.com.instalador.controle.CERTIFICADOS_PASTA;
 import br.com.instalador.controle.TelaController;
@@ -110,7 +110,7 @@ public final class TelaEditarPreferencias extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENS/lupa.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("lupa.png"))); // NOI18N
         jButton1.setText(" ");
         jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

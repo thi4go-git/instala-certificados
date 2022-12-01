@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.instalador.view.VISAO.TELAS;
+package br.com.instalador.view.TELAS;
 
 import br.com.instalador.controle.TelaController;
 import java.sql.Statement;

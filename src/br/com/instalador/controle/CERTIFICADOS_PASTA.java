@@ -2,7 +2,7 @@ package br.com.instalador.controle;
 
 import br.com.instalador.model.entity.Certificado;
 import br.com.instalador.utils.ArquivoUtils;
-import br.com.instalador.view.VISAO.PROGRESSO.Progresso;
+import br.com.instalador.view.PROGRESSO.Progresso;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
