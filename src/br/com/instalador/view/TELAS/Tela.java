@@ -20,9 +20,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 public final class Tela extends javax.swing.JFrame {
 
     Data dt = new Data();
-    String SENHA_MASTER = "895674";
+    String SENHA_MASTER = "NULL";
     String PASTA_CERTIFICADOS = "NULL";
-    String SENHA_CERTIFICADO = "123456";
+    String SENHA_CERTIFICADO = "NULL";
     int ID_CERTIFICADO;
 
     SimpleDateFormat formataDataBD = new SimpleDateFormat("yyyy-MM-dd");
@@ -199,7 +199,7 @@ public final class Tela extends javax.swing.JFrame {
                     label.setForeground(c);
                     return label;
                 } else {
-                    if (DIFERENCA_EM_DIAS > 0 & DIFERENCA_EM_DIAS <= 30) {
+                    if (DIFERENCA_EM_DIAS > 0 & DIFERENCA_EM_DIAS <= 60) {
                         label.setForeground(new Color(169, 0, 0));
                         return label;
                     } else {
@@ -238,10 +238,10 @@ public final class Tela extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Licenciado para Vandolima Contabilidade  ®", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Licenciado 2023  ®", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
         jPanel1.setForeground(new java.awt.Color(204, 204, 204));
 
-        LOGO.setIcon(new javax.swing.ImageIcon(getClass().getResource("LOGO_1.jpeg"))); // NOI18N
+        LOGO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENS/LOGO_1.jpeg"))); // NOI18N
 
         TABELA_CERTIFICADOS.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         TABELA_CERTIFICADOS.setModel(new javax.swing.table.DefaultTableModel(
