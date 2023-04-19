@@ -19,6 +19,8 @@ public interface ICertificadoDAO {
     void atualizarPreferencias(String local_pasta, String senha_certificado);
 
     boolean deletarCertificadosVencidos();
+    
+        boolean deletarCertificadosDuplicados();
 
     boolean consultarExistenciaCertifiado(Certificado certificado);
 

@@ -77,11 +77,13 @@
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="BT_EDIT" min="-2" pref="129" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="BT_SALVAR" min="-2" pref="129" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="BT_DELETA_VENCIDOS" min="-2" pref="143" max="-2" attributes="0"/>
+                          <Component id="BT_EDIT" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="BT_SALVAR" min="-2" pref="89" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="BT_DELETA_VENCIDOS" min="-2" pref="136" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="BT_DELETA_DUPLICADOS" min="-2" pref="153" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="BT_UPDADE_CERTS" min="-2" pref="222" max="-2" attributes="0"/>
                       </Group>
@@ -120,8 +122,9 @@
                       <Component id="BT_SALVAR" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="BT_UPDADE_CERTS" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="BT_DELETA_VENCIDOS" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="BT_DELETA_DUPLICADOS" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
@@ -223,7 +226,7 @@
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/IMAGENS/lupa.png"/>
+              <Image iconType="3" name="/br/com/instalador/view/TELAS/lupa.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value=" "/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -275,6 +278,25 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BT_DELETA_VENCIDOSActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="BT_DELETA_DUPLICADOS">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="DELETAR DUPLICADOS"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder bevelType="0"/>
+              </Border>
+            </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BT_DELETA_DUPLICADOSActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

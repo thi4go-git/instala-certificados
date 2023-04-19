@@ -238,7 +238,7 @@ public final class Tela extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Licenciado 2023  ®", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Licenciado 2023  ® - V_2.0.0", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
         jPanel1.setForeground(new java.awt.Color(204, 204, 204));
 
         LOGO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENS/LOGO_1.jpeg"))); // NOI18N

@@ -122,6 +122,10 @@ public class TelaController {
         return dao.deletarCertificadosVencidos();
     }
 
+    public boolean deletarCertificadosDuplicados() {
+        return dao.deletarCertificadosDuplicados();
+    }
+
     public List<Certificado> retornarListaDeCertificadosVencer1Mes() {
         return dao.retornarListaDeCertificadosVencerNDias();
     }

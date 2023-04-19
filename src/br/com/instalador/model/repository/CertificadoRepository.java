@@ -1,6 +1,5 @@
 package br.com.instalador.model.repository;
 
-
 import br.com.instalador.service.ICertificadoDAO;
 import br.com.instalador.utils.Data;
 import br.com.instalador.model.entity.Certificado;
@@ -15,12 +14,9 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-
 public class CertificadoRepository implements ICertificadoDAO {
 
     private static final int QTDE_DIAS_A_VENCER = 30;
-
- 
 
     SimpleDateFormat formataDataBD = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formataBR = new SimpleDateFormat("dd/MM/yyyy");
@@ -154,7 +150,7 @@ public class CertificadoRepository implements ICertificadoDAO {
             pst.setString(4, certificado.getHORA_VENCIMENTO());
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                return true;
+                return true;//////
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro método: consultarExistenciaCertifiado() " + ex);
@@ -185,6 +181,7 @@ public class CertificadoRepository implements ICertificadoDAO {
             //
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro método: inserirCertificado() " + ex);
+            System.out.println(ex.getCause());
         }
         return false;
     }
@@ -197,9 +194,8 @@ public class CertificadoRepository implements ICertificadoDAO {
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                Certificado cert = new 
-        Certificado(rs.getInt("id"), 
-                rs.getBytes("imagemCertificado"));
+                Certificado cert = new Certificado(rs.getInt("id"),
+                        rs.getBytes("imagemCertificado"));
                 return cert;
             }
         } catch (SQLException ex) {
@@ -315,6 +311,72 @@ public class CertificadoRepository implements ICertificadoDAO {
                     + "deletarCertificadosVencidos " + ex);
         }
         return false;
+    }
+
+    @Override
+    public boolean deletarCertificadosDuplicados() {
+        List<byte[]> listaImagesDuplicadas = new ArrayList<>();
+        String SQL = "select \n"
+                + "imagemcertificado, count (*) as total\n"
+                + "from certificado\n"
+                + "group by imagemcertificado\n"
+                + "having count (*) > 1";
+        try {
+            PreparedStatement pst = Conexao.getPreparedStatement(SQL);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                listaImagesDuplicadas.add(rs.getBytes("imagemcertificado"));
+            }
+            //
+            return processarListaDeImagesDuplicadas(listaImagesDuplicadas);
+            //
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro método: deletarCertificadosDuplicados() " + ex);
+        }
+        return false;
+    }
+
+    public boolean processarListaDeImagesDuplicadas(List<byte[]> listaImagesDuplicadas) {
+
+        for (byte[] imagemDeletar : listaImagesDuplicadas) {
+            int idNaoDeletar = retornarIdNaoDeletar(imagemDeletar);
+            if (idNaoDeletar != 0) {
+                deletarDuplicado(idNaoDeletar, imagemDeletar);
+            }
+        }
+
+        return true;
+    }
+
+    public int retornarIdNaoDeletar(byte[] imagem) {
+
+        String SQL = "select id,imagemcertificado  "
+                + "from certificado c where imagemCertificado = ? limit 1";
+        try {
+            PreparedStatement pst = Conexao.getPreparedStatement(SQL);
+            pst.setBytes(1, imagem);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro método: deletarCertificadosDuplicados() " + ex);
+        }
+
+        return 0;
+    }
+
+    public void deletarDuplicado(int id, byte[] imagem) {
+        String SQL = "delete from certificado where id != ? and imagemcertificado  = ?";
+        try {
+            PreparedStatement pst = Conexao.getPreparedStatement(SQL);
+            pst.setInt(1, id);
+            pst.setBytes(2, imagem);
+            pst.execute();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERRO AO DELETAR CERTIFICADO DUPLICADO DA BASE! "
+                    + "deletarDuplicado " + ex);
+        }
     }
 
 }

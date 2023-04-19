@@ -61,6 +61,7 @@ public final class TelaEditarPreferencias extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         BT_UPDADE_CERTS = new javax.swing.JButton();
         BT_DELETA_VENCIDOS = new javax.swing.JButton();
+        BT_DELETA_DUPLICADOS = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -110,7 +111,7 @@ public final class TelaEditarPreferencias extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("lupa.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/instalador/view/TELAS/lupa.png"))); // NOI18N
         jButton1.setText(" ");
         jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -140,6 +141,16 @@ public final class TelaEditarPreferencias extends javax.swing.JFrame {
             }
         });
 
+        BT_DELETA_DUPLICADOS.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        BT_DELETA_DUPLICADOS.setText("DELETAR DUPLICADOS");
+        BT_DELETA_DUPLICADOS.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        BT_DELETA_DUPLICADOS.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BT_DELETA_DUPLICADOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BT_DELETA_DUPLICADOSActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -161,11 +172,13 @@ public final class TelaEditarPreferencias extends javax.swing.JFrame {
                                 .addGap(2, 2, 2)
                                 .addComponent(C_SENHA_CERT))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(BT_EDIT, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BT_SALVAR, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BT_DELETA_VENCIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BT_EDIT, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BT_SALVAR, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BT_DELETA_VENCIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BT_DELETA_DUPLICADOS, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BT_UPDADE_CERTS, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -194,8 +207,9 @@ public final class TelaEditarPreferencias extends javax.swing.JFrame {
                     .addComponent(BT_EDIT, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BT_SALVAR, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BT_UPDADE_CERTS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BT_DELETA_VENCIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BT_DELETA_VENCIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BT_DELETA_DUPLICADOS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap(124, Short.MAX_VALUE)
@@ -302,6 +316,21 @@ public final class TelaEditarPreferencias extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BT_DELETA_VENCIDOSActionPerformed
 
+    private void BT_DELETA_DUPLICADOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_DELETA_DUPLICADOSActionPerformed
+        int response = JOptionPane.showConfirmDialog(null, "DESEJA DELETAR TODOS OS CERTIFICADOS DUPLICADOS? ", "Confirma?",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "EXCLUSÃO CANCELADA!");
+        } else {
+            if (response == JOptionPane.YES_NO_OPTION) {
+
+                if (controle.deletarCertificadosDuplicados()) {
+                    JOptionPane.showMessageDialog(null, "OS CERTIFICADOS DUPLICADOS FORAM EXCLUÍDOS!");
+                }
+            }
+        }
+    }//GEN-LAST:event_BT_DELETA_DUPLICADOSActionPerformed
+
     public class ProcessoATUALIZA_CERTS implements Runnable {
 
         @Override
@@ -358,6 +387,7 @@ public final class TelaEditarPreferencias extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BT_DELETA_DUPLICADOS;
     private javax.swing.JButton BT_DELETA_VENCIDOS;
     private javax.swing.JButton BT_EDIT;
     private javax.swing.JButton BT_SALVAR;

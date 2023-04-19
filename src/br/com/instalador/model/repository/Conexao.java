@@ -8,13 +8,21 @@ import javax.swing.JOptionPane;
 
 public class Conexao {
 
-    private static final String BANCO = "jdbc:postgresql://cloudtecnologia.ddns.net:5432/certificado";
+    //vando: private static final String BANCO = "jdbc:postgresql://192.168.1.253:5432/certificado";
+    private static final String BANCO = "jdbc:postgresql://localhost:5432/certificado";
+
     static final String DRIVER = "org.postgresql.Driver";
+
     static final String USUARIO = "postgres";
-    static String SENHA = "895674";//
+
+    //static String SENHA = "Vando243569@";
+    static String SENHA = "895674";
+    
+    //vando senha cert: 243569
+
     private static Connection con = null;
 
-    // 4851722
+    // senha Vando243569@
     public static Connection getConexao() {
         if (con == null) {
             try {

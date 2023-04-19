@@ -19,5 +19,7 @@ dtVencimento date,
 hrVencimento varchar,
 descricao_vencimento varchar,
 expira INTEGER,
-imagemCertificado bytea not null
+imagemCertificado bytea not null 
 );
+
+
