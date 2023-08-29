@@ -9,17 +9,18 @@ import javax.swing.JOptionPane;
 public class Conexao {
 
     //vando: private static final String BANCO = "jdbc:postgresql://192.168.1.253:5432/certificado";
-    private static final String BANCO = "jdbc:postgresql://localhost:5432/certificado";
+    //Exata  private static final String BANCO = "jdbc:postgresql://10.1.1.200:5432/certificado";
+    private static final String BANCO = "jdbc:postgresql://ipbanco:5432/certificado";
 
     static final String DRIVER = "org.postgresql.Driver";
 
     static final String USUARIO = "postgres";
 
-    //static String SENHA = "Vando243569@";
-    static String SENHA = "895674";
-    
-    //vando senha cert: 243569
+    //static String SENHA = "Vando243569@";  vando
+    //  static String SENHA = "Exata#2021@";  exata
+    static String SENHA = "senha banco";
 
+    //vando senha cert: 243569
     private static Connection con = null;
 
     // senha Vando243569@
