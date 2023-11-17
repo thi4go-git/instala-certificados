@@ -11,7 +11,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <exec.mainClass>com.dynns.cloudtecnologia.certificados.InstalaCertificados</exec.mainClass>
+        <exec.mainClass>com.dynns.cloudtecnologia.certificados.InstalaCertificados</exec.mainClass>        
+        <sonar.coverage.exclusions>
+            **/model/**
+        </sonar.coverage.exclusions>
+        <sonar.exclusions>
+            **/model/**
+        </sonar.exclusions>        
     </properties>
     <description>Instalador de Certificados .PFX Windows</description>
     
@@ -58,9 +64,7 @@
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
             <version>3.0.0</version>
-        </dependency>
-
-        
+        </dependency>        
     </dependencies>
     
 </project>
