@@ -2,3 +2,5 @@
 # NetBeans
 nb-configuration.xml
 /store/
+target
+/target/
