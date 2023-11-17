@@ -11,7 +11,6 @@ public class CertificadoModelTable extends AbstractTableModel {
 
     private final String[] colunas = {"CERTIFICADO", "VENCIMENTO", "HORA", "EXPIRA EM (DIAS)", "DETALHES"};
     private List<Certificado> certificadosList = new ArrayList<>();
-    private List<Certificado> certificadosListFinal = new ArrayList<>();
 
     private static final String MSG_SENHA_INCORRETA = "A Senha do Certificado não confere com a senha do Instalador!";
 
@@ -38,22 +37,22 @@ public class CertificadoModelTable extends AbstractTableModel {
     @Override
     public Object getValueAt(int linha, int coluna) {//PEGAR INFORMAÇÕES DA LINHA SELECIONADA!!!
         switch (coluna) {
-            case 0 -> {
+            case 0:
                 return certificadosList.get(linha).getNome();
-            }
-            case 1 -> {
+
+            case 1:
                 if (certificadosList.get(linha).getDataVencimento() != null) {
                     return DataUtils.formataParaBR((Date) certificadosList.get(linha).getDataVencimento());
                 }
                 return null;
-            }
-            case 2 -> {
+
+            case 2:
                 return certificadosList.get(linha).getHoraVencimento();
-            }
-            case 3 -> {
+
+            case 3:
                 return certificadosList.get(linha).getExpira();
-            }
-            case 4 -> {
+
+            case 4:
                 String expira = "" + certificadosList.get(linha).getExpira();
                 String observacao = certificadosList.get(linha).getDescricaoVencimento();
                 if (!observacao.contains(MSG_SENHA_INCORRETA)) {
@@ -70,10 +69,9 @@ public class CertificadoModelTable extends AbstractTableModel {
                 } else {
                     return certificadosList.get(linha).getDescricaoVencimento();
                 }
-            }
-            default -> {
+
+            default:
                 return null;
-            }
         }
     }
 
@@ -83,7 +81,6 @@ public class CertificadoModelTable extends AbstractTableModel {
 
     public void preencherTabelaCertificados(List<Certificado> certificadosList) {
         this.certificadosList = certificadosList;
-        this.certificadosListFinal = this.certificadosList;
         atualizaTabela();
     }
 
