@@ -9,9 +9,8 @@ pipeline {
 
    stages {     
         stage('Compilando') {
-            steps {
-                sh 'chmod 777 ./mvnw'
-                sh './mvnw clean package -DskipTests=true'
+            steps {             
+                sh 'mvn clean package -DskipTests=true'
             }
         }
         stage('Sonar Analise') {
