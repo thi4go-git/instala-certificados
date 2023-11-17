@@ -1,8 +1,19 @@
 pipeline {
 
-   agent any; 
+    agent any;
+
+    tools {
+       jdk 'JDK_11'
+       maven 'MAVEN_3.8.8'
+    }
 
    stages {     
+        stage('Compilando') {
+            steps {
+                sh 'chmod 777 ./mvnw'
+                sh './mvnw clean package -DskipTests=true'
+            }
+        }
         stage('Sonar Analise') {
           environment{
               scannerHome = tool 'SONAR_SCANNER'
