@@ -1,5 +1,6 @@
-package com.dynns.cloudtecnologia.certificados.utils;
+package com.dynns.cloudtecnologia.certificados.controller;
 
+import com.dynns.cloudtecnologia.certificados.utils.*;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import javax.swing.JOptionPane;
 
 public class Instalador {
 

@@ -2,6 +2,7 @@ package com.dynns.cloudtecnologia.certificados.view.telas;
 
 import com.dynns.cloudtecnologia.certificados.controller.CertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificadoController;
+import com.dynns.cloudtecnologia.certificados.controller.Instalador;
 import com.dynns.cloudtecnologia.certificados.model.dao.CertificadoDAO;
 import com.dynns.cloudtecnologia.certificados.model.dao.ConfiguracaoCertificadoDAO;
 import com.dynns.cloudtecnologia.certificados.model.dao.ICertificado;
@@ -10,7 +11,6 @@ import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
-import com.dynns.cloudtecnologia.certificados.utils.Instalador;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.Color;
 import java.awt.Component;
@@ -24,7 +24,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private Dotenv dotenv;
     private Instalador instalador;
-    TelaPreferencias telaPreferencias;
 
     ICertificado certificadoDAO;
     private CertificadoController certificadoControler;
@@ -421,7 +420,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void itemMenuPreferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuPreferenciasActionPerformed
         if (isAutenticado()) {
-            telaPreferencias = new TelaPreferencias();
+            new TelaPreferencias();
         }
     }//GEN-LAST:event_itemMenuPreferenciasActionPerformed
 
