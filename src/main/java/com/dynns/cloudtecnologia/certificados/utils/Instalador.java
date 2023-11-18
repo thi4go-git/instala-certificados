@@ -14,7 +14,7 @@ public class Instalador {
 
     String caminhoCertificadoTemp = System.getProperty("java.io.tmpdir") + "CERTIFICADO.pfx";
 
-    public void instalarCertificado(ConfiguracaoCertificado configuracao, Certificado certificado) {
+    public int instalarCertificado(ConfiguracaoCertificado configuracao, Certificado certificado) {
         FileUtils.byteTofile(certificado.getCertificadoByte(), caminhoCertificadoTemp);
         File certificadoTemp = new File(caminhoCertificadoTemp);
 
@@ -26,10 +26,8 @@ public class Instalador {
             try {
                 Process process = processBuilder.start();
                 process.waitFor();
-                int exitCode = process.exitValue();
-
                 deletarCertificado();
-                JOptionPane.showMessageDialog(null, "Sucesso ao instalar certificado ( " + certificado.getNome() + " ) CÓD: " + exitCode);
+                return process.exitValue();
             } catch (IOException e) {
                 throw new GeralException("Erro ao instalar IOException: CÓD: 1 ");
             } catch (InterruptedException ex) {
@@ -37,6 +35,7 @@ public class Instalador {
                 throw new GeralException("Erro ao instalar InterruptedException: CÓD: 1 ");
             }
         }
+        throw new GeralException("Erro ao instalar: Não foi possível criar o Certificado.");
     }
 
     private void deletarCertificado() {

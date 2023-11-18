@@ -23,6 +23,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private Dotenv dotenv;
     private Instalador instalador;
+    TelaPreferencias telaPreferencias;
 
     ICertificado certificadoDAO;
     private CertificadoController certificadoControler;
@@ -405,14 +406,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             + " DIAS, Favor informar o Responsável pela renovação");
                 }
                 String descricao = certificadoControler.retornarDescricao(linhaSelecionada);
-                if (dataVencimento != null && !descricao.equals(MSG_SENHA_INVALIDA)) {
+                ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
+                Certificado certificado = certificadoDAO.findById(certificadoControler.retornarId(linhaSelecionada));
+                int statusCode = instalador.instalarCertificado(configuracaoCertificado, certificado);
 
-                    ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
-                    Certificado certificado = certificadoDAO.findById(certificadoControler.retornarId(linhaSelecionada));
-                    instalador.instalarCertificado(configuracaoCertificado, certificado);
-
+                if (statusCode == 0 && !descricao.contains(MSG_SENHA_INVALIDA)) {
+                    JOptionPane.showMessageDialog(null, "Sucesso ao Instalar o certificado: " + nome + ", CÓD: " + statusCode);
                 } else {
-                    JOptionPane.showMessageDialog(null, "*** Não foi possível instalar, " + MSG_SENHA_INVALIDA);
+                    JOptionPane.showMessageDialog(null, "*** NÃO FOI POSSÍVEL INSTALAR: Senha Inválida. CÓD: " + statusCode + " ***");
                 }
             }
         } else {
@@ -422,7 +423,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void itemMenuPreferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuPreferenciasActionPerformed
         if (isAutenticado()) {
-            JOptionPane.showMessageDialog(null, "Não impl.");
+            telaPreferencias = new TelaPreferencias();
         }
     }//GEN-LAST:event_itemMenuPreferenciasActionPerformed
 

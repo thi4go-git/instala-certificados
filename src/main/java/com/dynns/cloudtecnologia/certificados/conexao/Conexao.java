@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public abstract class Conexao {
+public class Conexao {
 
     private Conexao() {
     }
