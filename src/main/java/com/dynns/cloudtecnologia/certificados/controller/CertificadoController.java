@@ -20,8 +20,32 @@ public class CertificadoController {
         return certificadoDAO.findById(id);
     }
 
-    public AbstractTableModel preencherTabelaCertificados() {
-        List<Certificado> certificadosList = certificadoDAO.findAll();
+    public AbstractTableModel preencherTabelaCertificados(Certificado filter) {
+        List<Certificado> certificadosList = certificadoDAO.findAllFilter(filter);
+        modelo.preencherTabelaCertificados(certificadosList);
+        return modelo;
+    }
+
+    public AbstractTableModel preencherTabelaCertificadosVencidos(Certificado filter) {
+        List<Certificado> certificadosList = certificadoDAO.findAllFilter(filter);
+        modelo.preencherTabelaCertificadosVencidos(certificadosList);
+        return modelo;
+    }
+
+    public AbstractTableModel preencherTabelaCertificadosAtivos(Certificado filter) {
+        List<Certificado> certificadosList = certificadoDAO.findAllFilter(filter);
+        modelo.preencherTabelaCertificadosAtivos(certificadosList);
+        return modelo;
+    }
+
+    public AbstractTableModel preencherTabelaCertificadosVencemAte30Dias(Certificado filter) {
+        List<Certificado> certificadosList = certificadoDAO.findAllFilter(filter);
+        modelo.preencherTabelaCertificadosVencemAte30Dias(certificadosList);
+        return modelo;
+    }
+
+    public AbstractTableModel preencherTabelaCertificadosPesquisa(Certificado filter) {
+        List<Certificado> certificadosList = certificadoDAO.findAllFilter(filter);
         modelo.preencherTabelaCertificados(certificadosList);
         return modelo;
     }
@@ -52,6 +76,10 @@ public class CertificadoController {
 
     public int retornarId(int linhaSelecionada) {
         return modelo.retornarId(linhaSelecionada);
+    }
+
+    public void deletarCertificado(int idCertificado) {
+        certificadoDAO.deletarCertificado(idCertificado);
     }
 
 }

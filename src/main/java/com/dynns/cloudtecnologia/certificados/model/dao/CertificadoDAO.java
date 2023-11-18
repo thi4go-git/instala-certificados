@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class CertificadoDAO implements ICertificado {
 
@@ -30,8 +31,7 @@ public class CertificadoDAO implements ICertificado {
     public Certificado findById(int id) {
         String sql = "SELECT * from certificado where id=?";
 
-        try (Connection connection = Conexao.getConexao(); 
-                PreparedStatement pst = connection.prepareStatement(sql)) {
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
 
             pst.setInt(1, id);
 
@@ -56,12 +56,21 @@ public class CertificadoDAO implements ICertificado {
     }
 
     @Override
-    public List<Certificado> findAll() {
-        List<Certificado> certificados = new ArrayList<>();
+    public List<Certificado> findAllFilter(Certificado filter) {
+
         String sql = "select * from certificado";
-        try (Connection connection = Conexao.getConexao(); 
-                PreparedStatement pst = connection.prepareStatement(sql)) {
+        if (Objects.nonNull(filter.getNome()) && filter.getNome().length() > 0) {
+            sql += " where nome ilike '%?%'";
+        }
+
+ 
+        
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
+            if (Objects.nonNull(filter.getNome()) && filter.getNome().length() > 0) {
+                pst.setString(1, filter.getNome());
+            }
             try (ResultSet rs = pst.executeQuery()) {
+                List<Certificado> certificados = new ArrayList<>();
                 while (rs.next()) {
                     int diferencaEmDias = 0;
                     if (!rs.getString(COLUNA_DESCRICAO_VENCIMENTO).equals(MSG_SENHA_INCORRETA)) {
@@ -82,13 +91,25 @@ public class CertificadoDAO implements ICertificado {
 
                     certificados.add(certificado);
                 }
-
                 Collections.sort(certificados, Comparator.comparingInt(Certificado::getExpira));
+                return certificados;
             }
         } catch (SQLException ex) {
-            throw new GeralException("Erro ao listar Certificados (CertificadoDAO)");
+            throw new GeralException("Erro ao listar Certificados (CertificadoDAO) " + ex);
         }
-        return certificados;
+    }
+
+    @Override
+    public void deletarCertificado(int idCertificado) {
+        String sql = "delete from certificado where id = ? ";
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
+
+            pst.setInt(1, idCertificado);
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new GeralException("Erro ao Deletar Certificado id: " + idCertificado + " (CertificadoDAO)");
+        }
     }
 
 }

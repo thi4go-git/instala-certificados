@@ -13,7 +13,7 @@ public class DataUtils {
     }
 
     private static final SimpleDateFormat FORMATA_BD = new SimpleDateFormat("yyyy-MM-dd");
-    private static final SimpleDateFormat FORMATA_BR = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat FORMATA_BR = new SimpleDateFormat("dd / MM / yyyy");
 
     public static int retornarDiferencaEmDias(String dataMenor, String dataMaior) {
         // yyyy-mm-dd 

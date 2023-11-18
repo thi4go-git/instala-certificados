@@ -84,6 +84,36 @@ public class CertificadoModelTable extends AbstractTableModel {
         atualizaTabela();
     }
 
+    public void preencherTabelaCertificadosVencidos(List<Certificado> certificadosList) {
+        this.certificadosList = new ArrayList<>();
+        for (Certificado certificado : certificadosList) {
+            if (certificado.getExpira() <= 0) {
+                this.certificadosList.add(certificado);
+            }
+        }
+        atualizaTabela();
+    }
+
+    public void preencherTabelaCertificadosAtivos(List<Certificado> certificadosList) {
+        this.certificadosList = new ArrayList<>();
+        for (Certificado certificado : certificadosList) {
+            if (certificado.getExpira() > 0) {
+                this.certificadosList.add(certificado);
+            }
+        }
+        atualizaTabela();
+    }
+
+    public void preencherTabelaCertificadosVencemAte30Dias(List<Certificado> certificadosList) {
+        this.certificadosList = new ArrayList<>();
+        for (Certificado certificado : certificadosList) {
+            if (certificado.getExpira() >= 0 && certificado.getExpira() <= 30) {
+                this.certificadosList.add(certificado);
+            }
+        }
+        atualizaTabela();
+    }
+
     public int retornarQtdeRegistros() {
         return this.certificadosList.size();
     }
