@@ -20,41 +20,41 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class TelaPrincipal extends javax.swing.JFrame {
-    
+
     private Dotenv dotenv;
     private Instalador instalador;
-    
+
     ICertificado certificadoDAO;
     private CertificadoController certificadoControler;
-    
+
     IConfiguracaoCertificado configuracaoCertificadoDAO;
     private ConfiguracaoCertificadoController configuracaoCertificadoController;
-    
+
     private static final String MSG_SELECIONA_CERTIFICADO = "Favor selecionar o Certificado!";
     private static final String MSG_SENHA_INVALIDA = "A Senha do Certificado não confere com a senha do Instalador!";
-    
+
     private static final String FILTRO_TODOS = "TODOS";
     private static final String FILTRO_VENCIDOS = "VENCIDOS";
     private static final String FILTRO_VENCER_30_DIAS = "VENCEM_EM_30_DIAS";
-    
+
     public TelaPrincipal() {
         initComponents();
         this.inicializarVariaveis();
         this.configurarExibicaoTela();
         this.processoAutomatico();
     }
-    
+
     private void inicializarVariaveis() {
         dotenv = Dotenv.configure().load();
         instalador = new Instalador();
-        
+
         certificadoDAO = new CertificadoDAO();
         certificadoControler = new CertificadoController(certificadoDAO);
-        
+
         configuracaoCertificadoDAO = new ConfiguracaoCertificadoDAO();
         configuracaoCertificadoController = new ConfiguracaoCertificadoController(configuracaoCertificadoDAO);
     }
-    
+
     private void configurarExibicaoTela() {
         this.setLocationRelativeTo(null);
         this.setEnabled(true);
@@ -63,50 +63,52 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.version.setText(dotenv.get("VERSION"));
         this.infoRodape.setText(dotenv.get("INFO_RODAPE"));
     }
-    
+
     private void processoAutomatico() {
         preencherTabelaCertificados();
     }
-    
+
     private void preencherTabelaCertificados() {
         tabela.setModel(certificadoControler.preencherTabelaCertificados(new Certificado()));
         definirInformacoesTabela();
     }
-    
+
     private void preencherTabelaCertificadosVencidos() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosVencidos(new Certificado()));
         definirInformacoesTabela();
     }
-    
+
     private void preencherTabelaCertificadosAtivos() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosAtivos(new Certificado()));
         definirInformacoesTabela();
     }
-    
+
     private void preencherTabelaCertificadosVencemAte30Dias() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosVencemAte30Dias(new Certificado()));
         definirInformacoesTabela();
     }
-    
+
     private void preencherTabelaCertificadosPesquisa() {
-        Certificado filter = new Certificado();
-        filter.setNome(nomeCertificado.getText().trim());
-        tabela.setModel(certificadoControler.preencherTabelaCertificadosPesquisa(filter));
-        definirInformacoesTabela();
+        String nomePesquisa = nomeCertificado.getText().trim();
+        if (nomePesquisa != null && !nomePesquisa.equals("")) {
+            Certificado filter = new Certificado();
+            filter.setNome(nomePesquisa);
+            tabela.setModel(certificadoControler.preencherTabelaCertificadosPesquisa(filter));
+            definirInformacoesTabela();
+        }
     }
-    
+
     private void definirInformacoesTabela() {
-        limpaBarraPesquisa();
-        int registros = certificadoControler.retornarQtdeRegistros();
-        qtdeRegistros.setText("Registros: " + registros);
+        int totalRegistros = certificadoControler.retornarQtdeRegistros();
+        qtdeRegistros.setText("Registros: " + totalRegistros);
         definirTamanhoColunas();
         colorirLinhaAtraso();
-        if (registros == 0) {
+        if (totalRegistros == 0 && nomeCertificado.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(null, "ATENÇÃO: Não existem certificados no banco de dados,"
                     + " favor informar ao Responsável! ");
         }
     }
-    
+
     private void definirTamanhoColunas() {
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.getColumnModel().getColumn(0).setPreferredWidth(500);//NOME 
@@ -115,7 +117,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(3).setPreferredWidth(115);//EXPIRA
         tabela.getColumnModel().getColumn(4).setPreferredWidth(250);//DETALHES
     }
-    
+
     private void colorirLinhaAtraso() {
         tabela.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
@@ -152,7 +154,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -367,18 +369,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if (tabela.getSelectedRow() != -1) {
             if (isAutenticado()) {
                 int linhaSelecionada = tabela.getSelectedRow();
-                String nomeCertificado = certificadoControler.retornarNome(linhaSelecionada);
-                
-                int response = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do Certificado: " + nomeCertificado + " ?", "Confirma?",
+                String nomeCert = certificadoControler.retornarNome(linhaSelecionada);
+                int response = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do Certificado: " + nomeCert + " ?", "Confirma?",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                
+
                 if (response == JOptionPane.NO_OPTION) {
                     JOptionPane.showMessageDialog(null, "Exclusão cancelada!");
                 } else if (response == JOptionPane.YES_NO_OPTION) {
-                    
+
                     int idCertificado = certificadoControler.retornarId(linhaSelecionada);
                     certificadoControler.deletarCertificado(idCertificado);
-                    JOptionPane.showMessageDialog(null, "Sucesso ao deletar Certificado id: " + idCertificado + " - " + nomeCertificado + "!");
+                    JOptionPane.showMessageDialog(null, "Sucesso ao deletar Certificado id: " + idCertificado + " - " + nomeCert + "!");
                     preencherTabelaCertificados();
                 }
             }
@@ -394,7 +395,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             String nome = certificadoControler.retornarNome(linhaSelecionada);
             String dataVencimento = certificadoControler.retornarDataVencimentoSTR(linhaSelecionada);
             String alias = certificadoControler.retornarAlias(linhaSelecionada);
-            
+
             if (expira < 0) {
                 JOptionPane.showMessageDialog(null, "Não foi possível instalar o Certificado: \r\n (" + nome + "-" + alias + ")  \r\n "
                         + " CAUSA: Certificado expirado: " + dataVencimento);
@@ -405,11 +406,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 }
                 String descricao = certificadoControler.retornarDescricao(linhaSelecionada);
                 if (dataVencimento != null && !descricao.equals(MSG_SENHA_INVALIDA)) {
-                    
+
                     ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
                     Certificado certificado = certificadoDAO.findById(certificadoControler.retornarId(linhaSelecionada));
                     instalador.instalarCertificado(configuracaoCertificado, certificado);
-                    
+
                 } else {
                     JOptionPane.showMessageDialog(null, "*** Não foi possível instalar, " + MSG_SENHA_INVALIDA);
                 }
@@ -427,32 +428,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void filtroListagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroListagemActionPerformed
         String filtro = "" + filtroListagem.getSelectedItem();
-        if (filtro.equals(FILTRO_TODOS)) {
-            preencherTabelaCertificados();
-        } else if (filtro.equals(FILTRO_VENCIDOS)) {
-            preencherTabelaCertificadosVencidos();
-        } else if (filtro.equals(FILTRO_VENCER_30_DIAS)) {
-            preencherTabelaCertificadosVencemAte30Dias();
-        } else {
-            preencherTabelaCertificadosAtivos();
+        switch (filtro) {
+            case FILTRO_TODOS:
+                preencherTabelaCertificados();
+                limpaBarraPesquisa();
+                break;
+            case FILTRO_VENCIDOS:
+                preencherTabelaCertificadosVencidos();
+                break;
+            case FILTRO_VENCER_30_DIAS:
+                preencherTabelaCertificadosVencemAte30Dias();
+                break;
+            default:
+                preencherTabelaCertificadosAtivos();
+                break;
         }
     }//GEN-LAST:event_filtroListagemActionPerformed
 
     private void nomeCertificadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeCertificadoKeyPressed
         preencherTabelaCertificadosPesquisa();
     }//GEN-LAST:event_nomeCertificadoKeyPressed
-    
+
     private void limpaBarraPesquisa() {
         nomeCertificado.setText("");
     }
-    
+
     private boolean isAutenticado() {
         ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
         AutenticacaoDialog dialogAutenticacao = new AutenticacaoDialog(this, configuracaoCertificado.getSenhaMaster());
         dialogAutenticacao.setVisible(true);
         return dialogAutenticacao.isAutenticado();
     }
-    
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

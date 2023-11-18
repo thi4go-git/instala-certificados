@@ -59,16 +59,20 @@ public class CertificadoDAO implements ICertificado {
     public List<Certificado> findAllFilter(Certificado filter) {
 
         String sql = "select * from certificado";
-        if (Objects.nonNull(filter.getNome()) && filter.getNome().length() > 0) {
-            sql += " where nome ilike '%?%'";
+        List<Object> parameters = new ArrayList<>();
+
+        if (Objects.nonNull(filter.getNome()) && !filter.getNome().isEmpty()) {
+            sql += " where nome ilike ?";
+            parameters.add("%" + filter.getNome() + "%");
         }
 
- 
-        
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
-            if (Objects.nonNull(filter.getNome()) && filter.getNome().length() > 0) {
-                pst.setString(1, filter.getNome());
+            int parameterIndex = 1;
+            for (Object parameter : parameters) {
+                pst.setObject(parameterIndex, parameter);
+                parameterIndex++;
             }
+
             try (ResultSet rs = pst.executeQuery()) {
                 List<Certificado> certificados = new ArrayList<>();
                 while (rs.next()) {

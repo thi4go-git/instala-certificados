@@ -3,7 +3,7 @@ package com.dynns.cloudtecnologia.certificados.view.telas;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class AutenticacaoDialog extends JDialog {
 
@@ -22,21 +22,15 @@ public class AutenticacaoDialog extends JDialog {
         panel.add(passwordField, BorderLayout.CENTER);
 
         okButton = new JButton("OK");
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                senha = new String(passwordField.getPassword());
-                autenticar(senhaMaster);
-            }
+        okButton.addActionListener((ActionEvent e) -> {
+            senha = new String(passwordField.getPassword());
+            autenticar(senhaMaster);
         });
 
         cancelButton = new JButton("Cancelar");
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                senha = null;
-                fecharDialog();
-            }
+        cancelButton.addActionListener((ActionEvent e) -> {
+            senha = null;
+            fecharDialog();
         });
 
         JPanel buttonPanel = new JPanel();
