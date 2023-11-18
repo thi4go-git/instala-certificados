@@ -29,7 +29,7 @@ public class Instalador {
                 int exitCode = process.exitValue();
 
                 deletarCertificado();
-                JOptionPane.showMessageDialog(null, "Sucesso ao instalar certificado. CÓD: " + exitCode);
+                JOptionPane.showMessageDialog(null, "Sucesso ao instalar certificado ( " + certificado.getNome() + " ) CÓD: " + exitCode);
             } catch (IOException e) {
                 throw new GeralException("Erro ao instalar IOException: CÓD: 1 ");
             } catch (InterruptedException ex) {

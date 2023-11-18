@@ -4,6 +4,7 @@ import com.dynns.cloudtecnologia.certificados.conexao.Conexao;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,16 +28,26 @@ public class CertificadoDAO implements ICertificado {
 
     @Override
     public Certificado findById(int id) {
-        try {
-            String sql = "SELECT id,imagemCertificado from certificado where id=?";
-            PreparedStatement pst = Conexao.getPreparedStatement(sql);
+        String sql = "SELECT * from certificado where id=?";
+
+        try (Connection connection = Conexao.getConexao(); 
+                PreparedStatement pst = connection.prepareStatement(sql)) {
+
             pst.setInt(1, id);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                Certificado cert = new Certificado();
-                cert.setId(rs.getInt("id"));
-                cert.setCertificadoByte(rs.getBytes(COLUNA_IMG_CERTIFICADO));
-                return cert;
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    Certificado certificado = new Certificado();
+                    certificado.setId(rs.getInt(COLUNA_ID));
+                    certificado.setNome(rs.getString(COLUNA_NOME));
+                    certificado.setAlias(rs.getString(COLUNA_ALIAS));
+                    certificado.setDataVencimento(rs.getDate(COLUNA_DATA_VENCIMENTO));
+                    certificado.setHoraVencimento(rs.getString(COLUNA_HORA_VENCIMENTO));
+                    certificado.setDescricaoVencimento(rs.getString(COLUNA_DESCRICAO_VENCIMENTO));
+                    certificado.setCertificadoByte(rs.getBytes(COLUNA_IMG_CERTIFICADO));
+
+                    return certificado;
+                }
             }
         } catch (SQLException ex) {
             throw new GeralException("Erro ao obter Certificado by Id " + ex.getMessage());
@@ -47,35 +58,33 @@ public class CertificadoDAO implements ICertificado {
     @Override
     public List<Certificado> findAll() {
         List<Certificado> certificados = new ArrayList<>();
+        String sql = "select * from certificado";
+        try (Connection connection = Conexao.getConexao(); 
+                PreparedStatement pst = connection.prepareStatement(sql)) {
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    int diferencaEmDias = 0;
+                    if (!rs.getString(COLUNA_DESCRICAO_VENCIMENTO).equals(MSG_SENHA_INCORRETA)) {
+                        String dataAtual = DataUtils.formataParaBD(new Date());
+                        String dataVencimento = DataUtils.formataParaBD(rs.getDate(COLUNA_DATA_VENCIMENTO));
 
-        try {
-            String sql = "select * from certificado";
-            PreparedStatement pst = Conexao.getPreparedStatement(sql);
-            ResultSet rs = pst.executeQuery();
+                        diferencaEmDias = DataUtils.retornarDiferencaEmDias(dataAtual, dataVencimento);
+                    }
+                    Certificado certificado = new Certificado();
+                    certificado.setId(rs.getInt(COLUNA_ID));
+                    certificado.setNome(rs.getString(COLUNA_NOME));
+                    certificado.setAlias(rs.getString(COLUNA_ALIAS));
+                    certificado.setDataVencimento(rs.getDate(COLUNA_DATA_VENCIMENTO));
+                    certificado.setHoraVencimento(rs.getString(COLUNA_HORA_VENCIMENTO));
+                    certificado.setDescricaoVencimento(rs.getString(COLUNA_DESCRICAO_VENCIMENTO));
+                    certificado.setExpira(diferencaEmDias);
+                    certificado.setCertificadoByte(rs.getBytes(COLUNA_IMG_CERTIFICADO));
 
-            while (rs.next()) {
-                int diferencaEmDias = 0;
-                if (!rs.getString(COLUNA_DESCRICAO_VENCIMENTO).equals(MSG_SENHA_INCORRETA)) {
-                    String dataAtual = DataUtils.formataParaBD(new Date());
-                    String dataVencimento = DataUtils.formataParaBD(rs.getDate(COLUNA_DATA_VENCIMENTO));
-
-                    diferencaEmDias = DataUtils.retornarDiferencaEmDias(dataAtual, dataVencimento);
+                    certificados.add(certificado);
                 }
-                Certificado certificado = new Certificado();
-                certificado.setId(rs.getInt(COLUNA_ID));
-                certificado.setNome(rs.getString(COLUNA_NOME));
-                certificado.setAlias(rs.getString(COLUNA_ALIAS));
-                certificado.setDataVencimento(rs.getDate(COLUNA_DATA_VENCIMENTO));
-                certificado.setHoraVencimento(rs.getString(COLUNA_HORA_VENCIMENTO));
-                certificado.setDescricaoVencimento(rs.getString(COLUNA_DESCRICAO_VENCIMENTO));
-                certificado.setExpira(diferencaEmDias);
-                certificado.setCertificadoByte(rs.getBytes(COLUNA_IMG_CERTIFICADO));
 
-                certificados.add(certificado);
+                Collections.sort(certificados, Comparator.comparingInt(Certificado::getExpira));
             }
-
-            Collections.sort(certificados, Comparator.comparingInt(Certificado::getExpira));
-
         } catch (SQLException ex) {
             throw new GeralException("Erro ao listar Certificados (CertificadoDAO)");
         }
