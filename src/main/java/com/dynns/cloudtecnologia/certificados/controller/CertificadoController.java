@@ -1,5 +1,6 @@
 package com.dynns.cloudtecnologia.certificados.controller;
 
+import com.dynns.cloudtecnologia.certificados.extrator.CertificadoExtrator;
 import com.dynns.cloudtecnologia.certificados.model.dao.ICertificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.view.table.CertificadoModelTable;
@@ -84,6 +85,11 @@ public class CertificadoController {
 
     public void deletarCertificadosVencidos() {
         certificadoDAO.deletarCertificadosVencidos();
+    }
+
+    public void processarCertificadosPasta(String caminhoPasta) {
+        CertificadoExtrator extrator = new CertificadoExtrator(caminhoPasta);
+        extrator.processarCertificadosPasta();
     }
 
 }

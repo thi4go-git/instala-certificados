@@ -132,6 +132,11 @@ public class TelaPreferencias extends javax.swing.JFrame {
         btAtualizarCertificados.setText("Atualizar Certificados");
         btAtualizarCertificados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btAtualizarCertificados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btAtualizarCertificados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarCertificadosActionPerformed(evt);
+            }
+        });
 
         btAlterar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btAlterar.setText("Alterar");
@@ -256,12 +261,18 @@ public class TelaPreferencias extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btDeletarVencidosActionPerformed
 
+    private void btAtualizarCertificadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarCertificadosActionPerformed
+        if (DialogUtils.confirmarOperacao("Deseja processar todos certificados da Pasta?")) {
+            String caminhoPasta = "" + cPastaCertificados.getText().trim();
+            certificadoControler.processarCertificadosPasta(caminhoPasta);
+        } else {
+            JOptionPane.showMessageDialog(null, "Exclusão cancelada!");
+        }
+    }//GEN-LAST:event_btAtualizarCertificadosActionPerformed
+
     public static void main() {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TelaPreferencias().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaPreferencias().setVisible(true);
         });
     }
 
