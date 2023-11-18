@@ -7,6 +7,9 @@ import java.io.IOException;
 
 public class FileUtils {
 
+    private FileUtils() {
+    }
+
     public static File byteTofile(byte[] bytesArquivo, String caminhoArquivo) {
         File file;
         try {

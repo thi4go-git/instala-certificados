@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DataUtils {
 
@@ -40,5 +38,6 @@ public class DataUtils {
             throw new GeralException("Erro ao Converter Data String para Date");
         }
     }
+
 
 }
