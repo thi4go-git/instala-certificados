@@ -12,8 +12,8 @@ public class DataUtils {
     private DataUtils() {
     }
 
-    private static final SimpleDateFormat FORMATA_BD = new SimpleDateFormat("yyyy-MM-dd");
-    private static final SimpleDateFormat FORMATA_BR = new SimpleDateFormat("dd / MM / yyyy");
+    private static final String FORMATA_BR = "dd / MM / yyyy";
+    private static final String FORMATA_BD = "yyyy-MM-dd";
 
     public static int retornarDiferencaEmDias(String dataMenor, String dataMaior) {
         // yyyy-mm-dd 
@@ -24,20 +24,22 @@ public class DataUtils {
     }
 
     public static String formataParaBD(Date data) {
-        return FORMATA_BD.format(data);
+        SimpleDateFormat formataBD = new SimpleDateFormat(FORMATA_BD);
+        return formataBD.format(data);
     }
 
     public static String formataParaBR(Date data) {
-        return FORMATA_BR.format(data);
+        SimpleDateFormat formataBr = new SimpleDateFormat(FORMATA_BR);
+        return formataBr.format(data);
     }
 
     public static Date parseDataBrStringToDate(String dataStr) {
+        SimpleDateFormat formataBr = new SimpleDateFormat(FORMATA_BR);
         try {
-            return FORMATA_BR.parse(dataStr);
+            return formataBr.parse(dataStr);
         } catch (ParseException ex) {
             throw new GeralException("Erro ao Converter Data String para Date");
         }
     }
-
 
 }

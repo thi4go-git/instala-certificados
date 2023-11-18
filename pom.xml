@@ -13,10 +13,10 @@
         <maven.compiler.target>11</maven.compiler.target>
         <exec.mainClass>com.dynns.cloudtecnologia.certificados.InstalaCertificados</exec.mainClass>        
         <sonar.coverage.exclusions>
-            **/model/**, com/dynns/cloudtecnologia/certificados/view/telas/TelaPrincipal.java
+            **/model/**,**/view/telas/TelaPrincipal.java
         </sonar.coverage.exclusions>
         <sonar.exclusions>
-            **/model/**, com/dynns/cloudtecnologia/certificados/view/telas/TelaPrincipal.java
+            **/model/**,**/view/telas/TelaPrincipal.java
         </sonar.exclusions>   
     </properties>
     <description>Instalador de Certificados .PFX Windows</description>
