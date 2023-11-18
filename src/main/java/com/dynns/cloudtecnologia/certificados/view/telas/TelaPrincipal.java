@@ -9,6 +9,7 @@ import com.dynns.cloudtecnologia.certificados.model.dao.IConfiguracaoCertificado
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
+import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
 import com.dynns.cloudtecnologia.certificados.utils.Instalador;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.Color;
@@ -371,17 +372,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if (isAutenticado()) {
                 int linhaSelecionada = tabela.getSelectedRow();
                 String nomeCert = certificadoControler.retornarNome(linhaSelecionada);
-                int response = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do Certificado: " + nomeCert + " ?", "Confirma?",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-                if (response == JOptionPane.NO_OPTION) {
-                    JOptionPane.showMessageDialog(null, "Exclusão cancelada!");
-                } else if (response == JOptionPane.YES_NO_OPTION) {
-
+                if (DialogUtils.confirmarOperacao("Confirmar exclusão do certificado? " + nomeCert)) {
                     int idCertificado = certificadoControler.retornarId(linhaSelecionada);
                     certificadoControler.deletarCertificado(idCertificado);
                     JOptionPane.showMessageDialog(null, "Sucesso ao deletar Certificado id: " + idCertificado + " - " + nomeCert + "!");
                     preencherTabelaCertificados();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Exclusão cancelada!");
                 }
             }
         } else {

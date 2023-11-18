@@ -11,4 +11,6 @@ public interface ICertificado {
 
     void deletarCertificado(int idCertificado);
 
+    void deletarCertificadosVencidos();
+
 }

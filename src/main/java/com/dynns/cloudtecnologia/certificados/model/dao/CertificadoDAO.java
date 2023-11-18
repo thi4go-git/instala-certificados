@@ -116,4 +116,16 @@ public class CertificadoDAO implements ICertificado {
         }
     }
 
+    @Override
+    public void deletarCertificadosVencidos() {
+        String sql = "delete from certificado where dtVencimento < CURRENT_TIMESTAMP";
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
+
+            pst.execute();            
+
+        } catch (SQLException ex) {
+            throw new GeralException("*** ERRO: Não foi possível deletar os certificados vencidos: " + ex.getMessage());
+        }
+    }
+
 }

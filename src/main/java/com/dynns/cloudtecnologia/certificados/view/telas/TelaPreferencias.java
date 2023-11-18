@@ -1,14 +1,21 @@
 package com.dynns.cloudtecnologia.certificados.view.telas;
 
+import com.dynns.cloudtecnologia.certificados.controller.CertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificadoController;
+import com.dynns.cloudtecnologia.certificados.model.dao.CertificadoDAO;
 import com.dynns.cloudtecnologia.certificados.model.dao.ConfiguracaoCertificadoDAO;
+import com.dynns.cloudtecnologia.certificados.model.dao.ICertificado;
 import com.dynns.cloudtecnologia.certificados.model.dao.IConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
+import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class TelaPreferencias extends javax.swing.JFrame {
+
+    ICertificado certificadoDAO;
+    private CertificadoController certificadoControler;
 
     IConfiguracaoCertificado configuracaoCertificadoDAO;
     private ConfiguracaoCertificadoController configuracaoCertificadoController;
@@ -21,6 +28,10 @@ public class TelaPreferencias extends javax.swing.JFrame {
     }
 
     private void inicializarVariaveis() {
+
+        certificadoDAO = new CertificadoDAO();
+        certificadoControler = new CertificadoController(certificadoDAO);
+
         configuracaoCertificadoDAO = new ConfiguracaoCertificadoDAO();
         configuracaoCertificadoController = new ConfiguracaoCertificadoController(configuracaoCertificadoDAO);
     }
@@ -101,6 +112,11 @@ public class TelaPreferencias extends javax.swing.JFrame {
         btDeletarVencidos.setText("Deletar Certificados Vencidos");
         btDeletarVencidos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btDeletarVencidos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btDeletarVencidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeletarVencidosActionPerformed(evt);
+            }
+        });
 
         btSalvar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btSalvar.setText("Salvar");
@@ -218,21 +234,27 @@ public class TelaPreferencias extends javax.swing.JFrame {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         if (validarCampos()) {
-            int response = JOptionPane.showConfirmDialog(null, "Confirma a alteração? ", "Confirma?",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-            if (response == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(null, "Alteração cancelada!");
-            } else if (response == JOptionPane.YES_NO_OPTION) {
+            if (DialogUtils.confirmarOperacao("Confirmar alteração das Preferências?")) {
                 ConfiguracaoCertificado configUpdate = new ConfiguracaoCertificado();
                 configUpdate.setLocalPasta(cPastaCertificados.getText().trim());
                 configUpdate.setSenhaCertificado(cSenhaCertificados.getText().trim());
                 configUpdate.setSenhaMaster(cSenhaMaster.getText().trim());
 
                 configuracaoCertificadoController.atualizarConfiguracaoCetificado(configUpdate);
+            } else {
+                JOptionPane.showMessageDialog(null, "Alteração cancelada!");
             }
         }
     }//GEN-LAST:event_btSalvarActionPerformed
+
+    private void btDeletarVencidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarVencidosActionPerformed
+        if (DialogUtils.confirmarOperacao("Confirmar exclusão de TODOS os Certificados vencidos? ")) {
+            certificadoControler.deletarCertificadosVencidos();
+            JOptionPane.showMessageDialog(null, "Os Certificados vencidos foram excluídos com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Exclusão cancelada!");
+        }
+    }//GEN-LAST:event_btDeletarVencidosActionPerformed
 
     public static void main() {
         java.awt.EventQueue.invokeLater(new Runnable() {

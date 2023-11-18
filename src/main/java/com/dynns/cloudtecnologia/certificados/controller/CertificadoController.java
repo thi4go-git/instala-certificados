@@ -82,4 +82,8 @@ public class CertificadoController {
         certificadoDAO.deletarCertificado(idCertificado);
     }
 
+    public void deletarCertificadosVencidos() {
+        certificadoDAO.deletarCertificadosVencidos();
+    }
+
 }
