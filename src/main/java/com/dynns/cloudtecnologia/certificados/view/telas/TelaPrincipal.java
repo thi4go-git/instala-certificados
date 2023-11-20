@@ -31,6 +31,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private static final String FILTRO_VENCIDOS = "VENCIDOS";
     private static final String FILTRO_VENCER_30_DIAS = "VENCEM_EM_30_DIAS";
 
+    private static final String FONTE = "Segoe UI";
+
     public TelaPrincipal() {
         initComponents();
         this.inicializarVariaveis();
@@ -183,12 +185,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabela);
 
-        qtdeRegistros.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        qtdeRegistros.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
         qtdeRegistros.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         qtdeRegistros.setText("Registros: 12564");
         qtdeRegistros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnInstalar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnInstalar.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
         btnInstalar.setText("Instalar");
         btnInstalar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnInstalar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -198,7 +200,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDeletar.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
         btnDeletar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -238,28 +240,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        version.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        version.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
         version.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         version.setText("Informações Rodapé");
 
-        infoRodape.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        infoRodape.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
         infoRodape.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         infoRodape.setText("Informações Rodapé");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtros"));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
         jLabel1.setText("Nome Certificado: ");
 
-        nomeCertificado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        nomeCertificado.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
         nomeCertificado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nomeCertificadoKeyPressed(evt);
             }
         });
 
-        filtroListagem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        filtroListagem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "VENCIDOS", "VENCEM_EM_30_DIAS", "ATIVOS" }));
+        filtroListagem.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
+        filtroListagem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { FILTRO_TODOS, FILTRO_VENCIDOS, FILTRO_VENCER_30_DIAS, "ATIVOS" }));
         filtroListagem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         filtroListagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,7 +295,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
 
         jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jMenuBar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jMenuBar1.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
 
         menuPreferencias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menuPreferencias.setText("Preferências");
@@ -302,7 +304,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuPreferencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuPreferencias.setMargin(new java.awt.Insets(6, 9, 6, 9));
 
-        itemMenuPreferencias.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        itemMenuPreferencias.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
         itemMenuPreferencias.setText("Editar Preferências");
         itemMenuPreferencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         itemMenuPreferencias.addActionListener(new java.awt.event.ActionListener() {

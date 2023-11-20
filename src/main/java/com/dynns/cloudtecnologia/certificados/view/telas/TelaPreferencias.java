@@ -13,6 +13,8 @@ public class TelaPreferencias extends javax.swing.JFrame {
     private CertificadoController certificadoControler;
     private ConfiguracaoCertificadoController configuracaoCertificadoController;
 
+    private static final String FONTE = "Segoe UI";
+
     public TelaPreferencias() {
         initComponents();
         this.inicializarVariaveis();
@@ -82,22 +84,22 @@ public class TelaPreferencias extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Preferências"));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
         jLabel1.setText("Senha master: ");
 
-        cSenhaMaster.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cSenhaMaster.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
 
-        cPastaCertificados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cPastaCertificados.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
 
-        cSenhaCertificados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cSenhaCertificados.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
         jLabel2.setText("Senha Certificados: ");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
         jLabel3.setText("Pasta Certificados:");
 
-        btDeletarVencidos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btDeletarVencidos.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
         btDeletarVencidos.setText("Deletar Certificados Vencidos");
         btDeletarVencidos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btDeletarVencidos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -107,7 +109,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
             }
         });
 
-        btSalvar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btSalvar.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
         btSalvar.setText("Salvar");
         btSalvar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -117,7 +119,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
             }
         });
 
-        btAtualizarCertificados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btAtualizarCertificados.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
         btAtualizarCertificados.setText("Atualizar Certificados");
         btAtualizarCertificados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btAtualizarCertificados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -127,7 +129,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
             }
         });
 
-        btAlterar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btAlterar.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
         btAlterar.setText("Alterar");
         btAlterar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

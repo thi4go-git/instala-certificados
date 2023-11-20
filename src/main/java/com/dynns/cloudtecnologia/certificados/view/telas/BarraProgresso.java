@@ -3,32 +3,32 @@ package com.dynns.cloudtecnologia.certificados.view.telas;
 import java.text.DecimalFormat;
 
 public class BarraProgresso extends javax.swing.JFrame {
-    
+
     public BarraProgresso() {
         initComponents();
         ajustarTela();
     }
-    
-    public void ajustarTela() {
+
+    private void ajustarTela() {
         this.setResizable(false);
         this.setEnabled(true);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        
+
     }
-    
+
     public void definirLimites(int minimo, int maximo) {
         progresso.setMinimum(minimo);
         progresso.setMaximum(maximo);
     }
-    
+
     public void atualizarBarra(int valor, String status) {
         DecimalFormat formataDouble = new DecimalFormat("###.00");
         descricao.setText(status);
         progresso.setValue(valor);
         percent.setText(formataDouble.format(progresso.getPercentComplete() * 100) + " %");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -76,7 +76,7 @@ public class BarraProgresso extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             new BarraProgresso().setVisible(true);
         });
