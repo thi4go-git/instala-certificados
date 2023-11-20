@@ -28,13 +28,33 @@ public class CertificadoDAO implements ICertificado {
     private static final String MSG_SENHA_INCORRETA = "A Senha do Certificado não confere com a senha do Instalador!";
 
     @Override
+    public void save(Certificado certificado) {
+        String sql = "INSERT INTO certificado "
+                + "(nome,alias,dtVencimento,hrVencimento,descricao_vencimento,expira,"
+                + "imagemCertificado)"
+                + " values (?,?,?,?,?,?,?)";
+
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setString(1, certificado.getNome());
+            pst.setString(2, certificado.getAlias());
+            pst.setDate(3, certificado.getDataVencimento());
+            pst.setString(4, certificado.getHoraVencimento());
+            pst.setString(5, certificado.getDescricaoVencimento());
+            pst.setInt(6, certificado.getExpira());
+            pst.setBytes(7, certificado.getCertificadoByte());
+
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            throw new GeralException("Erro ao salvar ertificado: " + ex.getMessage());
+        }
+    }
+
+    @Override
     public Certificado findById(int id) {
         String sql = "SELECT * from certificado where id=?";
 
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
-
             pst.setInt(1, id);
-
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     Certificado certificado = new Certificado();
@@ -45,7 +65,6 @@ public class CertificadoDAO implements ICertificado {
                     certificado.setHoraVencimento(rs.getString(COLUNA_HORA_VENCIMENTO));
                     certificado.setDescricaoVencimento(rs.getString(COLUNA_DESCRICAO_VENCIMENTO));
                     certificado.setCertificadoByte(rs.getBytes(COLUNA_IMG_CERTIFICADO));
-
                     return certificado;
                 }
             }
@@ -107,10 +126,8 @@ public class CertificadoDAO implements ICertificado {
     public void deletarCertificado(int idCertificado) {
         String sql = "delete from certificado where id = ? ";
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
-
             pst.setInt(1, idCertificado);
             pst.executeUpdate();
-
         } catch (SQLException ex) {
             throw new GeralException("Erro ao Deletar Certificado id: " + idCertificado + " (CertificadoDAO)");
         }
@@ -120,12 +137,32 @@ public class CertificadoDAO implements ICertificado {
     public void deletarCertificadosVencidos() {
         String sql = "delete from certificado where dtVencimento < CURRENT_TIMESTAMP";
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
-
-            pst.execute();            
-
+            pst.execute();
         } catch (SQLException ex) {
             throw new GeralException("*** ERRO: Não foi possível deletar os certificados vencidos: " + ex.getMessage());
         }
+    }
+
+    @Override
+    public boolean certificadoExists(Certificado certificado) {
+        String sql = "select * from certificado where alias = ? "
+                + "AND imagemCertificado = ? AND dtVencimento =? AND hrVencimento =? ";
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
+
+            pst.setString(1, certificado.getAlias());
+            pst.setBytes(2, certificado.getCertificadoByte());
+            pst.setDate(3, certificado.getDataVencimento());
+            pst.setString(4, certificado.getHoraVencimento());
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            throw new GeralException("Erro ao consultar certificado certificadoExists " + ex.getMessage());
+        }
+        return false;
     }
 
 }

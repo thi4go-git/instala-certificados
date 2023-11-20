@@ -1,5 +1,6 @@
 package com.dynns.cloudtecnologia.certificados.utils;
 
+import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyStore;
@@ -18,9 +19,11 @@ public class CertificadoUtils {
 
     public static String retornarVencimentoCertificado(String caminhoCert, String senhaCert) {
         String retorno = "";
-        try {
+
+        try (FileInputStream fileInputStream = new FileInputStream(caminhoCert)) {
             KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keystore.load(new FileInputStream(caminhoCert), senhaCert.toCharArray());
+            keystore.load(fileInputStream, senhaCert.toCharArray());
+
             Enumeration<String> aliases = keystore.aliases();
             while (aliases.hasMoreElements()) {
                 String alias = aliases.nextElement();
@@ -32,27 +35,25 @@ public class CertificadoUtils {
                 | CertificateException ex) {
             retorno = ex.getMessage();
         }
+
         return retorno;
     }
 
-    public static String retornarNomeOriginalCertificado(String caminhoCert, String senhaCert) {
-        String ALIAS = "";
-        //
+    public static String retornarAliasCertificado(String caminhoCert, String senhaCert) {
         try {
             KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
             keystore.load(new FileInputStream(caminhoCert), senhaCert.toCharArray());
             Enumeration<String> aliases = keystore.aliases();
             while (aliases.hasMoreElements()) {
                 String alias = aliases.nextElement();
-                if (keystore.getCertificate(alias).getType().equals("X.509")) {
-                    ALIAS = alias;
+                if (keystore.getCertificate(alias).getType().equals(TYPE_CERTIFICADO)) {
+                    return alias;
                 }
             }
         } catch (IOException | KeyStoreException | NoSuchAlgorithmException | CertificateException e) {
-            System.out.println(e);
+            throw new GeralException("Erro ao retornar ALIAS do Certificado!");
         }
-        //
-        return ALIAS;
+        return "Sem informações";
     }
 
 }

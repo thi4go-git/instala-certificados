@@ -1,6 +1,7 @@
 package com.dynns.cloudtecnologia.certificados.controller;
 
 import com.dynns.cloudtecnologia.certificados.extrator.CertificadoExtrator;
+import com.dynns.cloudtecnologia.certificados.model.dao.CertificadoDAO;
 import com.dynns.cloudtecnologia.certificados.model.dao.ICertificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.view.table.CertificadoModelTable;
@@ -12,9 +13,13 @@ public class CertificadoController {
     private final ICertificado certificadoDAO;
     private final CertificadoModelTable modelo;
 
-    public CertificadoController(ICertificado certificadoDAO) {
-        this.certificadoDAO = certificadoDAO;
+    public CertificadoController() {
+        this.certificadoDAO = new CertificadoDAO();
         this.modelo = new CertificadoModelTable();
+    }
+
+    public void save(Certificado certificado) {
+        certificadoDAO.save(certificado);
     }
 
     public Certificado findById(int id) {
@@ -87,9 +92,32 @@ public class CertificadoController {
         certificadoDAO.deletarCertificadosVencidos();
     }
 
-    public void processarCertificadosPasta(String caminhoPasta) {
-        CertificadoExtrator extrator = new CertificadoExtrator(caminhoPasta);
-        extrator.processarCertificadosPasta();
+    public boolean certificadoExists(Certificado certificado) {
+        return certificadoDAO.certificadoExists(certificado);
     }
 
+    public void processarCertificadosPasta(String caminhoPasta) {
+        ProcessoExtrator processoExtrator = new ProcessoExtrator(caminhoPasta);
+        Thread threadExtrator = new Thread(processoExtrator);
+        threadExtrator.setName("Thread threadUpdatCerts");
+        threadExtrator.start();
+    }
+
+    /*
+    Classe para executar thread dentro do CertificadoExtrator
+     */
+    public class ProcessoExtrator implements Runnable {
+
+        private final String caminhoPasta;
+
+        public ProcessoExtrator(String caminhoPasta) {
+            this.caminhoPasta = caminhoPasta;
+        }
+
+        @Override
+        public void run() {
+            CertificadoExtrator extrator = new CertificadoExtrator(caminhoPasta);
+            extrator.processarCertificadosPasta();
+        }
+    }
 }

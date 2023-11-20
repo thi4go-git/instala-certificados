@@ -15,7 +15,7 @@ public class Instalador {
     String caminhoCertificadoTemp = System.getProperty("java.io.tmpdir") + "CERTIFICADO.pfx";
 
     public int instalarCertificado(ConfiguracaoCertificado configuracao, Certificado certificado) {
-        FileUtils.byteTofile(certificado.getCertificadoByte(), caminhoCertificadoTemp);
+        FilesUtils.byteTofile(certificado.getCertificadoByte(), caminhoCertificadoTemp);
         File certificadoTemp = new File(caminhoCertificadoTemp);
 
         if (certificadoTemp.exists()) {

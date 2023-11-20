@@ -3,8 +3,6 @@ package com.dynns.cloudtecnologia.certificados.view.telas;
 import com.dynns.cloudtecnologia.certificados.controller.CertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.Instalador;
-import com.dynns.cloudtecnologia.certificados.model.dao.CertificadoDAO;
-import com.dynns.cloudtecnologia.certificados.model.dao.ConfiguracaoCertificadoDAO;
 import com.dynns.cloudtecnologia.certificados.model.dao.ICertificado;
 import com.dynns.cloudtecnologia.certificados.model.dao.IConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
@@ -48,12 +46,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void inicializarVariaveis() {
         dotenv = Dotenv.configure().load();
         instalador = new Instalador();
-
-        certificadoDAO = new CertificadoDAO();
-        certificadoControler = new CertificadoController(certificadoDAO);
-
-        configuracaoCertificadoDAO = new ConfiguracaoCertificadoDAO();
-        configuracaoCertificadoController = new ConfiguracaoCertificadoController(configuracaoCertificadoDAO);
+        certificadoControler = new CertificadoController();
+        configuracaoCertificadoController = new ConfiguracaoCertificadoController();
     }
 
     private void configurarExibicaoTela() {

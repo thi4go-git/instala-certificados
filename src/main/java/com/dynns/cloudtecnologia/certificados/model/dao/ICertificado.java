@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface ICertificado {
 
+    void save(Certificado certificado);
+
     List<Certificado> findAllFilter(Certificado filter);
 
     Certificado findById(int id);
@@ -12,5 +14,7 @@ public interface ICertificado {
     void deletarCertificado(int idCertificado);
 
     void deletarCertificadosVencidos();
+
+    boolean certificadoExists(Certificado certificado);
 
 }
