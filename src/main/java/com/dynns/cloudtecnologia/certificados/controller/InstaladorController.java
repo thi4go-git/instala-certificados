@@ -10,7 +10,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class Instalador {
+public class InstaladorController {
 
     String caminhoCertificadoTemp = System.getProperty("java.io.tmpdir") + "CERTIFICADO.pfx";
 

@@ -2,9 +2,7 @@ package com.dynns.cloudtecnologia.certificados.view.telas;
 
 import com.dynns.cloudtecnologia.certificados.controller.CertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificadoController;
-import com.dynns.cloudtecnologia.certificados.controller.Instalador;
-import com.dynns.cloudtecnologia.certificados.model.dao.ICertificado;
-import com.dynns.cloudtecnologia.certificados.model.dao.IConfiguracaoCertificado;
+import com.dynns.cloudtecnologia.certificados.controller.InstaladorController;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
@@ -21,12 +19,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     private Dotenv dotenv;
-    private Instalador instalador;
+    private InstaladorController instalador;
 
-    ICertificado certificadoDAO;
     private CertificadoController certificadoControler;
-
-    IConfiguracaoCertificado configuracaoCertificadoDAO;
     private ConfiguracaoCertificadoController configuracaoCertificadoController;
 
     private static final String MSG_SELECIONA_CERTIFICADO = "Favor selecionar o Certificado!";
@@ -45,7 +40,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void inicializarVariaveis() {
         dotenv = Dotenv.configure().load();
-        instalador = new Instalador();
+        instalador = new InstaladorController();
         certificadoControler = new CertificadoController();
         configuracaoCertificadoController = new ConfiguracaoCertificadoController();
     }
@@ -398,7 +393,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 }
                 String descricao = certificadoControler.retornarDescricao(linhaSelecionada);
                 ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
-                Certificado certificado = certificadoDAO.findById(certificadoControler.retornarId(linhaSelecionada));
+                Certificado certificado = certificadoControler.findById(certificadoControler.retornarId(linhaSelecionada));
                 int statusCode = instalador.instalarCertificado(configuracaoCertificado, certificado);
 
                 if (statusCode == 0 && !descricao.contains(MSG_SENHA_INVALIDA)) {
@@ -452,7 +447,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return dialogAutenticacao.isAutenticado();
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             new TelaPrincipal().setVisible(true);
         });

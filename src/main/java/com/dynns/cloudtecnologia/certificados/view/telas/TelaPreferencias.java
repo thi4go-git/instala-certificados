@@ -255,7 +255,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
             String caminhoPasta = "" + cPastaCertificados.getText().trim();
             certificadoControler.processarCertificadosPasta(caminhoPasta);
         } else {
-            JOptionPane.showMessageDialog(null, "Exclusão cancelada!");
+            JOptionPane.showMessageDialog(null, "Processo cancelado!");
         }
     }//GEN-LAST:event_btAtualizarCertificadosActionPerformed
 

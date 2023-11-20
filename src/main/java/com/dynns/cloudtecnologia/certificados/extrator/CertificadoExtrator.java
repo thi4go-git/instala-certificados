@@ -75,9 +75,9 @@ public class CertificadoExtrator {
                     certificadosSenhaCorreta.add(pathCertificado);
 
                     Date dtVencimento;
+                    String format = "EEE MMM dd HH:mm:ss zzz yyyy";
+                    DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
                     try {
-                        String format = "EEE MMM dd HH:mm:ss zzz yyyy";
-                        DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
                         dtVencimento = dateFormat.parse(dataVencimentoSTR);
                     } catch (ParseException ex) {
                         throw new GeralException("Erro ao converter data vencimento " + ex.getMessage());
