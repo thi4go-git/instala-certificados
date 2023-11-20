@@ -19,11 +19,9 @@ public class CertificadoUtils {
 
     public static String retornarVencimentoCertificado(String caminhoCert, String senhaCert) {
         String retorno = "";
-
         try (FileInputStream fileInputStream = new FileInputStream(caminhoCert)) {
             KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
             keystore.load(fileInputStream, senhaCert.toCharArray());
-
             Enumeration<String> aliases = keystore.aliases();
             while (aliases.hasMoreElements()) {
                 String alias = aliases.nextElement();
@@ -40,9 +38,9 @@ public class CertificadoUtils {
     }
 
     public static String retornarAliasCertificado(String caminhoCert, String senhaCert) {
-        try {
+        try (FileInputStream fileInputStream = new FileInputStream(caminhoCert)) {
             KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keystore.load(new FileInputStream(caminhoCert), senhaCert.toCharArray());
+            keystore.load(fileInputStream, senhaCert.toCharArray());
             Enumeration<String> aliases = keystore.aliases();
             while (aliases.hasMoreElements()) {
                 String alias = aliases.nextElement();
