@@ -7,3 +7,5 @@ target
 .idea
 /.idea/
 .env
+/.env
+/.env/
