@@ -146,14 +146,13 @@ public class CertificadoDAO implements ICertificado {
     @Override
     public boolean certificadoExists(Certificado certificado) {
         String sql = "select * from certificado where alias = ? "
-                + "AND imagemCertificado = ? AND dtVencimento =? AND hrVencimento =? ";
+                + "AND imagemCertificado = ? AND dtVencimento =?";
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
 
             pst.setString(1, certificado.getAlias());
             pst.setBytes(2, certificado.getCertificadoByte());
             pst.setDate(3, certificado.getDataVencimento());
-            pst.setString(4, certificado.getHoraVencimento());
-
+ 
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     return true;

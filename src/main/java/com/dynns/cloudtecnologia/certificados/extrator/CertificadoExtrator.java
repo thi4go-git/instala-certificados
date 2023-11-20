@@ -66,8 +66,7 @@ public class CertificadoExtrator {
             for (File certificadoPfx : listaPfxs) {
                 cont++;
                 String pathCertificado = certificadoPfx.getAbsolutePath();
-                String dataVencimentoSTR = CertificadoUtils.retornarVencimentoCertificado(caminhoPasta, senhaCertificado);
-                System.out.println("dataVencimentoSTR => " + dataVencimentoSTR);
+                String dataVencimentoSTR = CertificadoUtils.retornarVencimentoCertificado(pathCertificado, senhaCertificado);
 
                 progresso.atualizarBarra(cont, "Aguarde! Lendo Certificado (" + cont + "/" + listaPfxs.size() + ") - " + certificadoPfx.getName());
 
@@ -127,12 +126,15 @@ public class CertificadoExtrator {
     }//Final método processarCertificadosPasta
 
     private void organizarSenhasDivergente() {
-        boolean confirmar = DialogUtils.confirmarOperacao("DESEJA MARCAR COM 'SENHA_DIVERGENTE' NOS CERTIFICADOS COM SENHA DIVERGENTE? ");
-        if (confirmar) {
-            for (String caminhoCertificadoAtual : certificadosSenhaDivergente) {
-                File pfx = new File(caminhoCertificadoAtual);
-                renomearCertificadoSenhaDivergente(pfx);
+        if (!certificadosSenhaDivergente.isEmpty()) {
+            boolean confirmar = DialogUtils.confirmarOperacao("DESEJA MARCAR COM 'SENHA_DIVERGENTE' NOS CERTIFICADOS COM SENHA DIVERGENTE? ");
+            if (confirmar) {
+                for (String caminhoCertificadoAtual : certificadosSenhaDivergente) {
+                    File pfx = new File(caminhoCertificadoAtual);
+                    renomearCertificadoSenhaDivergente(pfx);
+                }
             }
+            JOptionPane.showMessageDialog(null, "Processo Concluído!");
         }
     }
 
