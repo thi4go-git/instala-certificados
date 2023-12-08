@@ -5,11 +5,12 @@ import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
 public class CertificadoModelTable extends AbstractTableModel {
 
-    private final String[] colunas = {"CERTIFICADO", "VENCIMENTO", "HORA", "EXPIRA EM (DIAS)", "DETALHES"};
+    private final String[] colunas = {"CERTIFICADO", "VENCIMENTO", "HORA", "EXPIRA EM (DIAS)", "DETALHES", ""};
     private List<Certificado> certificadosList = new ArrayList<>();
 
     private static final String MSG_SENHA_INCORRETA = "A Senha do Certificado não confere com a senha do Instalador!";
@@ -69,6 +70,8 @@ public class CertificadoModelTable extends AbstractTableModel {
                 } else {
                     return certificadosList.get(linha).getDescricaoVencimento();
                 }
+            case 5:
+                 return "*info*";
 
             default:
                 return null;

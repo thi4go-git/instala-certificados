@@ -43,6 +43,9 @@ public class AutenticacaoDialog extends JDialog {
         this.setSize(new Dimension(300, 150));
         setLocationRelativeTo(parent);
         setLocationRelativeTo(parent);
+        
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
 
     public void fecharDialog() {
