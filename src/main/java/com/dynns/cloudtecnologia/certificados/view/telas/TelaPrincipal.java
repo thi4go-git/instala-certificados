@@ -7,6 +7,7 @@ import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
+import com.dynns.cloudtecnologia.certificados.view.table.BotaoDetalhesImpl;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.Color;
 import java.awt.Component;
@@ -33,6 +34,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private static final String FONTE = "Segoe UI";
 
+    private static final Integer INDEX_COLUNA_BTN = 5;
+
     public TelaPrincipal() {
         initComponents();
         this.inicializarVariaveis();
@@ -58,6 +61,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void processoAutomatico() {
         preencherTabelaCertificados();
+        renderizarBotaoDetalhes();
     }
 
     private void preencherTabelaCertificados() {
@@ -67,7 +71,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void preencherTabelaCertificadosVencidos() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosVencidos(new Certificado()));
-        definirInformacoesTabela();
+        definirInformacoesTabela();   
     }
 
     private void preencherTabelaCertificadosAtivos() {
@@ -100,6 +104,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     + " favor informar ao Responsável! ");
         }
     }
+    
+    
+    private void renderizarBotaoDetalhes(){
+        new BotaoDetalhesImpl(tabela,INDEX_COLUNA_BTN);
+    }
+    
 
     private void definirTamanhoColunas() {
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
