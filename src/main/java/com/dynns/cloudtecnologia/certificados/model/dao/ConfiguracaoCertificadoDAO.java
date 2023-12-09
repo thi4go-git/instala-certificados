@@ -14,6 +14,13 @@ public class ConfiguracaoCertificadoDAO implements IConfiguracaoCertificado {
     private static final String COLUNA_SENHA_MASTER = "senha_master";
     private static final String COLUNA_LOCAL_PASTA = "local_pasta";
     private static final String COLUNA_SENHA_CERTIFICADO = "senha_certificado";
+    private static final String COLUNA_USER_EMAIL = "user_email";
+    private static final String COLUNA_PASS_EMAIL = "pass_email";
+    private static final String COLUNA_SMTP_EMAIL = "smtp_email";
+    private static final String COLUNA_SMTP_PORT_EMAIL = "smtp_port_email";
+    private static final String COLUNA_TLS_EMAIL = "tls_email";
+    private static final String COLUNA_ASSUNTO_EMAIL = "assunto_email";
+    private static final String COLUNA_MSG_PADRAO_EMAIL = "mensagem_padrao_email";
 
     @Override
     public ConfiguracaoCertificado obterConfiguracaoCertificado() {
@@ -27,6 +34,14 @@ public class ConfiguracaoCertificadoDAO implements IConfiguracaoCertificado {
                     config.setSenhaMaster(rs.getString(COLUNA_SENHA_MASTER));
                     config.setLocalPasta(rs.getString(COLUNA_LOCAL_PASTA));
                     config.setSenhaCertificado(rs.getString(COLUNA_SENHA_CERTIFICADO));
+                    config.setUserEmail(rs.getString(COLUNA_USER_EMAIL));
+                    config.setPassEmail(rs.getString(COLUNA_PASS_EMAIL));
+                    config.setSmtpEmail(rs.getString(COLUNA_SMTP_EMAIL));
+                    config.setSmtpPortEmail(rs.getString(COLUNA_SMTP_PORT_EMAIL));
+                    config.setTlsEmail(rs.getString(COLUNA_TLS_EMAIL));
+                    config.setAssuntoEmail(rs.getString(COLUNA_ASSUNTO_EMAIL));
+                    config.setMensagemPadraoEmail(rs.getString(COLUNA_MSG_PADRAO_EMAIL));
+
                     return config;
                 }
             }
@@ -38,14 +53,23 @@ public class ConfiguracaoCertificadoDAO implements IConfiguracaoCertificado {
 
     @Override
     public void atualizarConfiguracaoCetificado(ConfiguracaoCertificado configuracaoCertificado) {
-        String sql = "update configuracao_certificado SET local_pasta = ?,senha_certificado = ?, "
-                + "senha_master = ? ";
+        String sql = "update configuracao_certificado SET local_pasta = ?,senha_certificado = ?,"
+                + "senha_master = ?, user_email = ?,pass_email = ?,smtp_email = ?,smtp_port_email = ?,tls_email = ?,"
+                + "assunto_email = ?,mensagem_padrao_email = ?";
 
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
 
             pst.setString(1, configuracaoCertificado.getLocalPasta());
             pst.setString(2, configuracaoCertificado.getSenhaCertificado());
             pst.setString(3, configuracaoCertificado.getSenhaMaster());
+            pst.setString(4, configuracaoCertificado.getUserEmail());
+            pst.setString(5, configuracaoCertificado.getPassEmail());
+            pst.setString(6, configuracaoCertificado.getSmtpEmail());
+            pst.setString(7, configuracaoCertificado.getSmtpPortEmail());
+            pst.setString(8, configuracaoCertificado.getTlsEmail());
+            pst.setString(9, configuracaoCertificado.getAssuntoEmail());
+            pst.setString(10, configuracaoCertificado.getMensagemPadraoEmail());
+            
             pst.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Sucesso ao atualizar preferências!");
