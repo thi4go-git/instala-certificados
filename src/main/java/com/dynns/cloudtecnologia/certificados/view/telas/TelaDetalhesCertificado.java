@@ -14,16 +14,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class TelaDetalhesCertificado extends javax.swing.JFrame {
-    
+
     Certificado certificado;
     ContatoCertificado contatoCertificadoCadastrado;
     private ContatoCertificadoController contatoCertificadoController;
-    
+
     public TelaDetalhesCertificado() {
         initComponents();
         habilitarTela();
     }
-    
+
     public TelaDetalhesCertificado(Certificado certificado) {
         initComponents();
         this.certificado = certificado;
@@ -31,30 +31,30 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
         habilitarTela();
         preencherInformacoes();
     }
-    
+
     private void habilitarTela() {
         this.setEnabled(true);
         this.setVisible(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
-    
+
     private void preencherInformacoes() {
         cNomeCertificado.setText(certificado.getNome());
         String descricaoVencimento = DataUtils.formataParaBR(certificado.getDataVencimento())
                 + " às " + certificado.getHoraVencimento() + " - OBS: " + certificado.getDescricaoVencimento();
         cDescricaoVencimento.setText(descricaoVencimento);
         cAlias.setText(certificado.getAlias());
-        
+
         contatoCertificadoCadastrado = contatoCertificadoController.retornarContatoCertificado(certificado.getId());
-        
+
         cNomeResponsavel.setText(contatoCertificadoCadastrado.getNomeContato());
         cNumTelefone.setText(contatoCertificadoCadastrado.getTelefoneContato());
         cNumCelular.setText(contatoCertificadoCadastrado.getCelularContato());
         cEmail.setText(contatoCertificadoCadastrado.getEmailContato());
         cObservacao.setText(contatoCertificadoCadastrado.getObservacao());
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -80,6 +80,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         cObservacao = new javax.swing.JTextArea();
+        btnEmail = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -137,6 +138,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
         jLabel7.setText("Email:");
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSalvar.setIcon(new ImageIcon(getClass().getResource("/img/saveIcon.png")));
         btnSalvar.setText("Salvar");
         btnSalvar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -168,6 +170,17 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btnEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEmail.setIcon(new ImageIcon(getClass().getResource("/img/emailIcon.png")));
+        btnEmail.setText("Enviar Email");
+        btnEmail.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmailActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -185,23 +198,24 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cNomeResponsavel))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cNumTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cNumCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnWhatts, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cNumTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cNumCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)))
+                                .addComponent(cEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnWhatts, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(6, 6, 6))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -224,7 +238,8 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnWhatts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(btnEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -296,7 +311,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
             contatoUpdate.setCelularContato(formatarTelefone(cNumCelular.getText().trim()));
             contatoUpdate.setEmailContato(cEmail.getText().trim());
             contatoUpdate.setObservacao(cObservacao.getText());
-            
+
             contatoCertificadoController.salvarContatoCertificado(contatoUpdate);
         } else {
             JOptionPane.showMessageDialog(null, "Processo cancelado!");
@@ -312,7 +327,17 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
             abrirWppNavegador(linkWpp);
         }
     }//GEN-LAST:event_btnWhattsActionPerformed
-    
+
+    private void btnEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmailActionPerformed
+        String destinatario = cEmail.getText().replace(" ", "").trim();
+        if (!destinatario.equals("")) {
+            new TelaFormularioEmail(destinatario);
+        } else {
+            JOptionPane.showMessageDialog(null, "Não existe EMAIL salvo para esse contato!");
+
+        }
+    }//GEN-LAST:event_btnEmailActionPerformed
+
     private void abrirWppNavegador(String linkWpp) {
         try {
             URI uri = new URI(linkWpp);
@@ -326,14 +351,14 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
             throw new GeralException("ERRO Ao abrir navegador. " + e.getCause());
         }
     }
-    
+
     private String formatarTelefone(String numTelefone) {
         return numTelefone.replace("(", "")
                 .replace(")", "")
                 .replace("-", "")
                 .replace(" ", "").trim();
     }
-    
+
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             new TelaDetalhesCertificado().setVisible(true);
@@ -341,6 +366,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEmail;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnWhatts;
     private javax.swing.JTextField cAlias;
