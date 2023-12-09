@@ -1,12 +1,23 @@
 package com.dynns.cloudtecnologia.certificados.view.telas;
 
+import com.dynns.cloudtecnologia.certificados.controller.ContatoCertificadoController;
+import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
+import com.dynns.cloudtecnologia.certificados.model.entity.ContatoCertificado;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
+import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class TelaDetalhesCertificado extends javax.swing.JFrame {
 
     Certificado certificado;
+    ContatoCertificado contatoCertificadoCadastrado;
+    private ContatoCertificadoController contatoCertificadoController;
 
     public TelaDetalhesCertificado() {
         initComponents();
@@ -16,6 +27,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
     public TelaDetalhesCertificado(Certificado certificado) {
         initComponents();
         this.certificado = certificado;
+        this.contatoCertificadoController = new ContatoCertificadoController();
         habilitarTela();
         preencherInformacoes();
     }
@@ -33,6 +45,13 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
                 + " às " + certificado.getHoraVencimento() + " - OBS: " + certificado.getDescricaoVencimento();
         cDescricaoVencimento.setText(descricaoVencimento);
         cAlias.setText(certificado.getAlias());
+
+        contatoCertificadoCadastrado = contatoCertificadoController.retornarContatoCertificado(certificado.getId());
+
+        cNomeResponsavel.setText(contatoCertificadoCadastrado.getNomeContato());
+        cNumTelefone.setText(contatoCertificadoCadastrado.getTelefoneContato());
+        cNumCelular.setText(contatoCertificadoCadastrado.getCelularContato());
+        cEmail.setText(contatoCertificadoCadastrado.getEmailContato());
     }
 
     @SuppressWarnings("unchecked")
@@ -53,7 +72,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         cNumCelular = new javax.swing.JFormattedTextField();
         cNumTelefone = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
+        btnWhatts = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         cEmail = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
@@ -101,9 +120,14 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        jButton1.setIcon(new ImageIcon(getClass().getResource("/img/wppBtn.png")));
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnWhatts.setIcon(new ImageIcon(getClass().getResource("/img/wppBtn.png")));
+        btnWhatts.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnWhatts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnWhatts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWhattsActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Email:");
@@ -142,7 +166,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnWhatts, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -167,7 +191,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
                         .addComponent(cEmail)))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(btnWhatts, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -229,14 +253,49 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        String nome = cNomeResponsavel.getText();
-        
+        if (DialogUtils.confirmarOperacao("Deseja Salvar as informações do Contato?")) {
+            ContatoCertificado contatoUpdate = new ContatoCertificado();
+            contatoUpdate.setIdCertificado(certificado.getId());
+            contatoUpdate.setNomeContato(cNomeResponsavel.getText().trim());
+            contatoUpdate.setTelefoneContato(formatarTelefone(cNumTelefone.getText().trim()));
+            contatoUpdate.setCelularContato(formatarTelefone(cNumCelular.getText().trim()));
+            contatoUpdate.setEmailContato(cEmail.getText().trim());
 
+            contatoCertificadoController.salvarContatoCertificado(contatoUpdate);
+        } else {
+            JOptionPane.showMessageDialog(null, "Processo cancelado!");
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private boolean validarContato() {
+    private void btnWhattsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWhattsActionPerformed
+        String numCelular = formatarTelefone(cNumCelular.getText().trim());
+        if (numCelular.equals("")) {
+            JOptionPane.showMessageDialog(null, "Não existe nº de Celular salvo para esse contato!");
+        } else {
+            String linkWpp = "https://wa.me/55" + numCelular;
+            abrirWppNavegador(linkWpp);
+        }
+    }//GEN-LAST:event_btnWhattsActionPerformed
 
-        return true;
+    private void abrirWppNavegador(String linkWpp) {
+        try {
+            URI uri = new URI(linkWpp);
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                desktop.browse(uri);
+            } else {
+                throw new GeralException("A área de trabalho não é suportada.");
+            }
+        } catch (IOException | URISyntaxException e) {
+            throw new GeralException("ERRO Ao abrir navegador. " + e.getCause());
+        }
+    }
+
+    private String formatarTelefone(String numTelefone) {
+        return numTelefone.replace("(", "")
+                .replace(")", "")
+                .replace("-", "")
+                .replace(" ", "").trim();
     }
 
     public static void main(String[] args) {
@@ -247,6 +306,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnWhatts;
     private javax.swing.JTextField cAlias;
     private javax.swing.JTextField cDescricaoVencimento;
     private javax.swing.JTextField cEmail;
@@ -254,7 +314,6 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
     private javax.swing.JTextField cNomeResponsavel;
     private javax.swing.JFormattedTextField cNumCelular;
     private javax.swing.JFormattedTextField cNumTelefone;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
