@@ -79,14 +79,12 @@ public class CertificadoExtrator {
                     try {
                         dtVencimento = dateFormat.parse(dataVencimentoSTR);
                     } catch (ParseException ex) {
-                        throw new GeralException("""
-                                                 ::: Erro ao converter data vencimento :::  
-                                                   Certificado provavelmente corrompido! 
-                                              Para proseguir EXCLUA esse certificado da pasta. 
-                                               Acesse o caminho e tente instalar manualmente: 
-                                                 """
-                                + ex.getMessage() + ""
-                                + "\n " + pathCertificado);
+                        String msg = "::: Erro ao converter data vencimento :::  \n"
+                                + "Certificado provavelmente corrompido! \n"
+                                + "Para proseguir EXCLUA esse certificado da pasta. \n"
+                                + "Acesse o caminho e tente instalar manualmente: \n"
+                                + ex.getCause() + " ->  " + pathCertificado;
+                        throw new GeralException(msg);
                     }
 
                     Certificado certificado = new Certificado();
