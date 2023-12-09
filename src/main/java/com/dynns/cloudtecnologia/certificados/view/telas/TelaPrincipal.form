@@ -134,9 +134,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane1" pref="910" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="btnInstalar" min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btnInstalar" min="-2" pref="127" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnDeletar" min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btnDeletar" min="-2" pref="128" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="qtdeRegistros" min="-2" pref="115" max="-2" attributes="0"/>
                       </Group>
@@ -209,6 +209,9 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new ImageIcon(getClass().getResource(&quot;/img/downloadIcon.png&quot;))" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Instalar"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
@@ -227,6 +230,9 @@
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new ImageIcon(getClass().getResource(&quot;/img/deleteIcon.png&quot;))" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Deletar"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

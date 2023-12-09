@@ -19,7 +19,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
         initComponents();
         this.inicializarVariaveis();
         this.configurarExibicaoTela();
-        this.carregarConfiguracaoCertificado();
+        this.carregarConfiguracaoCertificadoNaTela();
     }
 
     private void inicializarVariaveis() {
@@ -34,11 +34,22 @@ public class TelaPreferencias extends javax.swing.JFrame {
         this.setResizable(false);
     }
 
-    private void carregarConfiguracaoCertificado() {
+    private void carregarConfiguracaoCertificadoNaTela() {
         ConfiguracaoCertificado configuracao = configuracaoCertificadoController.obterConfiguracaoCertificado();
         cSenhaMaster.setText(configuracao.getSenhaMaster());
         cSenhaCertificados.setText(configuracao.getSenhaCertificado());
         cPastaCertificados.setText(configuracao.getLocalPasta());
+        cUserEmail.setText(configuracao.getUserEmail());
+        cPassEmail.setText(configuracao.getPassEmail());
+        cSmtpEmail.setText(configuracao.getSmtpEmail());
+        cSmtpPortEmail.setText(configuracao.getSmtpPortEmail());
+        if (configuracao.getTlsEmail() == null) {
+            cTlsEmail.setSelectedItem("true");
+        } else {
+            cTlsEmail.setSelectedItem(configuracao.getTlsEmail());
+        }
+        cAssuntoEmail.setText(configuracao.getAssuntoEmail());
+        cMsgPadraoEmail.setText(configuracao.getMensagemPadraoEmail());
     }
 
     private boolean validarCampos() {
@@ -50,7 +61,8 @@ public class TelaPreferencias extends javax.swing.JFrame {
                 || pastaCertificadosStr == null || pastaCertificadosStr.equals("")
                 || senhaCertificadosStr == null || senhaCertificadosStr.equals("")) {
 
-            JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios!");
+            JOptionPane.showMessageDialog(null, "Campos obrigatórios: senhaMasterStr"
+                    + ", pastaCertificadosStr e senhaCertificadosStr!");
             return false;
         } else {
             File pastaCertificados = new File(cPastaCertificados.getText().trim());
@@ -79,27 +91,42 @@ public class TelaPreferencias extends javax.swing.JFrame {
         btAtualizarCertificados = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btAlterar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        cPassEmail = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        cAssuntoEmail = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        cSmtpPortEmail = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        cSmtpEmail = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        cTlsEmail = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        cUserEmail = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        cMsgPadraoEmail = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Preferências"));
 
-        jLabel1.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Senha master: ");
 
-        cSenhaMaster.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
+        cSenhaMaster.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        cPastaCertificados.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
+        cPastaCertificados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        cSenhaCertificados.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
+        cSenhaCertificados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Senha Certificados: ");
 
-        jLabel3.setFont(new java.awt.Font(FONTE, 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Pasta Certificados:");
 
-        btDeletarVencidos.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
+        btDeletarVencidos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btDeletarVencidos.setText("Deletar Certificados Vencidos");
         btDeletarVencidos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btDeletarVencidos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -109,7 +136,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
             }
         });
 
-        btSalvar.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
+        btSalvar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btSalvar.setText("Salvar");
         btSalvar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -119,7 +146,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
             }
         });
 
-        btAtualizarCertificados.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
+        btAtualizarCertificados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btAtualizarCertificados.setText("Atualizar Certificados");
         btAtualizarCertificados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btAtualizarCertificados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -129,7 +156,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
             }
         });
 
-        btAlterar.setFont(new java.awt.Font(FONTE, 1, 12)); // NOI18N
+        btAlterar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btAlterar.setText("Alterar");
         btAlterar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         btAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -138,6 +165,105 @@ public class TelaPreferencias extends javax.swing.JFrame {
                 btAlterarActionPerformed(evt);
             }
         });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Configurações para Envio de Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Pass:");
+
+        cPassEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("User:");
+
+        cAssuntoEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setText("SMTP:");
+
+        cSmtpPortEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("TLS:");
+
+        cSmtpEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setText("Port:");
+
+        cTlsEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cTlsEmail.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "true", "false" }));
+        cTlsEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Assunto EMAIL: ");
+
+        cUserEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        cMsgPadraoEmail.setColumns(20);
+        cMsgPadraoEmail.setRows(5);
+        cMsgPadraoEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mensagem PADRÃO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jScrollPane1.setViewportView(cMsgPadraoEmail);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cAssuntoEmail))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cUserEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cPassEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cSmtpEmail)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cSmtpPortEmail)
+                            .addComponent(cTlsEmail, 0, 91, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cSmtpPortEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cSmtpEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cPassEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cUserEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cAssuntoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cTlsEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -148,24 +274,28 @@ public class TelaPreferencias extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btDeletarVencidos, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btDeletarVencidos, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btAtualizarCertificados, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cSenhaMaster, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cPastaCertificados, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cSenhaCertificados))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cSenhaMaster, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cSenhaCertificados, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -173,19 +303,20 @@ public class TelaPreferencias extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cSenhaMaster, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cSenhaCertificados, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cSenhaMaster))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cPastaCertificados, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(btAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cSenhaCertificados, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btDeletarVencidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,7 +331,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,6 +366,13 @@ public class TelaPreferencias extends javax.swing.JFrame {
                 configUpdate.setLocalPasta(cPastaCertificados.getText().trim());
                 configUpdate.setSenhaCertificado(cSenhaCertificados.getText().trim());
                 configUpdate.setSenhaMaster(cSenhaMaster.getText().trim());
+                configUpdate.setUserEmail(cUserEmail.getText().trim());
+                configUpdate.setPassEmail(cPassEmail.getText().trim());
+                configUpdate.setSmtpEmail(cSmtpEmail.getText().trim());
+                configUpdate.setSmtpPortEmail(cSmtpPortEmail.getText().trim());
+                configUpdate.setTlsEmail(cTlsEmail.getSelectedItem().toString().trim());
+                configUpdate.setAssuntoEmail(cAssuntoEmail.getText().trim());
+                configUpdate.setMensagemPadraoEmail(cMsgPadraoEmail.getText().trim());
 
                 configuracaoCertificadoController.atualizarConfiguracaoCetificado(configUpdate);
             } else {
@@ -272,13 +410,28 @@ public class TelaPreferencias extends javax.swing.JFrame {
     private javax.swing.JButton btAtualizarCertificados;
     private javax.swing.JButton btDeletarVencidos;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JTextField cAssuntoEmail;
+    private javax.swing.JTextArea cMsgPadraoEmail;
+    private javax.swing.JTextField cPassEmail;
     private javax.swing.JTextField cPastaCertificados;
     private javax.swing.JTextField cSenhaCertificados;
     private javax.swing.JTextField cSenhaMaster;
+    private javax.swing.JTextField cSmtpEmail;
+    private javax.swing.JTextField cSmtpPortEmail;
+    private javax.swing.JComboBox<String> cTlsEmail;
+    private javax.swing.JTextField cUserEmail;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

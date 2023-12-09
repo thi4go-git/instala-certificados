@@ -16,6 +16,7 @@ public class ContatoCertificadoDAO implements IContatoCertificado {
     private static final String COLUNA_TELEFONE_CONTATO = "telefone_contato";
     private static final String COLUNA_CELULAR_CONTATO = "celular_contato";
     private static final String COLUNA_EMAIL_CONTATO = "email_contato";
+    private static final String COLUNA_OBSERVACAO_CONTATO = "observacao";
 
     @Override
     public ContatoCertificado retornarContatoCertificado(int idCertificado) {
@@ -32,6 +33,7 @@ public class ContatoCertificadoDAO implements IContatoCertificado {
                     contato.setTelefoneContato(rs.getString(COLUNA_TELEFONE_CONTATO));
                     contato.setCelularContato(rs.getString(COLUNA_CELULAR_CONTATO));
                     contato.setEmailContato(rs.getString(COLUNA_EMAIL_CONTATO));
+                    contato.setObservacao(rs.getString(COLUNA_OBSERVACAO_CONTATO));
 
                     return contato;
                 }
@@ -45,8 +47,8 @@ public class ContatoCertificadoDAO implements IContatoCertificado {
     @Override
     public void salvarContatoCertificado(ContatoCertificado contato) {
         String sql = "INSERT INTO contato_certificado "
-                + "(id_certificado,nome_contato,telefone_contato,celular_contato,email_contato)"
-                + " values (?,?,?,?,?)";
+                + "(id_certificado,nome_contato,telefone_contato,celular_contato,email_contato,observacao)"
+                + " values (?,?,?,?,?,?)";
 
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
             pst.setInt(1, contato.getIdCertificado());
@@ -54,6 +56,7 @@ public class ContatoCertificadoDAO implements IContatoCertificado {
             pst.setString(3, contato.getTelefoneContato());
             pst.setString(4, contato.getCelularContato());
             pst.setString(5, contato.getEmailContato());
+            pst.setString(6, contato.getObservacao());
 
             pst.executeUpdate();
         } catch (SQLException ex) {
@@ -64,7 +67,7 @@ public class ContatoCertificadoDAO implements IContatoCertificado {
     @Override
     public void atualizarContatoCertificado(ContatoCertificado contatoBD) {
         String sql = "UPDATE contato_certificado SET "
-                + "nome_contato=?, telefone_contato=?, celular_contato=?, email_contato=? "
+                + "nome_contato=?, telefone_contato=?, celular_contato=?, email_contato=?,observacao=?  "
                 + "WHERE id_certificado=?";
 
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -72,7 +75,8 @@ public class ContatoCertificadoDAO implements IContatoCertificado {
             pst.setString(2, contatoBD.getTelefoneContato());
             pst.setString(3, contatoBD.getCelularContato());
             pst.setString(4, contatoBD.getEmailContato());
-            pst.setInt(5, contatoBD.getIdCertificado());
+            pst.setString(5, contatoBD.getObservacao());
+            pst.setInt(6, contatoBD.getIdCertificado());
 
             int linhasAfetadas = pst.executeUpdate();
 
