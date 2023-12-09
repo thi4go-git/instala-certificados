@@ -26,6 +26,11 @@ public class CertificadoController {
         return certificadoDAO.findById(id);
     }
 
+    //findByIdNotBytes
+    public Certificado findByIdNotBytes(int id) {
+        return certificadoDAO.findByIdNotBytes(id);
+    }
+
     public AbstractTableModel preencherTabelaCertificados(Certificado filter) {
         List<Certificado> certificadosList = certificadoDAO.findAllFilter(filter);
         modelo.preencherTabelaCertificados(certificadosList);

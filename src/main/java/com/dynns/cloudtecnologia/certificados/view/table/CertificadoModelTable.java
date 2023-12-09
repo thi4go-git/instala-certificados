@@ -5,12 +5,11 @@ import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
 public class CertificadoModelTable extends AbstractTableModel {
 
-    private final String[] colunas = {"CERTIFICADO", "VENCIMENTO", "HORA", "EXPIRA EM (DIAS)", "DETALHES", ""};
+    private final String[] colunas = {"ID", "CERTIFICADO", "VENCIMENTO", "HORA", "EXPIRA EM (DIAS)", "DETALHES", ""};
     private List<Certificado> certificadosList = new ArrayList<>();
 
     private static final String MSG_SENHA_INCORRETA = "A Senha do Certificado não confere com a senha do Instalador!";
@@ -39,21 +38,23 @@ public class CertificadoModelTable extends AbstractTableModel {
     public Object getValueAt(int linha, int coluna) {//PEGAR INFORMAÇÕES DA LINHA SELECIONADA!!!
         switch (coluna) {
             case 0:
+                return certificadosList.get(linha).getId();
+            case 1:
                 return certificadosList.get(linha).getNome();
 
-            case 1:
+            case 2:
                 if (certificadosList.get(linha).getDataVencimento() != null) {
                     return DataUtils.formataParaBR((Date) certificadosList.get(linha).getDataVencimento());
                 }
                 return null;
 
-            case 2:
+            case 3:
                 return certificadosList.get(linha).getHoraVencimento();
 
-            case 3:
+            case 4:
                 return certificadosList.get(linha).getExpira();
 
-            case 4:
+            case 5:
                 String expira = "" + certificadosList.get(linha).getExpira();
                 String observacao = certificadosList.get(linha).getDescricaoVencimento();
                 if (!observacao.contains(MSG_SENHA_INCORRETA)) {
@@ -70,8 +71,8 @@ public class CertificadoModelTable extends AbstractTableModel {
                 } else {
                     return certificadosList.get(linha).getDescricaoVencimento();
                 }
-            case 5:
-                 return "*info*";
+            case 6:
+                return ". . .";
 
             default:
                 return null;

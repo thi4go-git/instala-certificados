@@ -27,14 +27,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private static final String MSG_SELECIONA_CERTIFICADO = "Favor selecionar o Certificado!";
     private static final String MSG_SENHA_INVALIDA = "A Senha do Certificado não confere com a senha do Instalador!";
-
     private static final String FILTRO_TODOS = "TODOS";
     private static final String FILTRO_VENCIDOS = "VENCIDOS";
     private static final String FILTRO_VENCER_30_DIAS = "VENCEM_EM_30_DIAS";
-
     private static final String FONTE = "Segoe UI";
-
-    private static final Integer INDEX_COLUNA_BTN = 5;
+    private static final Integer INDEX_COLUNA_BTN = 6;
+    private static final Integer INDEX_COLUNA_DATA_VENCIMENTO = 2;
 
     public TelaPrincipal() {
         initComponents();
@@ -44,10 +42,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     private void inicializarVariaveis() {
-        dotenv = Dotenv.configure().load();
-        instalador = new InstaladorController();
-        certificadoControler = new CertificadoController();
-        configuracaoCertificadoController = new ConfiguracaoCertificadoController();
+        this.dotenv = Dotenv.configure().load();
+        this.instalador = new InstaladorController();
+        this.certificadoControler = new CertificadoController();
+        this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
     }
 
     private void configurarExibicaoTela() {
@@ -61,7 +59,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void processoAutomatico() {
         preencherTabelaCertificados();
-        renderizarBotaoDetalhes();
+        new BotaoDetalhesImpl(tabela, INDEX_COLUNA_BTN);
     }
 
     private void preencherTabelaCertificados() {
@@ -71,7 +69,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void preencherTabelaCertificadosVencidos() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosVencidos(new Certificado()));
-        definirInformacoesTabela();   
+        definirInformacoesTabela();
     }
 
     private void preencherTabelaCertificadosAtivos() {
@@ -104,20 +102,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     + " favor informar ao Responsável! ");
         }
     }
-    
-    
-    private void renderizarBotaoDetalhes(){
-        new BotaoDetalhesImpl(tabela,INDEX_COLUNA_BTN);
-    }
-    
 
     private void definirTamanhoColunas() {
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        tabela.getColumnModel().getColumn(0).setPreferredWidth(500);//NOME 
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(90);//DATA VENC
-        tabela.getColumnModel().getColumn(2).setPreferredWidth(60);//HORA VENC
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(115);//EXPIRA
-        tabela.getColumnModel().getColumn(4).setPreferredWidth(250);//DETALHES
+        tabela.getColumnModel().getColumn(0).setPreferredWidth(40);//ID 
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(500);//NOME 
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(90);//DATA VENC
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(60);//HORA VENC
+        tabela.getColumnModel().getColumn(4).setPreferredWidth(115);//EXPIRA
+        tabela.getColumnModel().getColumn(5).setPreferredWidth(250);//DETALHES
+        tabela.getColumnModel().getColumn(6).setPreferredWidth(30);//BTN
     }
 
     private void colorirLinhaAtraso() {
@@ -127,7 +121,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value,
                         isSelected, hasFocus, row, column);
-                Object dataVencimento = tabela.getValueAt(row, 1);
+                Object dataVencimento = tabela.getValueAt(row, INDEX_COLUNA_DATA_VENCIMENTO);
                 int diferencaEmDias = 0;
                 if (dataVencimento != null) {
                     Date dtHoje = new Date();
