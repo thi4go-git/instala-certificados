@@ -6,17 +6,17 @@ import com.dynns.cloudtecnologia.certificados.model.entity.ContatoCertificado;
 import javax.swing.JOptionPane;
 
 public class ContatoCertificadoController {
-
+    
     private final IContatoCertificado contatoCertificadoDAO;
-
+    
     public ContatoCertificadoController() {
         this.contatoCertificadoDAO = new ContatoCertificadoDAO();
     }
-
+    
     public ContatoCertificado retornarContatoCertificado(int idCertificado) {
         return contatoCertificadoDAO.retornarContatoCertificado(idCertificado);
     }
-
+    
     public void salvarContatoCertificado(ContatoCertificado contatoUpdate) {
         ContatoCertificado contatoBD = contatoCertificadoDAO.retornarContatoCertificado(contatoUpdate.getIdCertificado());
         if (contatoBD.getId() == 0) {
@@ -27,7 +27,8 @@ public class ContatoCertificadoController {
             contatoBD.setTelefoneContato(contatoUpdate.getTelefoneContato());
             contatoBD.setCelularContato(contatoUpdate.getCelularContato());
             contatoBD.setEmailContato(contatoUpdate.getEmailContato());
-
+            contatoBD.setObservacao(contatoUpdate.getObservacao());
+            
             contatoCertificadoDAO.atualizarContatoCertificado(contatoBD);
             JOptionPane.showMessageDialog(null, "Contato Atualizado Com Sucesso!");
         }

@@ -8,6 +8,7 @@ public class ContatoCertificado {
     private String telefoneContato;
     private String celularContato;
     private String emailContato;
+    private String observacao;
 
     public int getId() {
         return id;
@@ -55,6 +56,20 @@ public class ContatoCertificado {
 
     public void setEmailContato(String emailContato) {
         this.emailContato = emailContato;
+    }
+
+    /**
+     * @return the observacao
+     */
+    public String getObservacao() {
+        return observacao;
+    }
+
+    /**
+     * @param observacao the observacao to set
+     */
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 
 }

@@ -46,5 +46,6 @@ id_certificado INTEGER,
 nome_contato varchar,
 telefone_contato varchar,
 celular_contato varchar,
-email_contato varchar
+email_contato varchar,
+observacao varchar
 );
