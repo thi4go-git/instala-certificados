@@ -65,6 +65,32 @@ public class CertificadoDAO implements ICertificado {
                     certificado.setHoraVencimento(rs.getString(COLUNA_HORA_VENCIMENTO));
                     certificado.setDescricaoVencimento(rs.getString(COLUNA_DESCRICAO_VENCIMENTO));
                     certificado.setCertificadoByte(rs.getBytes(COLUNA_IMG_CERTIFICADO));
+
+                    return certificado;
+                }
+            }
+        } catch (SQLException ex) {
+            throw new GeralException("Erro ao obter Certificado by Id " + ex.getMessage());
+        }
+        throw new GeralException("Certificado não localizado com id " + id);
+    }
+
+    @Override
+    public Certificado findByIdNotBytes(int id) {
+        String sql = "select id,nome,alias,dtvencimento,hrvencimento,descricao_vencimento,expira  from certificado where id=?";
+
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    Certificado certificado = new Certificado();
+                    certificado.setId(rs.getInt(COLUNA_ID));
+                    certificado.setNome(rs.getString(COLUNA_NOME));
+                    certificado.setAlias(rs.getString(COLUNA_ALIAS));
+                    certificado.setDataVencimento(rs.getDate(COLUNA_DATA_VENCIMENTO));
+                    certificado.setHoraVencimento(rs.getString(COLUNA_HORA_VENCIMENTO));
+                    certificado.setDescricaoVencimento(rs.getString(COLUNA_DESCRICAO_VENCIMENTO));
+
                     return certificado;
                 }
             }
@@ -152,7 +178,7 @@ public class CertificadoDAO implements ICertificado {
             pst.setString(1, certificado.getAlias());
             pst.setBytes(2, certificado.getCertificadoByte());
             pst.setDate(3, certificado.getDataVencimento());
- 
+
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     return true;

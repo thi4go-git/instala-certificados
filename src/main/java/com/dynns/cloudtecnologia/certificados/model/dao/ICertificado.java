@@ -11,6 +11,8 @@ public interface ICertificado {
 
     Certificado findById(int id);
 
+    Certificado findByIdNotBytes(int id);
+
     void deletarCertificado(int idCertificado);
 
     void deletarCertificadosVencidos();

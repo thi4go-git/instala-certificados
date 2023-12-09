@@ -9,8 +9,8 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>com.dynns.cloudtecnologia.certificados.InstalaCertificados</exec.mainClass>        
         <sonar.coverage.exclusions>
             **/model/**,**/view/telas/TelaPrincipal.java
@@ -72,5 +72,14 @@
             <version>2.4.4</version>
         </dependency>     
     </dependencies>
+    
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
     
 </project>

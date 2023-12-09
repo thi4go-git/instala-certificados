@@ -1,11 +1,13 @@
 package com.dynns.cloudtecnologia.certificados.view.table;
 
+import com.dynns.cloudtecnologia.certificados.controller.CertificadoController;
+import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
+import com.dynns.cloudtecnologia.certificados.view.telas.TelaDetalhesCertificado;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractCellEditor;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -13,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 public class BotaoDetalhesImpl extends AbstractCellEditor
         implements TableCellRenderer, TableCellEditor, ActionListener {
@@ -21,6 +24,11 @@ public class BotaoDetalhesImpl extends AbstractCellEditor
     JButton renderButton;
     JButton editButton;
     String text;
+
+    private static final int INDEX_ID = 0;
+    private static final int INDEX_DESCRICAO_VENCIMENTO = 5;
+
+    private final CertificadoController certificadoControler;
 
     public BotaoDetalhesImpl(JTable table, int column) {
         super();
@@ -36,6 +44,8 @@ public class BotaoDetalhesImpl extends AbstractCellEditor
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(column).setCellRenderer(this);
         columnModel.getColumn(column).setCellEditor(this);
+
+        this.certificadoControler = new CertificadoController();
     }
 
     @Override
@@ -47,9 +57,6 @@ public class BotaoDetalhesImpl extends AbstractCellEditor
         } else if (isSelected) {
             renderButton.setForeground(table.getSelectionForeground());
             renderButton.setBackground(table.getSelectionBackground());
-        } else {
-            renderButton.setForeground(table.getForeground());
-            renderButton.setBackground(UIManager.getColor("Button.background"));
         }
 
         renderButton.setText((value == null) ? "" : value.toString());
@@ -72,7 +79,28 @@ public class BotaoDetalhesImpl extends AbstractCellEditor
     @Override
     public void actionPerformed(ActionEvent e) {
         fireEditingStopped();
+
+        abrirTelaDetalhes();
+    }
+
+    private void abrirTelaDetalhes() {
         int indexLinhaSelecionada = table.getSelectedRow();
-        JOptionPane.showMessageDialog(null, "Action: " + e.getActionCommand() + " - indexLinhaSelecionada " + indexLinhaSelecionada);
+        if (indexLinhaSelecionada != -1) {
+            TableModel model = table.getModel();
+            int numColunas = model.getColumnCount();
+            Object[] valoresLinhaSelecionada = new Object[numColunas];
+            for (int i = 0; i < numColunas; i++) {
+                valoresLinhaSelecionada[i] = model.getValueAt(indexLinhaSelecionada, i);
+            }
+            int idCertificado = Integer.parseInt(valoresLinhaSelecionada[INDEX_ID].toString());
+            String descricaoVencimento = valoresLinhaSelecionada[INDEX_DESCRICAO_VENCIMENTO].toString();
+            Certificado certificado = certificadoControler.findByIdNotBytes(idCertificado);
+            certificado.setDescricaoVencimento(descricaoVencimento);
+
+            new TelaDetalhesCertificado(certificado);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum detalhe a mostrar.");
+        }
     }
 }
