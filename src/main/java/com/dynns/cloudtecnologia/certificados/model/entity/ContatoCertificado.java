@@ -4,10 +4,10 @@ public class ContatoCertificado {
 
     private int id = 0;
     private int idCertificado = 0;
-    private String nomeContato;
+    private String nomeContato = null;
     private String telefoneContato;
     private String celularContato;
-    private String emailContato;
+    private String emailContato = null;
     private String observacao;
 
     public int getId() {
