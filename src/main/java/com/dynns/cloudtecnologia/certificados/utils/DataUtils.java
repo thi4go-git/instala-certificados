@@ -42,4 +42,13 @@ public class DataUtils {
         }
     }
 
+    public static String dataBDStringToDataBRString(String dataBD) {
+        //deve receber:YYYY-mm-DD
+        String ano = dataBD.substring(0, 4);
+        String mes = dataBD.substring(5, 7);
+        String dia = dataBD.substring(8, 10);
+
+        return dia.concat("/").concat(mes).concat("/").concat(ano);
+    }
+
 }

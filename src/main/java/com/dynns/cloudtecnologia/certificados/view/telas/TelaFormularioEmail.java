@@ -1,20 +1,21 @@
 package com.dynns.cloudtecnologia.certificados.view.telas;
 
 import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificadoController;
+import com.dynns.cloudtecnologia.certificados.model.dto.EmailSendDTO;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.utils.EmailUtils;
 import javax.swing.ImageIcon;
 
 public class TelaFormularioEmail extends javax.swing.JFrame {
-    
+
     ConfiguracaoCertificadoController configuracaoCertificadoController;
     private String destinatario;
     private ConfiguracaoCertificado configuracaoCertificado;
-    
+
     public TelaFormularioEmail() {
         initComponents();
     }
-    
+
     public TelaFormularioEmail(String destinatario) {
         initComponents();
         configurarExibicaoTela();
@@ -22,25 +23,25 @@ public class TelaFormularioEmail extends javax.swing.JFrame {
         inicializarVariaveis();
         carregarInformacoesFormularioTela();
     }
-    
+
     private void inicializarVariaveis() {
         this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
         this.configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
     }
-    
+
     private void configurarExibicaoTela() {
         this.setLocationRelativeTo(null);
         this.setEnabled(true);
         this.setVisible(true);
         this.setResizable(false);
     }
-    
+
     private void carregarInformacoesFormularioTela() {
         cDestinatario.setText(destinatario);
         cAssunto.setText(configuracaoCertificado.getAssuntoEmail());
         cCorpoEmail.setText(configuracaoCertificado.getMensagemPadraoEmail());
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -138,11 +139,32 @@ public class TelaFormularioEmail extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        configuracaoCertificado.setAssuntoEmail(cAssunto.getText().trim());
-        configuracaoCertificado.setMensagemPadraoEmail(cCorpoEmail.getText());
-        EmailUtils.enviarEmail(configuracaoCertificado, destinatario);
+        ProcessoEnviarEmail processoEnvEmail = new ProcessoEnviarEmail();
+        Thread threadEnvEmail = new Thread(processoEnvEmail);
+        threadEnvEmail.setName("Thread threadEnvEmail");
+        threadEnvEmail.start();
     }//GEN-LAST:event_btnEnviarActionPerformed
-    
+
+    public class ProcessoEnviarEmail implements Runnable {
+
+        @Override
+        public void run() {
+            EmailSendDTO emailSendDTO = new EmailSendDTO();
+            emailSendDTO.setUsername(configuracaoCertificado.getUserEmail());
+            emailSendDTO.setPassword(configuracaoCertificado.getPassEmail());
+            emailSendDTO.setSmtpEmail(configuracaoCertificado.getSmtpEmail());
+            emailSendDTO.setSmtpPortEmail(configuracaoCertificado.getSmtpPortEmail());
+            emailSendDTO.setTlsEmail(configuracaoCertificado.getTlsEmail());
+            emailSendDTO.setAssunto(cAssunto.getText().trim());
+            emailSendDTO.setMensagemPadrao(cCorpoEmail.getText().trim());
+            emailSendDTO.setDestinatario(destinatario);
+            emailSendDTO.setAnexoBytes(null);
+            emailSendDTO.setAnexoNome(null);
+
+            EmailUtils.enviarEmail(emailSendDTO);
+        }
+    }
+
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             new TelaFormularioEmail().setVisible(true);

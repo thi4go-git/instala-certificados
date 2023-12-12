@@ -19,13 +19,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class TelaPrincipal extends javax.swing.JFrame {
-
+    
     private Dotenv dotenv;
     private InstaladorController instalador;
-
+    
     private CertificadoController certificadoControler;
     private ConfiguracaoCertificadoController configuracaoCertificadoController;
-
+    
     private static final String MSG_SELECIONA_CERTIFICADO = "Favor selecionar o Certificado!";
     private static final String MSG_SENHA_INVALIDA = "A Senha do Certificado não confere com a senha do Instalador!";
     private static final String FILTRO_TODOS = "TODOS";
@@ -34,21 +34,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private static final String FONTE = "Segoe UI";
     private static final Integer INDEX_COLUNA_BTN = 6;
     private static final Integer INDEX_COLUNA_DATA_VENCIMENTO = 2;
-
+    private static final String MSG_PROCESSO_CANCELADO = "Processo cancelado!";
+    
     public TelaPrincipal() {
         initComponents();
         this.inicializarVariaveis();
         this.configurarExibicaoTela();
         this.processoAutomatico();
     }
-
+    
     private void inicializarVariaveis() {
         this.dotenv = Dotenv.configure().load();
         this.instalador = new InstaladorController();
         this.certificadoControler = new CertificadoController();
         this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
     }
-
+    
     private void configurarExibicaoTela() {
         this.setLocationRelativeTo(null);
         this.setEnabled(true);
@@ -57,32 +58,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.version.setText(dotenv.get("VERSION"));
         this.infoRodape.setText(dotenv.get("INFO_RODAPE"));
     }
-
+    
     private void processoAutomatico() {
         preencherTabelaCertificados();
         new BotaoDetalhesImpl(tabela, INDEX_COLUNA_BTN);
     }
-
+    
     private void preencherTabelaCertificados() {
         tabela.setModel(certificadoControler.preencherTabelaCertificados(new Certificado()));
         definirInformacoesTabela();
     }
-
+    
     private void preencherTabelaCertificadosVencidos() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosVencidos(new Certificado()));
         definirInformacoesTabela();
     }
-
+    
     private void preencherTabelaCertificadosAtivos() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosAtivos(new Certificado()));
         definirInformacoesTabela();
     }
-
+    
     private void preencherTabelaCertificadosVencemAte30Dias() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosVencemAte30Dias(new Certificado()));
         definirInformacoesTabela();
     }
-
+    
     private void preencherTabelaCertificadosPesquisa() {
         String nomePesquisa = nomeCertificado.getText().trim();
         if (nomePesquisa != null && !nomePesquisa.equals("")) {
@@ -92,7 +93,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             definirInformacoesTabela();
         }
     }
-
+    
     private void definirInformacoesTabela() {
         int totalRegistros = certificadoControler.retornarQtdeRegistros();
         qtdeRegistros.setText("Registros: " + totalRegistros);
@@ -103,7 +104,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     + " favor informar ao Responsável! ");
         }
     }
-
+    
     private void definirTamanhoColunas() {
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.getColumnModel().getColumn(0).setPreferredWidth(40);//ID 
@@ -114,7 +115,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(5).setPreferredWidth(250);//DETALHES
         tabela.getColumnModel().getColumn(6).setPreferredWidth(30);//BTN
     }
-
+    
     private void colorirLinhaAtraso() {
         tabela.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
@@ -151,7 +152,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -162,6 +163,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         qtdeRegistros = new javax.swing.JLabel();
         btnInstalar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
+        btnEnviarCertificado = new javax.swing.JButton();
         version = new javax.swing.JLabel();
         infoRodape = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -217,6 +219,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnEnviarCertificado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEnviarCertificado.setIcon(new ImageIcon(getClass().getResource("/img/emailIcon.png")));
+        btnEnviarCertificado.setText("Enviar Certificado");
+        btnEnviarCertificado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEnviarCertificado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEnviarCertificado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarCertificadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -229,6 +242,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(btnInstalar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEnviarCertificado, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(qtdeRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -243,7 +258,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(qtdeRegistros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnInstalar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEnviarCertificado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -369,14 +385,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if (isAutenticado()) {
                 int linhaSelecionada = tabela.getSelectedRow();
                 String nomeCert = certificadoControler.retornarNome(linhaSelecionada);
-
+                
                 if (DialogUtils.confirmarOperacao("Confirmar exclusão do certificado? " + nomeCert)) {
                     int idCertificado = certificadoControler.retornarId(linhaSelecionada);
                     certificadoControler.deletarCertificado(idCertificado);
                     JOptionPane.showMessageDialog(null, "Sucesso ao deletar Certificado id: " + idCertificado + " - " + nomeCert + "!");
                     preencherTabelaCertificados();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Exclusão cancelada!");
+                    JOptionPane.showMessageDialog(null, MSG_PROCESSO_CANCELADO);
                 }
             }
         } else {
@@ -391,7 +407,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             String nome = certificadoControler.retornarNome(linhaSelecionada);
             String dataVencimento = certificadoControler.retornarDataVencimentoSTR(linhaSelecionada);
             String alias = certificadoControler.retornarAlias(linhaSelecionada);
-
+            
             if (expira < 0) {
                 JOptionPane.showMessageDialog(null, "Não foi possível instalar o Certificado: \r\n (" + nome + "-" + alias + ")  \r\n "
                         + " CAUSA: Certificado expirado: " + dataVencimento);
@@ -404,7 +420,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
                 Certificado certificado = certificadoControler.findById(certificadoControler.retornarId(linhaSelecionada));
                 int statusCode = instalador.instalarCertificado(configuracaoCertificado, certificado);
-
+                
                 if (statusCode == 0 && !descricao.contains(MSG_SENHA_INVALIDA)) {
                     JOptionPane.showMessageDialog(null, "Sucesso ao Instalar o certificado: " + nome + ", CÓD: " + statusCode);
                 } else {
@@ -445,17 +461,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
         preencherTabelaCertificadosPesquisa();
     }//GEN-LAST:event_nomeCertificadoKeyPressed
 
+    private void btnEnviarCertificadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarCertificadoActionPerformed
+        if (tabela.getSelectedRow() != -1) {
+            if (isAutenticado()) {
+                if (DialogUtils.confirmarOperacao("*** ATENÇÃO: Você está prestes a enviar o arquivo de certificado digital com a SENHA "
+                        + "de instalação!!!, DESEJA PROSSEGUIR? ***")) {
+                    if (DialogUtils.confirmarOperacao("*** Tem Certeza? ... ***")) {
+                        int linhaSelecionada = tabela.getSelectedRow();
+                        int idCertificado = certificadoControler.retornarId(linhaSelecionada);
+                        certificadoControler.enviarCertificadoEmail(idCertificado);
+                    } else {
+                        JOptionPane.showMessageDialog(null, MSG_PROCESSO_CANCELADO);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, MSG_PROCESSO_CANCELADO);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, MSG_SELECIONA_CERTIFICADO);
+        }
+    }//GEN-LAST:event_btnEnviarCertificadoActionPerformed
+    
     private void limpaBarraPesquisa() {
         nomeCertificado.setText("");
     }
-
+    
     private boolean isAutenticado() {
         ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
         AutenticacaoDialog dialogAutenticacao = new AutenticacaoDialog(this, configuracaoCertificado.getSenhaMaster());
         dialogAutenticacao.setVisible(true);
         return dialogAutenticacao.isAutenticado();
     }
-
+    
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             new TelaPrincipal().setVisible(true);
@@ -463,6 +500,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
+    private javax.swing.JButton btnEnviarCertificado;
     private javax.swing.JButton btnInstalar;
     private javax.swing.JComboBox<String> filtroListagem;
     private javax.swing.JLabel infoRodape;
