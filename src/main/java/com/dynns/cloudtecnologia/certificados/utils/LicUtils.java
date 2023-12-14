@@ -11,7 +11,7 @@ public class LicUtils {
         
     }
     
-    private static final String VENCIMENTO_DATA = "14/12/2023";
+    private static final String VENCIMENTO_DATA = "15/12/2023";
     
     public static void validarLic() {
         SimpleDateFormat formata = new SimpleDateFormat("dd/MM/yyyy");

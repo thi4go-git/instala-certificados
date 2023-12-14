@@ -1,6 +1,5 @@
 package com.dynns.cloudtecnologia.certificados.conexao;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,15 +12,14 @@ public class Conexao {
 
     private static Connection connection = null;
 
+    private static final String URL_BANCO = "jdbc:postgresql://cloudtecnologia.dynns.com:5432/certificado";
+    private static final String USUARIO = "postgres";
+    private static final String PASS_BD = "895674";
+
     public static Connection getConexao() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            Dotenv dotenv = Dotenv.configure().load();
-
-            String url = dotenv.get("URL_BANCO");
-            String usuario = dotenv.get("USUARIO_BANCO");
-            String senha = dotenv.get("SENHA_BANCO");
-
-            connection = DriverManager.getConnection(url, usuario, senha);
+            connection = DriverManager.getConnection(URL_BANCO,
+                    USUARIO, PASS_BD);
         }
         return connection;
     }
