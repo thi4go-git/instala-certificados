@@ -9,7 +9,6 @@ import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
 import com.dynns.cloudtecnologia.certificados.utils.LicUtils;
 import com.dynns.cloudtecnologia.certificados.view.table.BotaoDetalhesImpl;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.Date;
@@ -21,7 +20,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
-    private Dotenv dotenv;
     private InstaladorController instalador;
 
     private CertificadoController certificadoControler;
@@ -46,7 +44,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     private void inicializarVariaveis() {
-        this.dotenv = Dotenv.configure().load();
         this.instalador = new InstaladorController();
         this.certificadoControler = new CertificadoController();
         this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
@@ -57,8 +54,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(true);
         this.setVisible(true);
         this.setResizable(false);
-        this.version.setText(dotenv.get("VERSION"));
-        this.infoRodape.setText(dotenv.get("INFO_RODAPE"));
+        this.version.setText("Version teste");
+        this.infoRodape.setText("By Teste");
     }
 
     private void processoAutomatico() {
