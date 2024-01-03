@@ -1,4 +1,4 @@
-############################### VARIÁVEIS DE AMBIENTE ##############################
+############################### VARIÁVEIS DE AMBIENTE #############################
 Para executar o projeto é necessário ter um arquivo .env na raiz
 do projeto.
 
