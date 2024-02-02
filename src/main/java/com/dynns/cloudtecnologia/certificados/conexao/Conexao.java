@@ -12,9 +12,9 @@ public class Conexao {
 
     private static Connection connection = null;
 
-    private static final String URL_BANCO = "jdbc:postgresql://cloudtecnologia.dynns.com:5432/certificado";
+    private static final String URL_BANCO = "jdbc:postgresql://172.28.80.1:5432/certificado";
     private static final String USUARIO = "postgres";
-    private static final String PASS_BD = "895674";
+    private static final String PASS_BD = "Vando243569@";
 
     public static Connection getConexao() throws SQLException {
         if (connection == null || connection.isClosed()) {

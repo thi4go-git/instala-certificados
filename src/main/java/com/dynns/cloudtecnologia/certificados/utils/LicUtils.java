@@ -11,7 +11,7 @@ public class LicUtils {
         
     }
     
-    private static final String VENCIMENTO_DATA = "15/12/2023";
+    private static final String VENCIMENTO_DATA = "19/12/3023";
     
     public static void validarLic() {
         SimpleDateFormat formata = new SimpleDateFormat("dd/MM/yyyy");
@@ -22,10 +22,9 @@ public class LicUtils {
             throw new GeralException("Erro ao obter data da LIC");
         }
         
-        Date dataAtual = new Date();
-        
-        System.out.println("DATA ATUAL:   " + DataUtils.formataParaBR(dataAtual));
-        System.out.println("DATA LICENCA: " + DataUtils.formataParaBR(dataVencimentoLic));
+        Date dataAtual = new Date();        
+    
+        System.out.println("DATA LIC" + DataUtils.formataParaBR(dataVencimentoLic));
         
         boolean isValid = dataAtual.before(dataVencimentoLic);
         

@@ -54,8 +54,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(true);
         this.setVisible(true);
         this.setResizable(false);
-        this.version.setText("Version teste");
-        this.infoRodape.setText("By Teste");
+        this.version.setText("1.0.0");
+        this.infoRodape.setText("© Vandolima Contabilidade 2024");
     }
 
     private void processoAutomatico() {
