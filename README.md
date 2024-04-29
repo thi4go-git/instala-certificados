@@ -49,7 +49,7 @@ imagemCertificado bytea not null
 
 create table contato_certificado (
 id serial primary key,
-id_certificado INTEGER,
+id_certificado INTEGER REFERENCES certificado(id), 
 nome_contato varchar,
 telefone_contato varchar,
 celular_contato varchar,
