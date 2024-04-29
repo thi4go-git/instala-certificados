@@ -45,6 +45,16 @@ email_contato varchar,
 observacao varchar
 );
 
+-> 5 Passo: Criar a tabela de logs do sistema:
+create table log_certificado (
+id serial primary key,
+tipo_log varchar not null,
+data_log TIMESTAMP not null,
+usuario varchar not null,
+ip_usuario varchar not null,
+detalhes varchar
+);
+
 
 ############################## MENSAGEM PADRÃO EMAIL ##############################
 Prezado cliente,

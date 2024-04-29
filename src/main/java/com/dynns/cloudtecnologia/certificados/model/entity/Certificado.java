@@ -1,6 +1,7 @@
 package com.dynns.cloudtecnologia.certificados.model.entity;
 
 import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Certificado {
 
@@ -12,6 +13,8 @@ public class Certificado {
     private String horaVencimento;
     private String descricaoVencimento;
     private int expira;
+
+    @JsonIgnore
     private byte[] certificadoByte;
 
     public int getId() {

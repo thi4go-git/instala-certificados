@@ -1,6 +1,8 @@
 package com.dynns.cloudtecnologia.certificados.utils;
 
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyStore;
@@ -54,4 +56,14 @@ public class CertificadoUtils {
         return "Sem informações";
     }
 
+    public static String converterObjetoParaJson(Object object) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new GeralException("Erro ao converter objeto para JSON!");
+        }
+        return json;
+    }
 }

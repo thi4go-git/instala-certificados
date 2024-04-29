@@ -75,6 +75,8 @@ public class EmailUtils {
 
             JOptionPane.showMessageDialog(null, "Sucesso ao enviar email: " + emailSendDTO.getDestinatario());
 
+            String detalhes = "Certificado Enviado via EMAIL: " + CertificadoUtils.converterObjetoParaJson(emailSendDTO.getCertificado());
+
         } catch (MessagingException e) {
             throw new GeralException("ERRO ao enviar email: " + e.getCause());
         }
