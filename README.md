@@ -1,15 +1,3 @@
-############################### VARIÁVEIS DE AMBIENTE #############################
-Para executar o projeto é necessário ter um arquivo .env na raiz
-do projeto.
-
-Exemplo de conteúdo do arquivo .env:
-URL_BANCO=jdbc:postgresql://meuIp:porta/bancoNome
-USUARIO_BANCO=user
-SENHA_BANCO=pass
-VERSION=Version 1.0
-INFO_RODAPE=By Thiago Jr. 62-981204102
-
-
 ############################## BANCO DE DADOS ##############################
 -> 1 passo criar tabela configuracao_certificado:
 
