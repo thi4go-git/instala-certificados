@@ -1,5 +1,6 @@
 package com.dynns.cloudtecnologia.certificados.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,7 +10,10 @@ public class Certificado {
     private String nome;
     private String alias;
     private String caminho;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "UTC")
     private Date dataVencimento;
+
     private String horaVencimento;
     private String descricaoVencimento;
     private int expira;

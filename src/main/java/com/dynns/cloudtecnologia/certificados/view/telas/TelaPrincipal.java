@@ -22,13 +22,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class TelaPrincipal extends javax.swing.JFrame {
-    
+
     private InstaladorController instalador;
-    
+
     private CertificadoController certificadoControler;
     private ConfiguracaoCertificadoController configuracaoCertificadoController;
     private LogCertificadoController logCertificadoController;
-    
+
     private static final String MSG_SELECIONA_CERTIFICADO = "Favor selecionar o Certificado!";
     private static final String MSG_SENHA_INVALIDA = "A Senha do Certificado não confere com a senha do Instalador!";
     private static final String FILTRO_TODOS = "TODOS";
@@ -37,23 +37,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private static final Integer INDEX_COLUNA_BTN = 6;
     private static final Integer INDEX_COLUNA_DATA_VENCIMENTO = 2;
     private static final String MSG_PROCESSO_CANCELADO = "Processo cancelado!";
-    
+
     public TelaPrincipal() {
         LicUtils.validarLic();
         initComponents();
         this.inicializarVariaveis();
         this.configurarExibicaoTela();
         this.processoAutomatico();
-        
+
     }
-    
+
     private void inicializarVariaveis() {
         this.instalador = new InstaladorController();
         this.certificadoControler = new CertificadoController();
         this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
         this.logCertificadoController = new LogCertificadoController();
     }
-    
+
     private void configurarExibicaoTela() {
         this.setLocationRelativeTo(null);
         this.setEnabled(true);
@@ -62,32 +62,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.version.setText("Version teste");
         this.infoRodape.setText("By Teste");
     }
-    
+
     private void processoAutomatico() {
         preencherTabelaCertificados();
         new BotaoDetalhesImpl(tabela, INDEX_COLUNA_BTN);
     }
-    
+
     private void preencherTabelaCertificados() {
         tabela.setModel(certificadoControler.preencherTabelaCertificados(new Certificado()));
         definirInformacoesTabela();
     }
-    
+
     private void preencherTabelaCertificadosVencidos() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosVencidos(new Certificado()));
         definirInformacoesTabela();
     }
-    
+
     private void preencherTabelaCertificadosAtivos() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosAtivos(new Certificado()));
         definirInformacoesTabela();
     }
-    
+
     private void preencherTabelaCertificadosVencemAte30Dias() {
         tabela.setModel(certificadoControler.preencherTabelaCertificadosVencemAte30Dias(new Certificado()));
         definirInformacoesTabela();
     }
-    
+
     private void preencherTabelaCertificadosPesquisa() {
         String nomePesquisa = nomeCertificado.getText().trim();
         if (nomePesquisa != null && !nomePesquisa.equals("")) {
@@ -97,7 +97,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             definirInformacoesTabela();
         }
     }
-    
+
     private void definirInformacoesTabela() {
         int totalRegistros = certificadoControler.retornarQtdeRegistros();
         qtdeRegistros.setText("Registros: " + totalRegistros);
@@ -108,7 +108,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     + " favor informar ao Responsável! ");
         }
     }
-    
+
     private void definirTamanhoColunas() {
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.getColumnModel().getColumn(0).setPreferredWidth(40);//ID 
@@ -119,7 +119,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(5).setPreferredWidth(250);//DETALHES
         tabela.getColumnModel().getColumn(6).setPreferredWidth(30);//BTN
     }
-    
+
     private void colorirLinhaAtraso() {
         tabela.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
@@ -156,7 +156,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -413,7 +413,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             String nome = certificadoControler.retornarNome(linhaSelecionada);
             String dataVencimento = certificadoControler.retornarDataVencimentoSTR(linhaSelecionada);
             String alias = certificadoControler.retornarAlias(linhaSelecionada);
-            
+
             if (expira < 0) {
                 JOptionPane.showMessageDialog(null, "Não foi possível instalar o Certificado: \r\n (" + nome + "-" + alias + ")  \r\n "
                         + " CAUSA: Certificado expirado: " + dataVencimento);
@@ -426,9 +426,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
                 Certificado certificado = certificadoControler.findById(certificadoControler.retornarId(linhaSelecionada));
                 int statusCode = instalador.instalarCertificado(configuracaoCertificado, certificado);
-                
+
                 if (statusCode == 0 && !descricao.contains(MSG_SENHA_INVALIDA)) {
                     JOptionPane.showMessageDialog(null, "Sucesso ao Instalar o certificado: " + nome + ", CÓD: " + statusCode);
+                    String detalhes = "Certificado instalado: " + CertificadoUtils.converterObjetoParaJson(certificado);
+                    logCertificadoController.salvarLog(TipoLog.USER_CERTIFICADO_INSTALADO, detalhes);
                 } else {
                     JOptionPane.showMessageDialog(null, "*** NÃO FOI POSSÍVEL INSTALAR: Senha Inválida. CÓD: " + statusCode + " ***");
                 }
@@ -487,18 +489,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, MSG_SELECIONA_CERTIFICADO);
         }
     }//GEN-LAST:event_btnEnviarCertificadoActionPerformed
-    
+
     private void limpaBarraPesquisa() {
         nomeCertificado.setText("");
     }
-    
+
     private boolean isAutenticado() {
         ConfiguracaoCertificado configuracaoCertificado = configuracaoCertificadoController.obterConfiguracaoCertificado();
         AutenticacaoDialog dialogAutenticacao = new AutenticacaoDialog(this, configuracaoCertificado.getSenhaMaster());
         dialogAutenticacao.setVisible(true);
         return dialogAutenticacao.isAutenticado();
     }
-    
+
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             new TelaPrincipal().setVisible(true);
