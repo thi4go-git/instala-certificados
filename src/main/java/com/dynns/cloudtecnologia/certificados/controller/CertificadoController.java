@@ -191,6 +191,7 @@ public class CertificadoController {
                 emailSendDTO.setDestinatario(contato.getEmailContato());
                 emailSendDTO.setAnexoBytes(certificado.getCertificadoByte());
                 emailSendDTO.setAnexoNome(certificado.getNome());
+                emailSendDTO.setCertificado(certificado);
 
                 EmailUtils.enviarEmail(emailSendDTO);
             }

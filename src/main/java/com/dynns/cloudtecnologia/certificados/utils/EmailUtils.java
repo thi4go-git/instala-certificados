@@ -1,7 +1,9 @@
 package com.dynns.cloudtecnologia.certificados.utils;
 
+import com.dynns.cloudtecnologia.certificados.controller.LogCertificadoController;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.dto.EmailSendDTO;
+import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import com.dynns.cloudtecnologia.certificados.view.telas.BarraProgresso;
 import java.util.Properties;
 import javax.activation.DataHandler;
@@ -63,19 +65,18 @@ public class EmailUtils {
 
                 // Adicionar o conteúdo multipart ao e-mail
                 message.setContent(multipart);
-
             } else {
                 //MENSAGEM SEM ANEXO.
                 message.setText(emailSendDTO.getMensagemPadrao());
             }
 
             Transport.send(message);
-
             progressoEnviaCert.dispose();
+            String detalhes = "Certificado enviado: " + CertificadoUtils.converterObjetoParaJson(emailSendDTO.getCertificado());
+            LogCertificadoController logCertificadoController = new LogCertificadoController();
+            logCertificadoController.salvarLog(TipoLog.ADMIN_CERTIFICADO_ENVIADO_EMAIL, detalhes);
 
             JOptionPane.showMessageDialog(null, "Sucesso ao enviar email: " + emailSendDTO.getDestinatario());
-
-            String detalhes = "Certificado Enviado via EMAIL: " + CertificadoUtils.converterObjetoParaJson(emailSendDTO.getCertificado());
 
         } catch (MessagingException e) {
             throw new GeralException("ERRO ao enviar email: " + e.getCause());
