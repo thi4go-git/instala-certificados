@@ -2,7 +2,10 @@ package com.dynns.cloudtecnologia.certificados.view.telas;
 
 import com.dynns.cloudtecnologia.certificados.controller.CertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificadoController;
+import com.dynns.cloudtecnologia.certificados.controller.LogCertificadoController;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
+import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
+import com.dynns.cloudtecnologia.certificados.utils.CertificadoUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -12,6 +15,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
 
     private CertificadoController certificadoControler;
     private ConfiguracaoCertificadoController configuracaoCertificadoController;
+    private LogCertificadoController logCertificadoController;
 
     private static final String FONTE = "Segoe UI";
 
@@ -23,8 +27,9 @@ public class TelaPreferencias extends javax.swing.JFrame {
     }
 
     private void inicializarVariaveis() {
-        certificadoControler = new CertificadoController();
-        configuracaoCertificadoController = new ConfiguracaoCertificadoController();
+        this.certificadoControler = new CertificadoController();
+        this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
+        this.logCertificadoController = new LogCertificadoController();
     }
 
     private void configurarExibicaoTela() {
@@ -374,7 +379,12 @@ public class TelaPreferencias extends javax.swing.JFrame {
                 configUpdate.setAssuntoEmail(cAssuntoEmail.getText().trim());
                 configUpdate.setMensagemPadraoEmail(cMsgPadraoEmail.getText().trim());
 
+                ConfiguracaoCertificado configCertificadoAntiga = configuracaoCertificadoController.obterConfiguracaoCertificado();
+
                 configuracaoCertificadoController.atualizarConfiguracaoCetificado(configUpdate);
+
+                String detalhes = "Configuração certificado Anterior: " + CertificadoUtils.converterObjetoParaJson(configCertificadoAntiga);
+                logCertificadoController.salvarLog(TipoLog.ADMIN_ALTERACAO_PREFERENCIAS, detalhes);
             } else {
                 JOptionPane.showMessageDialog(null, "Alteração cancelada!");
             }
