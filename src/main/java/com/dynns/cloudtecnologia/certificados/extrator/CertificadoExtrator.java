@@ -2,9 +2,11 @@ package com.dynns.cloudtecnologia.certificados.extrator;
 
 import com.dynns.cloudtecnologia.certificados.controller.CertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificadoController;
+import com.dynns.cloudtecnologia.certificados.controller.LogCertificadoController;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
+import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import com.dynns.cloudtecnologia.certificados.utils.CertificadoUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
 import com.dynns.cloudtecnologia.certificados.utils.FilesUtils;
@@ -27,10 +29,12 @@ public class CertificadoExtrator {
 
     private final CertificadoController certificadoController;
     private final ConfiguracaoCertificadoController configuracaoCertificadoController;
+    private final LogCertificadoController logCertificadoController;
 
     public CertificadoExtrator(String caminhoPasta) {
         this.certificadoController = new CertificadoController();
         this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
+        this.logCertificadoController = new LogCertificadoController();
         this.caminhoPasta = caminhoPasta;
     }
 
@@ -112,6 +116,13 @@ public class CertificadoExtrator {
                 }
             }//Fim do laço de repetição
             progresso.dispose();
+
+            String detalhes = "Rotina de atualização de certificados realizada com sucesso,"
+                    + " RESUMO: Certificados Processados: " + listaPfxs.size() + ","
+                    + "Certificados Instalados: " + instalados
+                    + ", Certificados senha Divergente: " + certificadosSenhaDivergente.size()
+                    + ", Certificados Já existentes: " + certificadosExistentesBD.size();
+            logCertificadoController.salvarLog(TipoLog.ADMIN_ATUALIZAR_CERTIFICADOS, detalhes);
 
             JOptionPane.showMessageDialog(null, "ATUALIZAÇÃO CONCLUÍDA!!!");
             JOptionPane.showMessageDialog(null,

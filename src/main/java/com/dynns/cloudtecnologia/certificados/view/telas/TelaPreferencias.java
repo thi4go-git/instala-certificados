@@ -394,6 +394,8 @@ public class TelaPreferencias extends javax.swing.JFrame {
     private void btDeletarVencidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarVencidosActionPerformed
         if (DialogUtils.confirmarOperacao("Confirmar exclusão de TODOS os Certificados vencidos? ")) {
             certificadoControler.deletarCertificadosVencidos();
+            String detalhes = "Todos os certificados vencidos foram deletados!";
+            logCertificadoController.salvarLog(TipoLog.ADMIN_DELETAR_CERTIFICADOS_VENCIDOS, detalhes);
             JOptionPane.showMessageDialog(null, "Os Certificados vencidos foram excluídos com sucesso!");
         } else {
             JOptionPane.showMessageDialog(null, "Exclusão cancelada!");
