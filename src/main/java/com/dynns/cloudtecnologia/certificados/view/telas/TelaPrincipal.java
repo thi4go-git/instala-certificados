@@ -3,8 +3,11 @@ package com.dynns.cloudtecnologia.certificados.view.telas;
 import com.dynns.cloudtecnologia.certificados.controller.CertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificadoController;
 import com.dynns.cloudtecnologia.certificados.controller.InstaladorController;
+import com.dynns.cloudtecnologia.certificados.controller.LogCertificadoController;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
+import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
+import com.dynns.cloudtecnologia.certificados.utils.CertificadoUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
 import com.dynns.cloudtecnologia.certificados.utils.LicUtils;
@@ -24,6 +27,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private CertificadoController certificadoControler;
     private ConfiguracaoCertificadoController configuracaoCertificadoController;
+    private LogCertificadoController logCertificadoController;
 
     private static final String MSG_SELECIONA_CERTIFICADO = "Favor selecionar o Certificado!";
     private static final String MSG_SENHA_INVALIDA = "A Senha do Certificado não confere com a senha do Instalador!";
@@ -47,6 +51,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.instalador = new InstaladorController();
         this.certificadoControler = new CertificadoController();
         this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
+        this.logCertificadoController = new LogCertificadoController();
     }
 
     private void configurarExibicaoTela() {
@@ -383,13 +388,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if (tabela.getSelectedRow() != -1) {
             if (isAutenticado()) {
                 int linhaSelecionada = tabela.getSelectedRow();
-                String nomeCert = certificadoControler.retornarNome(linhaSelecionada);
-
+                int idCertificado = certificadoControler.retornarId(linhaSelecionada);
+                Certificado certDeletar = certificadoControler.findById(idCertificado);
+                String nomeCert = certDeletar.getNome();
                 if (DialogUtils.confirmarOperacao("Confirmar exclusão do certificado? " + nomeCert)) {
-                    int idCertificado = certificadoControler.retornarId(linhaSelecionada);
                     certificadoControler.deletarCertificado(idCertificado);
                     JOptionPane.showMessageDialog(null, "Sucesso ao deletar Certificado id: " + idCertificado + " - " + nomeCert + "!");
                     preencherTabelaCertificados();
+                    String detalhes = "Certificado deletado: " + CertificadoUtils.converterObjetoParaJson(certDeletar);
+                    logCertificadoController.salvarLog(TipoLog.ADMIN_CERTIFICADO_DELETADO, detalhes);
                 } else {
                     JOptionPane.showMessageDialog(null, MSG_PROCESSO_CANCELADO);
                 }
@@ -422,6 +429,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
                 if (statusCode == 0 && !descricao.contains(MSG_SENHA_INVALIDA)) {
                     JOptionPane.showMessageDialog(null, "Sucesso ao Instalar o certificado: " + nome + ", CÓD: " + statusCode);
+                    String detalhes = "Certificado instalado: " + CertificadoUtils.converterObjetoParaJson(certificado);
+                    logCertificadoController.salvarLog(TipoLog.USER_CERTIFICADO_INSTALADO, detalhes);
                 } else {
                     JOptionPane.showMessageDialog(null, "*** NÃO FOI POSSÍVEL INSTALAR: Senha Inválida. CÓD: " + statusCode + " ***");
                 }

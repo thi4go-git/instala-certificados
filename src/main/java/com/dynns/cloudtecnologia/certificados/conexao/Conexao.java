@@ -12,7 +12,7 @@ public class Conexao {
 
     private static Connection connection = null;
 
-    private static final String URL_BANCO = "jdbc:postgresql://cloudtecnologia.dynns.com:5432/certificado";
+    private static final String URL_BANCO = "jdbc:postgresql://localhost:5432/certificado";
     private static final String USUARIO = "postgres";
     private static final String PASS_BD = "895674";
 

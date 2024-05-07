@@ -1,15 +1,3 @@
-############################### VARIÁVEIS DE AMBIENTE #############################
-Para executar o projeto é necessário ter um arquivo .env na raiz
-do projeto.
-
-Exemplo de conteúdo do arquivo .env:
-URL_BANCO=jdbc:postgresql://meuIp:porta/bancoNome
-USUARIO_BANCO=user
-SENHA_BANCO=pass
-VERSION=Version 1.0
-INFO_RODAPE=By Thiago Jr. 62-981204102
-
-
 ############################## BANCO DE DADOS ##############################
 -> 1 passo criar tabela configuracao_certificado:
 
@@ -55,6 +43,16 @@ telefone_contato varchar,
 celular_contato varchar,
 email_contato varchar,
 observacao varchar
+);
+
+-> 5 Passo: Criar a tabela de logs do sistema:
+create table log_certificado (
+id serial primary key,
+tipo_log varchar not null,
+data_log TIMESTAMP not null,
+usuario varchar not null,
+ip_usuario varchar not null,
+detalhes varchar
 );
 
 

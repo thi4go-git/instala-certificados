@@ -1,5 +1,7 @@
 package com.dynns.cloudtecnologia.certificados.model.dto;
 
+import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
+
 public class EmailSendDTO {
 
     private String username;
@@ -12,6 +14,7 @@ public class EmailSendDTO {
     private String destinatario;
     private byte[] anexoBytes = null;
     private String anexoNome = null;
+    private Certificado certificado;
 
     public String getUsername() {
         return username;
@@ -91,6 +94,20 @@ public class EmailSendDTO {
 
     public void setDestinatario(String destinatario) {
         this.destinatario = destinatario;
+    }
+
+    /**
+     * @return the certificado
+     */
+    public Certificado getCertificado() {
+        return certificado;
+    }
+
+    /**
+     * @param certificado the certificado to set
+     */
+    public void setCertificado(Certificado certificado) {
+        this.certificado = certificado;
     }
 
 }
