@@ -3,9 +3,11 @@ package com.dynns.cloudtecnologia.certificados.controller;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.dao.ILogCertificado;
 import com.dynns.cloudtecnologia.certificados.model.dao.LogCertificadoDAO;
+import com.dynns.cloudtecnologia.certificados.model.entity.LogCertificado;
 import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class LogCertificadoController {
 
@@ -25,6 +27,10 @@ public class LogCertificadoController {
             throw new GeralException("Erro ao obter IP da máquina!");
         }
         logCertificadoDAO.salvarLog(tipoLog, usuarioLogado, ipUsuario, detalhes);
+    }
+
+    public List<LogCertificado> findAll() {
+        return this.logCertificadoDAO.findAll();
     }
 
 }

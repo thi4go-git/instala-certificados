@@ -21,14 +21,12 @@ public class CertificadoController {
     private final CertificadoModelTable modelo;
     private final ConfiguracaoCertificadoController configuracaoCertificadoController;
     private final ContatoCertificadoController contatoCertificadoController;
-    private final LogCertificadoController logCertificadoController;
 
     public CertificadoController() {
         this.certificadoDAO = new CertificadoDAO();
         this.modelo = new CertificadoModelTable();
         this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
         this.contatoCertificadoController = new ContatoCertificadoController();
-        this.logCertificadoController = new LogCertificadoController();
     }
 
     public void save(Certificado certificado) {

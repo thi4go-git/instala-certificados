@@ -111,6 +111,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
         cUserEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         cMsgPadraoEmail = new javax.swing.JTextArea();
+        btnLogs = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -270,6 +271,16 @@ public class TelaPreferencias extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnLogs.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLogs.setText("Consultar LOGS");
+        btnLogs.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
+        btnLogs.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLogs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -280,6 +291,8 @@ public class TelaPreferencias extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btDeletarVencidos, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btAtualizarCertificados, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -325,7 +338,8 @@ public class TelaPreferencias extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btDeletarVencidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btAtualizarCertificados, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btAtualizarCertificados, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -411,6 +425,10 @@ public class TelaPreferencias extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btAtualizarCertificadosActionPerformed
 
+    private void btnLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogsActionPerformed
+        new TelaLogs();
+    }//GEN-LAST:event_btnLogsActionPerformed
+
     public static void main() {
         java.awt.EventQueue.invokeLater(() -> {
             new TelaPreferencias().setVisible(true);
@@ -422,6 +440,7 @@ public class TelaPreferencias extends javax.swing.JFrame {
     private javax.swing.JButton btAtualizarCertificados;
     private javax.swing.JButton btDeletarVencidos;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JButton btnLogs;
     private javax.swing.JTextField cAssuntoEmail;
     private javax.swing.JTextArea cMsgPadraoEmail;
     private javax.swing.JTextField cPassEmail;
