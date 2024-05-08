@@ -79,7 +79,7 @@ public class EmailUtils {
             JOptionPane.showMessageDialog(null, "Sucesso ao enviar email: " + emailSendDTO.getDestinatario());
 
         } catch (MessagingException e) {
-            throw new GeralException("ERRO ao enviar email: " + e.getCause());
+            throw new GeralException("ERRO ao enviar email: " + e);
         }
     }
 }

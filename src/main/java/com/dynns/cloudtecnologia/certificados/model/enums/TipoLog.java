@@ -2,6 +2,7 @@ package com.dynns.cloudtecnologia.certificados.model.enums;
 
 public enum TipoLog {
     USER_CERTIFICADO_INSTALADO,
+    USER_CONTATO_CERTIFICADO_ATUALIZADO,
     ADMIN_CERTIFICADO_DELETADO,
     ADMIN_CERTIFICADO_ENVIADO_EMAIL,
     ADMIN_ALTERACAO_PREFERENCIAS,
