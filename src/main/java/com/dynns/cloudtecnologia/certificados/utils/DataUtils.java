@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 public class DataUtils {
 
@@ -49,6 +50,14 @@ public class DataUtils {
         String dia = dataBD.substring(8, 10);
 
         return dia.concat("/").concat(mes).concat("/").concat(ano);
+    }
+
+    public static boolean validarDataInicioAndFim(Date dataInicio, Date dataFim) {
+        if (dataFim.before(dataInicio)) {
+            JOptionPane.showMessageDialog(null, "Atenção: A data FINAL não pode ser MENOR que a data INICIAL!");
+            return false;
+        }
+        return true;
     }
 
 }

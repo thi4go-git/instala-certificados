@@ -4,6 +4,7 @@ import com.dynns.cloudtecnologia.certificados.controller.LogCertificadoControlle
 import com.dynns.cloudtecnologia.certificados.model.entity.LogCertificado;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -67,7 +68,7 @@ public class LogModelTable extends AbstractTableModel {
     }
 
     public void preencherTabelaLogsCertificadoFiltro(
-            String dtInicio, String dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes
+            Date dtInicio, Date dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes
     ) {
         this.logCertificadosList = this.logCertificadoController.findFilter(dtInicio, dtFim, tipoLog, usuario, ipUsuario, detalhes);
         atualizaTabela();

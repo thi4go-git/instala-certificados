@@ -68,7 +68,7 @@ public class LogCertificadoDAO implements ILogCertificado {
     }
 
     @Override
-    public List<LogCertificado> findFilter(String dtInicio, String dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes) {
+    public List<LogCertificado> findFilter(Date dtInicio, Date dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes) {
 
         String sql = "SELECT * FROM log_certificado WHERE 1=1";
         List<Object> parameters = new ArrayList<>();
@@ -93,11 +93,12 @@ public class LogCertificadoDAO implements ILogCertificado {
             parameters.add("%" + detalhes + "%");
         }
 
-        if (Objects.nonNull(dtInicio) && !dtInicio.isEmpty()
-                && Objects.nonNull(dtFim) && !dtFim.isEmpty()) {
+        if (Objects.nonNull(dtInicio) && Objects.nonNull(dtFim)) {
             sql += " AND data_log BETWEEN ? AND ?";
-            Timestamp dtInicioTimestamp = Timestamp.valueOf(dtInicio + " 00:00:00");
-            Timestamp dtFimTimestamp = Timestamp.valueOf(dtFim + " 23:59:59");
+            String dtInicioStr = DataUtils.formataParaBD(dtInicio);
+            String dtFimStr = DataUtils.formataParaBD(dtFim);
+            Timestamp dtInicioTimestamp = Timestamp.valueOf(dtInicioStr + " 00:00:00");
+            Timestamp dtFimTimestamp = Timestamp.valueOf(dtFimStr + " 23:59:59");
             parameters.add(dtInicioTimestamp);
             parameters.add(dtFimTimestamp);
         }

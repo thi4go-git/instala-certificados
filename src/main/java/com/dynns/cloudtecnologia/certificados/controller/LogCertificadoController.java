@@ -7,6 +7,7 @@ import com.dynns.cloudtecnologia.certificados.model.entity.LogCertificado;
 import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.List;
 
 public class LogCertificadoController {
@@ -34,7 +35,7 @@ public class LogCertificadoController {
     }
 
     public List<LogCertificado> findFilter(
-            String dtInicio, String dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes
+            Date dtInicio, Date dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes
     ) {
          return this.logCertificadoDAO.findFilter(dtInicio, dtFim, tipoLog, usuario, ipUsuario, detalhes);
     }
