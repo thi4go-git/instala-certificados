@@ -47,6 +47,7 @@ public class EmailUtils {
             message.setSubject(emailSendDTO.getAssunto());
 
             String detalhes;
+            TipoLog tipoLog;
             LogCertificadoController logCertificadoController = new LogCertificadoController();
 
             if (emailSendDTO.getAnexoBytes() != null && emailSendDTO.getAnexoNome() != null) {
@@ -71,18 +72,19 @@ public class EmailUtils {
 
                 detalhes = "Destinatário: " + emailSendDTO.getDestinatario() + " | Assunto: " + emailSendDTO.getAssunto() + " | "
                         + " Mensagem: " + emailSendDTO.getMensagemPadrao() + " | Certificado: " + CertificadoUtils.converterObjetoParaJson(emailSendDTO.getCertificado());
-                logCertificadoController.salvarLog(TipoLog.ADMIN_CERTIFICADO_ENVIADO_EMAIL, detalhes);
+                tipoLog = TipoLog.ADMIN_CERTIFICADO_ENVIADO_EMAIL;
             } else {
                 //MENSAGEM SEM ANEXO.
                 message.setText(emailSendDTO.getMensagemPadrao());
                 detalhes = "Destinatário: " + emailSendDTO.getDestinatario() + " | Assunto: " + emailSendDTO.getAssunto() + " | "
                         + " Mensagem: " + emailSendDTO.getMensagemPadrao();
-                logCertificadoController.salvarLog(TipoLog.USER_EMAIL_ENVIADO, detalhes);
+                tipoLog = TipoLog.USER_EMAIL_ENVIADO;
             }
 
             Transport.send(message);
             progressoEnviaCert.dispose();
 
+            logCertificadoController.salvarLog(tipoLog, detalhes);
             JOptionPane.showMessageDialog(null, "Sucesso ao enviar email: " + emailSendDTO.getDestinatario());
 
         } catch (MessagingException e) {
