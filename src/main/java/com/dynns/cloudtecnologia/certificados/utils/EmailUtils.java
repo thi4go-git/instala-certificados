@@ -46,6 +46,9 @@ public class EmailUtils {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailSendDTO.getDestinatario()));
             message.setSubject(emailSendDTO.getAssunto());
 
+            String detalhes;
+            LogCertificadoController logCertificadoController = new LogCertificadoController();
+
             if (emailSendDTO.getAnexoBytes() != null && emailSendDTO.getAnexoNome() != null) {
                 //MENSAGEM COM ANEXO.
                 // Criar a parte de texto do e-mail
@@ -65,16 +68,20 @@ public class EmailUtils {
 
                 // Adicionar o conteúdo multipart ao e-mail
                 message.setContent(multipart);
+
+                detalhes = "Destinatário: " + emailSendDTO.getDestinatario() + " | Assunto: " + emailSendDTO.getAssunto() + " | "
+                        + " Mensagem: " + emailSendDTO.getMensagemPadrao() + " | Certificado: " + CertificadoUtils.converterObjetoParaJson(emailSendDTO.getCertificado());
+                logCertificadoController.salvarLog(TipoLog.ADMIN_CERTIFICADO_ENVIADO_EMAIL, detalhes);
             } else {
                 //MENSAGEM SEM ANEXO.
                 message.setText(emailSendDTO.getMensagemPadrao());
+                detalhes = "Destinatário: " + emailSendDTO.getDestinatario() + " | Assunto: " + emailSendDTO.getAssunto() + " | "
+                        + " Mensagem: " + emailSendDTO.getMensagemPadrao();
+                logCertificadoController.salvarLog(TipoLog.USER_EMAIL_ENVIADO, detalhes);
             }
 
             Transport.send(message);
             progressoEnviaCert.dispose();
-            String detalhes = "Certificado enviado: " + CertificadoUtils.converterObjetoParaJson(emailSendDTO.getCertificado());
-            LogCertificadoController logCertificadoController = new LogCertificadoController();
-            logCertificadoController.salvarLog(TipoLog.ADMIN_CERTIFICADO_ENVIADO_EMAIL, detalhes);
 
             JOptionPane.showMessageDialog(null, "Sucesso ao enviar email: " + emailSendDTO.getDestinatario());
 

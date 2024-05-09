@@ -32,7 +32,7 @@ public class TelaLogs extends javax.swing.JFrame {
         tabelaLogs.getColumnModel().getColumn(2).setPreferredWidth(120);//DATA 
         tabelaLogs.getColumnModel().getColumn(3).setPreferredWidth(120);//Usuário
         tabelaLogs.getColumnModel().getColumn(4).setPreferredWidth(100);//Ip Usuário
-        tabelaLogs.getColumnModel().getColumn(5).setPreferredWidth(500);//DETALHES
+        tabelaLogs.getColumnModel().getColumn(5).setPreferredWidth(1000);//DETALHES
     }
 
     @SuppressWarnings("unchecked")
