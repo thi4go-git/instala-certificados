@@ -1,7 +1,10 @@
 package com.dynns.cloudtecnologia.certificados.view.telas;
 
+import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import com.dynns.cloudtecnologia.certificados.view.table.LogModelTable;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -18,13 +21,23 @@ public class TelaLogs extends javax.swing.JFrame {
         this.setResizable(false);
         this.setEnabled(true);
         this.preencherTabelaLogs();
+        this.definirComboBoxTipoLog();
     }
 
     private void preencherTabelaLogs() {
         LogModelTable modelo = new LogModelTable();
-        modelo.preencherTabelaLogsCertificado();
+        modelo.preencherTabelaLogsCertificadoMesAtual();
         tabelaLogs.setModel(modelo);
         this.definirTamanhoColunas();
+    }
+
+    private void definirComboBoxTipoLog() {
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+        comboBoxModel.addElement("");
+        for (TipoLog tipo : TipoLog.values()) {
+            comboBoxModel.addElement(tipo.name());
+        }
+        cTipoLog.setModel(comboBoxModel);
     }
 
     private void definirTamanhoColunas() {
@@ -64,7 +77,7 @@ public class TelaLogs extends javax.swing.JFrame {
         cDetalhes = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cIpUsuario = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -89,8 +102,6 @@ public class TelaLogs extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Data Final:");
 
-        dtInicial.setText("26/16/2111");
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Data Inicial:");
 
@@ -101,27 +112,24 @@ public class TelaLogs extends javax.swing.JFrame {
         cTipoLog.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN_ALTERACAO_PREFERENCIAS", "ADMIN_ALTERACAO_PREFERENCIAS", "ADMIN_ALTERACAO_PREFERENCIAS", "ADMIN_ALTERACAO_PREFERENCIAS", "ADMIN_ALTERACAO_PREFERENCIAS", "ADMIN_ALTERACAO_PREFERENCIAS" }));
         cTipoLog.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        dtFinal.setText("26/16/2111");
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Usuário:");
-
-        cUsuario.setText("judas-ascdascoascas");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("IP usuário:");
 
-        cDetalhes.setText("192.168.254.126");
-
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Detalhes:");
 
-        cIpUsuario.setText("192.168.254.126");
-
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\procurar.png")); // NOI18N
-        jButton1.setText("Consultar");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnConsultar.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\procurar.png")); // NOI18N
+        btnConsultar.setText("Consultar");
+        btnConsultar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnConsultar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -130,16 +138,15 @@ public class TelaLogs extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(dtInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cUsuario))))
+                    .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dtInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cUsuario)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -178,7 +185,7 @@ public class TelaLogs extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cIpUsuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnConsultar)
                 .addGap(7, 7, 7))
         );
 
@@ -223,6 +230,29 @@ public class TelaLogs extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        String dataInicio = this.dtInicial.getText().trim();
+        String dataFim = this.dtFinal.getText().trim();
+        if (validarPreenchimentoCampoData(dataInicio, dataFim)) {
+            LogModelTable modeloFiltro = new LogModelTable();
+            modeloFiltro.preencherTabelaLogsCertificadoFiltro(dataInicio, dataFim,
+                    this.cTipoLog.getSelectedItem().toString().trim(),
+                    this.cUsuario.getText().trim(), this.cIpUsuario.getText().trim(),
+                    this.cDetalhes.getText().trim());
+            tabelaLogs.setModel(modeloFiltro);
+            this.definirTamanhoColunas();
+        } else {
+            JOptionPane.showMessageDialog(null, "Atenção: Ao preencher o campo data, é necessário informar Início e Fim!  ");
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private boolean validarPreenchimentoCampoData(String dataInicio, String dataFim) {
+        if (!dataInicio.isBlank() || !dataFim.isBlank()) {
+            return !dataInicio.isBlank() && !dataFim.isBlank();
+        }
+        return true;
+    }
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -252,13 +282,13 @@ public class TelaLogs extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JTextField cDetalhes;
     private javax.swing.JTextField cIpUsuario;
     private javax.swing.JComboBox<String> cTipoLog;
     private javax.swing.JTextField cUsuario;
     private javax.swing.JTextField dtFinal;
     private javax.swing.JTextField dtInicial;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -117,18 +117,16 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jButton1" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel2" min="-2" pref="67" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="dtInicial" min="-2" pref="117" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cUsuario" max="32767" attributes="0"/>
-                              </Group>
+                          <Component id="btnConsultar" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel2" min="-2" pref="67" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="dtInicial" min="-2" pref="117" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cUsuario" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -177,7 +175,7 @@
                           <Component id="cIpUsuario" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnConsultar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -193,9 +191,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="dtInicial">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="26/16/2111"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
@@ -237,9 +232,6 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="dtFinal">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="26/16/2111"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
@@ -250,9 +242,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="cUsuario">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="judas-ascdascoascas"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
@@ -263,9 +252,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="cDetalhes">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="192.168.254.126"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
@@ -276,11 +262,8 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="cIpUsuario">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="192.168.254.126"/>
-              </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btnConsultar">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\thiago-am\Desktop\DEVELOP\PESSOAL\instala-certificados\src\main\resources\img\procurar.png"/>
@@ -295,6 +278,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

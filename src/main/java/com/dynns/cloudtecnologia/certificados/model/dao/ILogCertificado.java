@@ -7,6 +7,10 @@ import java.util.List;
 public interface ILogCertificado {
 
     void salvarLog(TipoLog tipoLog, String usuario, String ipUsuario, String detalhes);
-    
-    List<LogCertificado> findAll();
+
+    List<LogCertificado> findAllByMesAtual();
+
+    List<LogCertificado> findFilter(
+            String dtInicio, String dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes
+    );
 }

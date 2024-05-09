@@ -29,8 +29,14 @@ public class LogCertificadoController {
         logCertificadoDAO.salvarLog(tipoLog, usuarioLogado, ipUsuario, detalhes);
     }
 
-    public List<LogCertificado> findAll() {
-        return this.logCertificadoDAO.findAll();
+    public List<LogCertificado> findAllByMesAtual() {
+        return this.logCertificadoDAO.findAllByMesAtual();
+    }
+
+    public List<LogCertificado> findFilter(
+            String dtInicio, String dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes
+    ) {
+         return this.logCertificadoDAO.findFilter(dtInicio, dtFim, tipoLog, usuario, ipUsuario, detalhes);
     }
 
 }

@@ -61,8 +61,15 @@ public class LogModelTable extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
-    public void preencherTabelaLogsCertificado() {
-        this.logCertificadosList = this.logCertificadoController.findAll();
+    public void preencherTabelaLogsCertificadoMesAtual() {
+        this.logCertificadosList = this.logCertificadoController.findAllByMesAtual();
+        atualizaTabela();
+    }
+
+    public void preencherTabelaLogsCertificadoFiltro(
+            String dtInicio, String dtFim, String tipoLog, String usuario, String ipUsuario, String detalhes
+    ) {
+        this.logCertificadosList = this.logCertificadoController.findFilter(dtInicio, dtFim, tipoLog, usuario, ipUsuario, detalhes);
         atualizaTabela();
     }
 
