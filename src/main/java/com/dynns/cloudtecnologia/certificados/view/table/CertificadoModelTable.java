@@ -91,7 +91,7 @@ public class CertificadoModelTable extends AbstractTableModel {
     public void preencherTabelaCertificadosVencidos(List<Certificado> certificadosList) {
         this.certificadosList = new ArrayList<>();
         for (Certificado certificado : certificadosList) {
-            if (certificado.getExpira() <= 0) {
+            if (certificado.getExpira() < 0) {
                 this.certificadosList.add(certificado);
             }
         }
@@ -101,7 +101,7 @@ public class CertificadoModelTable extends AbstractTableModel {
     public void preencherTabelaCertificadosAtivos(List<Certificado> certificadosList) {
         this.certificadosList = new ArrayList<>();
         for (Certificado certificado : certificadosList) {
-            if (certificado.getExpira() > 0) {
+            if (certificado.getExpira() >= 0) {
                 this.certificadosList.add(certificado);
             }
         }

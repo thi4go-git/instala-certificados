@@ -103,10 +103,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         qtdeRegistros.setText("Registros: " + totalRegistros);
         definirTamanhoColunas();
         colorirLinhaAtraso();
-        if (totalRegistros == 0 && nomeCertificado.getText().trim().length() == 0) {
-            JOptionPane.showMessageDialog(null, "ATENÇÃO: Não existem certificados no banco de dados,"
-                    + " favor informar ao Responsável! ");
-        }
     }
 
     private void definirTamanhoColunas() {

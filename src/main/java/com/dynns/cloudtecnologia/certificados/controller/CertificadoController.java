@@ -101,11 +101,18 @@ public class CertificadoController {
     }
 
     public void deletarCertificado(int idCertificado) {
-        certificadoDAO.deletarCertificado(idCertificado);
+        if (contatoCertificadoController.deletarContatoCertificadoByIdCertificado(idCertificado)) {
+            certificadoDAO.deletarCertificado(idCertificado);
+        }
     }
 
     public void deletarCertificadosVencidos() {
-        certificadoDAO.deletarCertificadosVencidos();
+        List<Certificado> certificadosVencidos = certificadoDAO.findAllVencidos();
+        for (Certificado certificadoVencido : certificadosVencidos) {
+            if (contatoCertificadoController.deletarContatoCertificadoByIdCertificado(certificadoVencido.getId())) {
+                certificadoDAO.deletarCertificado(certificadoVencido.getId());
+            }
+        }
     }
 
     public boolean certificadoExists(Certificado certificado) {
