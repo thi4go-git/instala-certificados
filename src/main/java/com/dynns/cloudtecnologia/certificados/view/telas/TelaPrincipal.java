@@ -59,8 +59,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(true);
         this.setVisible(true);
         this.setResizable(false);
-        this.version.setText("Version teste");
-        this.infoRodape.setText("By Teste");
+        this.version.setText("Version: 2024.05.09");
+        this.infoRodape.setText("Contato: thi4go19@gmail.com | 62-981204102");
     }
 
     private void processoAutomatico() {
@@ -280,7 +280,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Nome Certificado: ");
 
-        nomeCertificado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        nomeCertificado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nomeCertificado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nomeCertificadoKeyPressed(evt);
