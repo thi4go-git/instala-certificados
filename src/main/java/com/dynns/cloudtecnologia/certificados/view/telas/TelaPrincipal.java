@@ -118,6 +118,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(4).setPreferredWidth(115);//EXPIRA
         tabela.getColumnModel().getColumn(5).setPreferredWidth(250);//DETALHES
         tabela.getColumnModel().getColumn(6).setPreferredWidth(30);//BTN
+
+        // Centralizar o texto em todas as colunas   
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tabela.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tabela.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tabela.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tabela.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
     }
 
     private void colorirLinhaAtraso() {
@@ -325,6 +333,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         menuPreferencias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menuPreferencias.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\preferencias.png")); // NOI18N
         menuPreferencias.setText("Preferências");
         menuPreferencias.setAlignmentX(1.0F);
         menuPreferencias.setAlignmentY(1.0F);
@@ -332,6 +341,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuPreferencias.setMargin(new java.awt.Insets(6, 9, 6, 9));
 
         itemMenuPreferencias.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        itemMenuPreferencias.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\edit1.png")); // NOI18N
         itemMenuPreferencias.setText("Editar Preferências");
         itemMenuPreferencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         itemMenuPreferencias.addActionListener(new java.awt.event.ActionListener() {
