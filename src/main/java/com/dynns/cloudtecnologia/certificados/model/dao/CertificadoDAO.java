@@ -3,14 +3,11 @@ package com.dynns.cloudtecnologia.certificados.model.dao;
 import com.dynns.cloudtecnologia.certificados.conexao.Conexao;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
-import com.dynns.cloudtecnologia.certificados.model.entity.LogCertificado;
-import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -185,13 +182,14 @@ public class CertificadoDAO implements ICertificado {
 
     @Override
     public List<Certificado> findAllVencidos() {
-        String sql = "SELECT id FROM certificado WHERE dtvencimento < CURRENT_DATE";
+        String sql = "SELECT id,nome FROM certificado WHERE dtvencimento < CURRENT_DATE";
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
             try (ResultSet rs = pst.executeQuery()) {
                 List<Certificado> certificados = new ArrayList<>();
                 while (rs.next()) {
                     Certificado certificado = new Certificado();
                     certificado.setId(rs.getInt(COLUNA_ID));
+                    certificado.setNome(rs.getString(COLUNA_NOME));
                     certificados.add(certificado);
                 }
                 return certificados;

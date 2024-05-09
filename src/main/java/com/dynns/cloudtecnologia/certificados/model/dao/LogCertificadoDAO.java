@@ -2,6 +2,7 @@ package com.dynns.cloudtecnologia.certificados.model.dao;
 
 import com.dynns.cloudtecnologia.certificados.conexao.Conexao;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
+import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.LogCertificado;
 import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
@@ -12,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -57,6 +60,7 @@ public class LogCertificadoDAO implements ILogCertificado {
 
                     logs.add(log);
                 }
+                Collections.sort(logs, Comparator.comparing(LogCertificado::getDataLog));
                 return logs;
             }
         } catch (SQLException ex) {
@@ -120,6 +124,7 @@ public class LogCertificadoDAO implements ILogCertificado {
 
                     logs.add(log);
                 }
+                Collections.sort(logs, Comparator.comparing(LogCertificado::getDataLog));
                 return logs;
             }
         } catch (SQLException ex) {
