@@ -15,7 +15,7 @@ public class LogModelTable extends AbstractTableModel {
         this.logCertificadoController = new LogCertificadoController();
     }
 
-    private final String[] colunas = {"ID", "TIPO LOG", "DATA", "USUÁRIO", "IP USUÁRIO", "DETALHES"};
+    private final String[] colunas = {"DATA", "TIPO LOG", "USUÁRIO", "IP USUÁRIO", "DETALHES"};
     private List<LogCertificado> logCertificadosList = new ArrayList<>();
 
     @Override// PREENCHE OS NOMES DAS COLUNAS DA TABLE
@@ -42,17 +42,15 @@ public class LogModelTable extends AbstractTableModel {
     public Object getValueAt(int linha, int coluna) {//PEGAR INFORMAÇÕES DA LINHA SELECIONADA!!!
         switch (coluna) {
             case 0:
-                return logCertificadosList.get(linha).getId();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                return logCertificadosList.get(linha).getDataLog().format(formatter);
             case 1:
                 return logCertificadosList.get(linha).getTipoLog();
             case 2:
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                return logCertificadosList.get(linha).getDataLog().format(formatter);
-            case 3:
                 return logCertificadosList.get(linha).getUsuario();
-            case 4:
+            case 3:
                 return logCertificadosList.get(linha).getIpUsuario();
-            case 5:
+            case 4:
                 return logCertificadosList.get(linha).getDetalhes();
             default:
                 return null;

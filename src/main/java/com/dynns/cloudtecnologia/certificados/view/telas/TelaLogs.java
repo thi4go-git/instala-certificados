@@ -27,12 +27,11 @@ public class TelaLogs extends javax.swing.JFrame {
 
     private void definirTamanhoColunas() {
         tabelaLogs.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        tabelaLogs.getColumnModel().getColumn(0).setPreferredWidth(40);//ID 
-        tabelaLogs.getColumnModel().getColumn(1).setPreferredWidth(250);//Tipo Log 
-        tabelaLogs.getColumnModel().getColumn(2).setPreferredWidth(120);//DATA 
-        tabelaLogs.getColumnModel().getColumn(3).setPreferredWidth(120);//Usuário
-        tabelaLogs.getColumnModel().getColumn(4).setPreferredWidth(100);//Ip Usuário
-        tabelaLogs.getColumnModel().getColumn(5).setPreferredWidth(1000);//DETALHES
+        tabelaLogs.getColumnModel().getColumn(0).setPreferredWidth(120);//DATA 
+        tabelaLogs.getColumnModel().getColumn(1).setPreferredWidth(250);//Tipo Log      
+        tabelaLogs.getColumnModel().getColumn(2).setPreferredWidth(120);//Usuário
+        tabelaLogs.getColumnModel().getColumn(3).setPreferredWidth(100);//Ip Usuário
+        tabelaLogs.getColumnModel().getColumn(4).setPreferredWidth(1000);//DETALHES
     }
 
     @SuppressWarnings("unchecked")
@@ -72,8 +71,8 @@ public class TelaLogs extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
