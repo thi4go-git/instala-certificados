@@ -330,7 +330,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         menuPreferencias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menuPreferencias.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\preferencias.png")); // NOI18N
+        menuPreferencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/preferencias.png"))); // NOI18N
         menuPreferencias.setText("Preferências");
         menuPreferencias.setAlignmentX(1.0F);
         menuPreferencias.setAlignmentY(1.0F);
@@ -338,7 +338,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuPreferencias.setMargin(new java.awt.Insets(6, 9, 6, 9));
 
         itemMenuLogsSistema.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        itemMenuLogsSistema.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\edit1.png")); // NOI18N
+        itemMenuLogsSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/preferencias.png"))); // NOI18N
         itemMenuLogsSistema.setText("Editar Preferências");
         itemMenuLogsSistema.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         itemMenuLogsSistema.addActionListener(new java.awt.event.ActionListener() {
@@ -349,7 +349,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuPreferencias.add(itemMenuLogsSistema);
 
         jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\log.png")); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/log.png"))); // NOI18N
         jMenuItem1.setText("LOGS do Sistema");
         jMenuItem1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
