@@ -7,9 +7,11 @@ import com.dynns.cloudtecnologia.certificados.model.dto.EmailSendDTO;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ContatoCertificado;
+import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import com.dynns.cloudtecnologia.certificados.utils.EmailUtils;
 import com.dynns.cloudtecnologia.certificados.view.table.CertificadoModelTable;
+import com.dynns.cloudtecnologia.certificados.view.telas.BarraProgresso;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,7 +23,7 @@ public class CertificadoController {
     private final CertificadoModelTable modelo;
     private final ConfiguracaoCertificadoController configuracaoCertificadoController;
     private final ContatoCertificadoController contatoCertificadoController;
-    private final LogCertificadoController logCertificadoController;
+    private LogCertificadoController logCertificadoController;
 
     public CertificadoController() {
         this.certificadoDAO = new CertificadoDAO();
@@ -103,11 +105,16 @@ public class CertificadoController {
     }
 
     public void deletarCertificado(int idCertificado) {
-        certificadoDAO.deletarCertificado(idCertificado);
+        if (contatoCertificadoController.deletarContatoCertificadoByIdCertificado(idCertificado)) {
+            certificadoDAO.deletarCertificado(idCertificado);
+        }
     }
 
     public void deletarCertificadosVencidos() {
-        certificadoDAO.deletarCertificadosVencidos();
+        ProcessoDeletarVencidos processoDeletar = new ProcessoDeletarVencidos();
+        Thread threadDeletar = new Thread(processoDeletar);
+        threadDeletar.setName("Thread ProcessoDeletarVencidos");
+        threadDeletar.start();
     }
 
     public boolean certificadoExists(Certificado certificado) {
@@ -143,6 +150,32 @@ public class CertificadoController {
         public void run() {
             CertificadoExtrator extrator = new CertificadoExtrator(caminhoPasta);
             extrator.processarCertificadosPasta();
+        }
+    }
+
+    /*
+    Classe para executar thread Deletar Vencidos
+     */
+    public class ProcessoDeletarVencidos implements Runnable {
+
+        @Override
+        public void run() {
+            List<Certificado> certificadosVencidos = certificadoDAO.findAllVencidos();
+            BarraProgresso progresso = new BarraProgresso();
+            progresso.definirLimites(1, 100);
+            int cont = 1;
+            for (Certificado certificadoVencido : certificadosVencidos) {
+                progresso.atualizarBarra(cont, "Aguarde! Deletando Certificado (" + cont + "/" + certificadosVencidos.size() + ") - " + certificadoVencido.getNome());
+                if (contatoCertificadoController.deletarContatoCertificadoByIdCertificado(certificadoVencido.getId())) {
+                    certificadoDAO.deletarCertificado(certificadoVencido.getId());
+                }
+                cont++;
+            }
+            progresso.dispose();
+
+            String detalhes = "Todos os certificados vencidos foram deletados!";
+            logCertificadoController.salvarLog(TipoLog.ADMIN_DELETAR_CERTIFICADOS_VENCIDOS, detalhes);
+            JOptionPane.showMessageDialog(null, "Os Certificados vencidos foram excluídos com sucesso!");
         }
     }
 

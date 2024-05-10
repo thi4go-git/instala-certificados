@@ -21,6 +21,9 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="C:\Users\thiago-am\Desktop\DEVELOP\PESSOAL\instala-certificados\src\main\resources\img\preferencias.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Prefer&#xea;ncias"/>
             <Property name="alignmentX" type="float" value="1.0"/>
             <Property name="alignmentY" type="float" value="1.0"/>
@@ -32,10 +35,13 @@
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="itemMenuPreferencias">
+            <MenuItem class="javax.swing.JMenuItem" name="itemMenuLogsSistema">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\thiago-am\Desktop\DEVELOP\PESSOAL\instala-certificados\src\main\resources\img\edit1.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Editar Prefer&#xea;ncias"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -43,7 +49,24 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemMenuPreferenciasActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemMenuLogsSistemaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\thiago-am\Desktop\DEVELOP\PESSOAL\instala-certificados\src\main\resources\img\log.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="LOGS do Sistema"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -344,7 +367,7 @@
         <Component class="javax.swing.JTextField" name="nomeCertificado">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="1"/>
+              <Font name="Segoe UI" size="14" style="0"/>
             </Property>
           </Properties>
           <Events>

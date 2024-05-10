@@ -59,8 +59,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(true);
         this.setVisible(true);
         this.setResizable(false);
-        this.version.setText("Version teste");
-        this.infoRodape.setText("By Teste");
+        this.version.setText("Version: 2024.05.09");
+        this.infoRodape.setText("Contato: thi4go19@gmail.com | 62-981204102");
     }
 
     private void processoAutomatico() {
@@ -103,10 +103,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         qtdeRegistros.setText("Registros: " + totalRegistros);
         definirTamanhoColunas();
         colorirLinhaAtraso();
-        if (totalRegistros == 0 && nomeCertificado.getText().trim().length() == 0) {
-            JOptionPane.showMessageDialog(null, "ATENÇÃO: Não existem certificados no banco de dados,"
-                    + " favor informar ao Responsável! ");
-        }
     }
 
     private void definirTamanhoColunas() {
@@ -118,6 +114,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(4).setPreferredWidth(115);//EXPIRA
         tabela.getColumnModel().getColumn(5).setPreferredWidth(250);//DETALHES
         tabela.getColumnModel().getColumn(6).setPreferredWidth(30);//BTN
+
+        // Centralizar o texto em todas as colunas   
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tabela.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tabela.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tabela.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tabela.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
     }
 
     private void colorirLinhaAtraso() {
@@ -176,7 +180,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         filtroListagem = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuPreferencias = new javax.swing.JMenu();
-        itemMenuPreferencias = new javax.swing.JMenuItem();
+        itemMenuLogsSistema = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -280,7 +285,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Nome Certificado: ");
 
-        nomeCertificado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        nomeCertificado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nomeCertificado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nomeCertificadoKeyPressed(evt);
@@ -325,21 +330,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         menuPreferencias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menuPreferencias.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\preferencias.png")); // NOI18N
         menuPreferencias.setText("Preferências");
         menuPreferencias.setAlignmentX(1.0F);
         menuPreferencias.setAlignmentY(1.0F);
         menuPreferencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuPreferencias.setMargin(new java.awt.Insets(6, 9, 6, 9));
 
-        itemMenuPreferencias.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        itemMenuPreferencias.setText("Editar Preferências");
-        itemMenuPreferencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        itemMenuPreferencias.addActionListener(new java.awt.event.ActionListener() {
+        itemMenuLogsSistema.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        itemMenuLogsSistema.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\edit1.png")); // NOI18N
+        itemMenuLogsSistema.setText("Editar Preferências");
+        itemMenuLogsSistema.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        itemMenuLogsSistema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemMenuPreferenciasActionPerformed(evt);
+                itemMenuLogsSistemaActionPerformed(evt);
             }
         });
-        menuPreferencias.add(itemMenuPreferencias);
+        menuPreferencias.add(itemMenuLogsSistema);
+
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\log.png")); // NOI18N
+        jMenuItem1.setText("LOGS do Sistema");
+        jMenuItem1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuPreferencias.add(jMenuItem1);
 
         jMenuBar1.add(menuPreferencias);
 
@@ -440,11 +458,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnInstalarActionPerformed
 
-    private void itemMenuPreferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuPreferenciasActionPerformed
+    private void itemMenuLogsSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuLogsSistemaActionPerformed
         if (isAutenticado()) {
             new TelaPreferencias();
         }
-    }//GEN-LAST:event_itemMenuPreferenciasActionPerformed
+    }//GEN-LAST:event_itemMenuLogsSistemaActionPerformed
 
     private void filtroListagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroListagemActionPerformed
         String filtro = "" + filtroListagem.getSelectedItem();
@@ -490,6 +508,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEnviarCertificadoActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if (isAutenticado()) {
+            new TelaLogs();
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void limpaBarraPesquisa() {
         nomeCertificado.setText("");
     }
@@ -512,9 +536,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnInstalar;
     private javax.swing.JComboBox<String> filtroListagem;
     private javax.swing.JLabel infoRodape;
-    private javax.swing.JMenuItem itemMenuPreferencias;
+    private javax.swing.JMenuItem itemMenuLogsSistema;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

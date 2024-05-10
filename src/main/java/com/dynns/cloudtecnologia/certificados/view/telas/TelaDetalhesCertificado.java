@@ -1,15 +1,19 @@
 package com.dynns.cloudtecnologia.certificados.view.telas;
 
 import com.dynns.cloudtecnologia.certificados.controller.ContatoCertificadoController;
+import com.dynns.cloudtecnologia.certificados.controller.LogCertificadoController;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
 import com.dynns.cloudtecnologia.certificados.model.entity.ContatoCertificado;
+import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
+import com.dynns.cloudtecnologia.certificados.utils.CertificadoUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import com.dynns.cloudtecnologia.certificados.utils.DialogUtils;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Objects;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -18,6 +22,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
     Certificado certificado;
     ContatoCertificado contatoCertificadoCadastrado;
     private ContatoCertificadoController contatoCertificadoController;
+    private LogCertificadoController logCertificadoController;
 
     public TelaDetalhesCertificado() {
         initComponents();
@@ -28,6 +33,7 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
         initComponents();
         this.certificado = certificado;
         this.contatoCertificadoController = new ContatoCertificadoController();
+        this.logCertificadoController = new LogCertificadoController();
         habilitarTela();
         preencherInformacoes();
     }
@@ -313,7 +319,13 @@ public class TelaDetalhesCertificado extends javax.swing.JFrame {
             contatoUpdate.setEmailContato(cEmail.getText().trim());
             contatoUpdate.setObservacao(cObservacao.getText());
 
+            ContatoCertificado contatoAntigo = contatoCertificadoController.retornarContatoCertificado(certificado.getId());
+
             contatoCertificadoController.salvarContatoCertificado(contatoUpdate);
+            String detalhes = Objects.nonNull(contatoAntigo.getId())
+                    ? "Contato certificado anterior: " + CertificadoUtils.converterObjetoParaJson(contatoAntigo) : "Contato certificado criado!";
+            logCertificadoController.salvarLog(TipoLog.USER_CONTATO_CERTIFICADO_ATUALIZADO, detalhes);
+
         } else {
             JOptionPane.showMessageDialog(null, "Processo cancelado!");
         }

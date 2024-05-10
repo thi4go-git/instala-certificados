@@ -160,16 +160,6 @@ public class CertificadoDAO implements ICertificado {
     }
 
     @Override
-    public void deletarCertificadosVencidos() {
-        String sql = "delete from certificado where dtVencimento < CURRENT_TIMESTAMP";
-        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
-            pst.execute();
-        } catch (SQLException ex) {
-            throw new GeralException("*** ERRO: Não foi possível deletar os certificados vencidos: " + ex.getMessage());
-        }
-    }
-
-    @Override
     public boolean certificadoExists(Certificado certificado) {
         String sql = "select * from certificado where alias = ? "
                 + "AND imagemCertificado = ? AND dtVencimento =?";
@@ -188,6 +178,25 @@ public class CertificadoDAO implements ICertificado {
             throw new GeralException("Erro ao consultar certificado certificadoExists " + ex.getMessage());
         }
         return false;
+    }
+
+    @Override
+    public List<Certificado> findAllVencidos() {
+        String sql = "SELECT id,nome FROM certificado WHERE dtvencimento < CURRENT_DATE";
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
+            try (ResultSet rs = pst.executeQuery()) {
+                List<Certificado> certificados = new ArrayList<>();
+                while (rs.next()) {
+                    Certificado certificado = new Certificado();
+                    certificado.setId(rs.getInt(COLUNA_ID));
+                    certificado.setNome(rs.getString(COLUNA_NOME));
+                    certificados.add(certificado);
+                }
+                return certificados;
+            }
+        } catch (SQLException ex) {
+            throw new GeralException("Erro ao obter certificados Vencidos findAllVencidos (CertificadoDAO) " + ex);
+        }
     }
 
 }

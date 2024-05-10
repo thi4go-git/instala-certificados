@@ -9,4 +9,6 @@ public interface IContatoCertificado {
     void salvarContatoCertificado(ContatoCertificado contato);
    
     void atualizarContatoCertificado(ContatoCertificado contato);
+    
+    boolean deletarContatoCertificadoByIdCertificado(int idCertificado);
 }

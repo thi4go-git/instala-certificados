@@ -96,16 +96,10 @@ public class EmailSendDTO {
         this.destinatario = destinatario;
     }
 
-    /**
-     * @return the certificado
-     */
     public Certificado getCertificado() {
         return certificado;
     }
 
-    /**
-     * @param certificado the certificado to set
-     */
     public void setCertificado(Certificado certificado) {
         this.certificado = certificado;
     }

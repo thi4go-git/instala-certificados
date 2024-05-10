@@ -88,4 +88,20 @@ public class ContatoCertificadoDAO implements IContatoCertificado {
         }
     }
 
+    @Override
+    public boolean deletarContatoCertificadoByIdCertificado(int idCertificado) {
+        String sql = "delete from contato_certificado WHERE id_certificado=?";
+        try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setInt(1, idCertificado);
+            //int linhasAfetadas = pst.executeUpdate();
+            //if (linhasAfetadas == 0) {
+            //throw new GeralException("Contato não encontrado para EXCLUSÃO. Certificado ID: " + idCertificado);
+            //}
+            pst.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            throw new GeralException("Erro ao atualizar Contato: " + ex.getMessage());
+        }
+    }
+
 }

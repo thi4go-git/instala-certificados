@@ -15,8 +15,8 @@ public interface ICertificado {
 
     void deletarCertificado(int idCertificado);
 
-    void deletarCertificadosVencidos();
-
     boolean certificadoExists(Certificado certificado);
+
+    List<Certificado> findAllVencidos();
 
 }
