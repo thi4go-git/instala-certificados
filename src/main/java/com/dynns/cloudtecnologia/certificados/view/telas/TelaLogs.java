@@ -69,10 +69,10 @@ public class TelaLogs extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaLogs = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();       
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cTipoLog = new javax.swing.JComboBox<>();      
+        cTipoLog = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         cUsuario = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -81,7 +81,7 @@ public class TelaLogs extends javax.swing.JFrame {
         cIpUsuario = new javax.swing.JTextField();
         btnLimparCampos = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
-		
+
 		dtInicial = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
         dtInicial.setMaxSelectableDate(new Date());
 		dtFinal = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
@@ -129,7 +129,7 @@ public class TelaLogs extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Detalhes:");
 
-        btnLimparCampos.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\clear.png")); // NOI18N
+        btnLimparCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clear.png"))); // NOI18N
         btnLimparCampos.setText("Limpar Campos");
         btnLimparCampos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnLimparCampos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -139,7 +139,7 @@ public class TelaLogs extends javax.swing.JFrame {
             }
         });
 
-        btnConsultar.setIcon(new javax.swing.ImageIcon("C:\\Users\\thiago-am\\Desktop\\DEVELOP\\PESSOAL\\instala-certificados\\src\\main\\resources\\img\\procurar.png")); // NOI18N
+        btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/procurar.png"))); // NOI18N
         btnConsultar.setText("Consultar");
         btnConsultar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnConsultar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -165,7 +165,7 @@ public class TelaLogs extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(cUsuario)))
-                    .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
+                    .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -177,15 +177,15 @@ public class TelaLogs extends javax.swing.JFrame {
                             .addComponent(dtFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                             .addComponent(cIpUsuario)))
                     .addComponent(btnLimparCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cTipoLog, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,10 +207,9 @@ public class TelaLogs extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cIpUsuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLimparCampos)
-                    .addComponent(btnConsultar))
-                .addGap(7, 7, 7))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(btnLimparCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
