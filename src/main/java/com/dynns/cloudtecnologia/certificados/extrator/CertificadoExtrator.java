@@ -24,6 +24,7 @@ import org.apache.commons.io.FileUtils;
 import javax.swing.*;
 import java.io.File;
 
+
 public class CertificadoExtrator {
 
     BarraProgresso progresso;
@@ -68,7 +69,6 @@ public class CertificadoExtrator {
             progresso.definirLimites(1, listaPfxs.size());
 
             String senhaCertificado = configuracaoCertificado.getSenhaCertificado();
-
             int cont = 0;
             int instalados = 0;
             for (File certificadoPfx : listaPfxs) {
@@ -80,7 +80,6 @@ public class CertificadoExtrator {
 
                 if (!dataVencimentoSTR.contains("keystore password was incorrect")) {
                     certificadosSenhaCorreta.add(pathCertificado);
-
                     Date dtVencimento = null;
                     String format = "EEE MMM dd HH:mm:ss zzz yyyy";
                     DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
@@ -88,9 +87,8 @@ public class CertificadoExtrator {
                         dtVencimento = dateFormat.parse(dataVencimentoSTR);
                     } catch (ParseException ex) {
                         certificadosErroProcessamento.add(pathCertificado);
-                        this.notificarErroProcessamentoCertificado(pathCertificado, ex.getMessage());
+                        this.notificarErroProcessamentoCertificado(pathCertificado, ex.getMessage(), certificadoPfx.length(), certificadoPfx.getName());
                     }
-
                     if (Objects.nonNull(dtVencimento)) {
                         Certificado certificado = new Certificado();
                         certificado.setNome(certificadoPfx.getName());
@@ -168,10 +166,12 @@ public class CertificadoExtrator {
         }
     }
 
-    private void notificarErroProcessamentoCertificado(String pathCertificado, String erro) {
+    private void notificarErroProcessamentoCertificado(String pathCertificado, String erro, long tamanhoCertificado, String nomeCertificado) {
         String msg = "<html>::::::::::::::: Erro ao ler CERTIFICADO :::::::::::::::<br>"
-                + "Causa: " + erro + " <br>"
-                + "Certificado: <a href='" + pathCertificado + "'>" + pathCertificado + "</a></html>";
+                + "Certificado: " + nomeCertificado + " <br>"
+                + "Tamanho (bytes): " + tamanhoCertificado + " <br>"
+                + "Causa do erro: " + erro + " <br>"
+                + "Caminho: <a href='" + pathCertificado + "'>" + pathCertificado + "</a></html>";
 
         JTextPane textPane = new JTextPane();
         textPane.setContentType("text/html");
