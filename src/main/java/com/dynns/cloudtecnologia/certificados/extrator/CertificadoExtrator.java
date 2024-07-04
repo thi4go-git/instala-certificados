@@ -5,6 +5,7 @@ import com.dynns.cloudtecnologia.certificados.controller.ConfiguracaoCertificado
 import com.dynns.cloudtecnologia.certificados.controller.LogCertificadoController;
 import com.dynns.cloudtecnologia.certificados.exception.GeralException;
 import com.dynns.cloudtecnologia.certificados.model.entity.Certificado;
+import com.dynns.cloudtecnologia.certificados.model.entity.CertificadoInformacoesDTO;
 import com.dynns.cloudtecnologia.certificados.model.entity.ConfiguracaoCertificado;
 import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import com.dynns.cloudtecnologia.certificados.utils.CertificadoUtils;
@@ -23,7 +24,6 @@ import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import javax.swing.*;
 import java.io.File;
-
 
 public class CertificadoExtrator {
 
@@ -74,17 +74,15 @@ public class CertificadoExtrator {
             for (File certificadoPfx : listaPfxs) {
                 cont++;
                 String pathCertificado = certificadoPfx.getAbsolutePath();
-                String dataVencimentoSTR = CertificadoUtils.retornarVencimentoCertificado(pathCertificado, senhaCertificado);
-
+                CertificadoInformacoesDTO infoCert = CertificadoUtils.retornarInformacoesCertificado(pathCertificado, senhaCertificado);
                 progresso.atualizarBarra(cont, "Aguarde! Lendo Certificado (" + cont + "/" + listaPfxs.size() + ") - " + certificadoPfx.getName());
-
-                if (!dataVencimentoSTR.contains("keystore password was incorrect")) {
+                if (!infoCert.getDataVencimento().contains("keystore password was incorrect")) {
                     certificadosSenhaCorreta.add(pathCertificado);
                     Date dtVencimento = null;
                     String format = "EEE MMM dd HH:mm:ss zzz yyyy";
                     DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
                     try {
-                        dtVencimento = dateFormat.parse(dataVencimentoSTR);
+                        dtVencimento = dateFormat.parse(infoCert.getDataVencimento());
                     } catch (ParseException ex) {
                         certificadosErroProcessamento.add(pathCertificado);
                         this.notificarErroProcessamentoCertificado(pathCertificado, ex.getMessage(), certificadoPfx.length(), certificadoPfx.getName());
@@ -92,7 +90,7 @@ public class CertificadoExtrator {
                     if (Objects.nonNull(dtVencimento)) {
                         Certificado certificado = new Certificado();
                         certificado.setNome(certificadoPfx.getName());
-                        certificado.setAlias(CertificadoUtils.retornarAliasCertificado(pathCertificado, senhaCertificado));
+                        certificado.setAlias(infoCert.getAlias());
                         java.sql.Date dataSQL = new java.sql.Date(dtVencimento.getTime());
                         certificado.setDataVencimento(dataSQL);
                         certificado.setHoraVencimento(new SimpleDateFormat("HH:mm:ss").format(dtVencimento));
@@ -108,7 +106,6 @@ public class CertificadoExtrator {
                             certificadosExistentesBD.add(certificadoPfx.getAbsolutePath());
                         }
                     }
-
                 } else {
                     certificadosSenhaDivergente.add(pathCertificado);
                 }
