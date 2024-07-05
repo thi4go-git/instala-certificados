@@ -63,38 +63,44 @@ public class CertificadoExtrator {
             for (File certificadoPfx : listaPfxs) {
                 cont++;
                 String pathCertificado = certificadoPfx.getAbsolutePath();
-                CertificadoInformacoesDTO infoCert = CertificadoUtils.retornarInformacoesCertificado(pathCertificado, senhaCertificado);
-                progresso.atualizarBarra(cont, "Aguarde! Lendo Certificado (" + cont + "/" + listaPfxs.size() + ") - " + certificadoPfx.getName());
-                if (!infoCert.getDataVencimento().contains("keystore password was incorrect")) {
-                    Date dtVencimento = null;
-                    String format = "EEE MMM dd HH:mm:ss zzz yyyy";
-                    DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
-                    try {
-                        dtVencimento = dateFormat.parse(infoCert.getDataVencimento());
-                    } catch (ParseException ex) {
-                        detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), null, StatusAtualizacaoEnum.ERRO_DE_PROCESSAMENTO));
-                    }
-                    if (Objects.nonNull(dtVencimento)) {
-                        Certificado certificado = new Certificado();
-                        certificado.setNome(certificadoPfx.getName());
-                        certificado.setAlias(infoCert.getAlias());
-                        java.sql.Date dataSQL = new java.sql.Date(dtVencimento.getTime());
-                        certificado.setDataVencimento(dataSQL);
-                        certificado.setHoraVencimento(new SimpleDateFormat("HH:mm:ss").format(dtVencimento));
-                        certificado.setDescricaoVencimento("DESCRIÇÃO");
-                        certificado.setExpira(0);
-                        certificado.setCertificadoByte(FilesUtils.fileTobyte(new File(certificadoPfx.getAbsolutePath())));
 
-                        if (!certificadoController.certificadoExists(certificado)) {
-                            certificadoController.save(certificado);
-                            progresso.atualizarBarra(cont, "SUCESSO AO SALVAR NO BANCO: " + certificado.getNome());
-                            detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_NOVO));
-                        } else {
-                            detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_JA_EXISTE));
+                long certificadoSize = certificadoPfx.length();
+                if (certificadoSize != 0) {
+                    CertificadoInformacoesDTO infoCert = CertificadoUtils.retornarInformacoesCertificado(pathCertificado, senhaCertificado);
+                    progresso.atualizarBarra(cont, "Aguarde! Lendo Certificado (" + cont + "/" + listaPfxs.size() + ") - " + certificadoPfx.getName());
+                    if (!infoCert.getDataVencimento().contains("keystore password was incorrect")) {
+                        Date dtVencimento = null;
+                        String format = "EEE MMM dd HH:mm:ss zzz yyyy";
+                        DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
+                        try {
+                            dtVencimento = dateFormat.parse(infoCert.getDataVencimento());
+                        } catch (ParseException ex) {
+                            detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), null, StatusAtualizacaoEnum.ERRO_DE_PROCESSAMENTO));
                         }
+                        if (Objects.nonNull(dtVencimento)) {
+                            Certificado certificado = new Certificado();
+                            certificado.setNome(certificadoPfx.getName());
+                            certificado.setAlias(infoCert.getAlias());
+                            java.sql.Date dataSQL = new java.sql.Date(dtVencimento.getTime());
+                            certificado.setDataVencimento(dataSQL);
+                            certificado.setHoraVencimento(new SimpleDateFormat("HH:mm:ss").format(dtVencimento));
+                            certificado.setDescricaoVencimento("DESCRIÇÃO");
+                            certificado.setExpira(0);
+                            certificado.setCertificadoByte(FilesUtils.fileTobyte(new File(certificadoPfx.getAbsolutePath())));
+
+                            if (!certificadoController.certificadoExists(certificado)) {
+                                certificadoController.save(certificado);
+                                progresso.atualizarBarra(cont, "SUCESSO AO SALVAR NO BANCO: " + certificado.getNome());
+                                detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_NOVO));
+                            } else {
+                                detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_JA_EXISTE));
+                            }
+                        }
+                    } else {
+                        detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), null, StatusAtualizacaoEnum.SENHA_DIVERGENTE));
                     }
                 } else {
-                    detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), null, StatusAtualizacaoEnum.SENHA_DIVERGENTE));
+                    detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), null, StatusAtualizacaoEnum.ERRO_DE_PROCESSAMENTO));
                 }
             }
             progresso.dispose();

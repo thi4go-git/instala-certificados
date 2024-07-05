@@ -25,8 +25,8 @@ public class CertificadoUtils {
     public static CertificadoInformacoesDTO retornarInformacoesCertificado(String caminhoCert, String senhaCert) {
         CertificadoInformacoesDTO informacoesCertificado = new CertificadoInformacoesDTO();
         try (FileInputStream fileInputStream = new FileInputStream(caminhoCert)) {
-            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
             Security.addProvider(new BouncyCastleProvider());
+            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());            
             keystore.load(fileInputStream, senhaCert.toCharArray());
             Enumeration<String> aliases = keystore.aliases();
             while (aliases.hasMoreElements()) {

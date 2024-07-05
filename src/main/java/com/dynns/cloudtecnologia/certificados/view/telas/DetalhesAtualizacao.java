@@ -62,7 +62,7 @@ public class DetalhesAtualizacao extends javax.swing.JFrame {
                     label.setForeground(new Color(0, 200, 90));
                     return label;
                 } else {
-                    if (status == StatusAtualizacaoEnum.ERRO_DE_PROCESSAMENTO) {
+                    if (status == StatusAtualizacaoEnum.ERRO_DE_PROCESSAMENTO || status == StatusAtualizacaoEnum.SENHA_DIVERGENTE ) {
                         label.setForeground(new Color(200, 10, 10));
                         return label;
                     } else {
