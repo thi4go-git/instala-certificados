@@ -1,16 +1,19 @@
 package com.dynns.cloudtecnologia.certificados.view.table;
 
 import com.dynns.cloudtecnologia.certificados.model.entity.DetalhesAtualizacaoDTO;
+import com.dynns.cloudtecnologia.certificados.model.enums.StatusAtualizacaoEnum;
 import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
 
 public class CertificadoAtualizacaoModelTable extends AbstractTableModel {
 
     private final String[] colunas = {"Nome", "Data vencimento", "Status"};
     private List<DetalhesAtualizacaoDTO> certificadosAtualizacaoList = new ArrayList<>();
+    private List<DetalhesAtualizacaoDTO> certificadosAtualizacaoListBackup = new ArrayList<>();
 
     @Override
     public String getColumnName(int column) {
@@ -34,7 +37,7 @@ public class CertificadoAtualizacaoModelTable extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int linha, int coluna) {
-        switch (coluna) {    
+        switch (coluna) {
             case 0:
                 return certificadosAtualizacaoList.get(linha).getNomeCertificado();
 
@@ -57,7 +60,24 @@ public class CertificadoAtualizacaoModelTable extends AbstractTableModel {
 
     public void preencherTabela(List<DetalhesAtualizacaoDTO> certificadosAtualizacaoList) {
         this.certificadosAtualizacaoList = certificadosAtualizacaoList;
+        this.certificadosAtualizacaoListBackup = this.certificadosAtualizacaoList;
         atualizaTabela();
+    }
+
+    public void preencherTabelaPersonalizada(String atualizacaoEnumStr) {
+        resetarTabela();
+        if (!atualizacaoEnumStr.equals("TODOS")) {
+            StatusAtualizacaoEnum status = StatusAtualizacaoEnum.fromString(atualizacaoEnumStr);
+            List<DetalhesAtualizacaoDTO> filtro = certificadosAtualizacaoList.stream()
+                    .filter(detalhe -> detalhe.getStatusAtualizacaoEnum() == status)
+                    .collect(Collectors.toList());
+            this.certificadosAtualizacaoList = filtro;
+        }
+        atualizaTabela();
+    }
+
+    private void resetarTabela() {
+        this.certificadosAtualizacaoList = this.certificadosAtualizacaoListBackup;
     }
 
 }
