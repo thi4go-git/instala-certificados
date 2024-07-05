@@ -162,7 +162,7 @@ public class CertificadoController {
         public void run() {
             List<Certificado> certificadosVencidos = certificadoDAO.findAllVencidos();
             BarraProgresso progresso = new BarraProgresso();
-            progresso.definirLimites(1, 100);
+            progresso.definirLimites(1, certificadosVencidos.size());
             int cont = 1;
             for (Certificado certificadoVencido : certificadosVencidos) {
                 progresso.atualizarBarra(cont, "Aguarde! Deletando Certificado (" + cont + "/" + certificadosVencidos.size() + ") - " + certificadoVencido.getNome());
