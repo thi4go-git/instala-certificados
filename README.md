@@ -1,4 +1,5 @@
 ############################## BANCO DE DADOS ##############################
+
 -> 1 passo criar tabela configuracao_certificado::
 
 create table configuracao_certificado (
