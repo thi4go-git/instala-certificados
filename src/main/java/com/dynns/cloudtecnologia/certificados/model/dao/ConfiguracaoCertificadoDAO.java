@@ -21,6 +21,7 @@ public class ConfiguracaoCertificadoDAO implements IConfiguracaoCertificado {
     private static final String COLUNA_TLS_EMAIL = "tls_email";
     private static final String COLUNA_ASSUNTO_EMAIL = "assunto_email";
     private static final String COLUNA_MSG_PADRAO_EMAIL = "mensagem_padrao_email";
+    private static final String COLUNA_PROCESSAR_VENCIDOS = "processar_vencidos";
 
     @Override
     public ConfiguracaoCertificado obterConfiguracaoCertificado() {
@@ -41,6 +42,7 @@ public class ConfiguracaoCertificadoDAO implements IConfiguracaoCertificado {
                     config.setTlsEmail(rs.getString(COLUNA_TLS_EMAIL));
                     config.setAssuntoEmail(rs.getString(COLUNA_ASSUNTO_EMAIL));
                     config.setMensagemPadraoEmail(rs.getString(COLUNA_MSG_PADRAO_EMAIL));
+                    config.setProcessarVencidos(rs.getBoolean(COLUNA_PROCESSAR_VENCIDOS));
 
                     return config;
                 }
@@ -55,7 +57,7 @@ public class ConfiguracaoCertificadoDAO implements IConfiguracaoCertificado {
     public void atualizarConfiguracaoCetificado(ConfiguracaoCertificado configuracaoCertificado) {
         String sql = "update configuracao_certificado SET local_pasta = ?,senha_certificado = ?,"
                 + "senha_master = ?, user_email = ?,pass_email = ?,smtp_email = ?,smtp_port_email = ?,tls_email = ?,"
-                + "assunto_email = ?,mensagem_padrao_email = ?";
+                + "assunto_email = ?,mensagem_padrao_email = ?, processar_vencidos = ?";
 
         try (Connection connection = Conexao.getConexao(); PreparedStatement pst = connection.prepareStatement(sql)) {
 
@@ -69,6 +71,7 @@ public class ConfiguracaoCertificadoDAO implements IConfiguracaoCertificado {
             pst.setString(8, configuracaoCertificado.getTlsEmail());
             pst.setString(9, configuracaoCertificado.getAssuntoEmail());
             pst.setString(10, configuracaoCertificado.getMensagemPadraoEmail());
+            pst.setBoolean(11, configuracaoCertificado.isProcessarVencidos());
             
             pst.executeUpdate();
 

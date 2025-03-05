@@ -10,6 +10,7 @@ import com.dynns.cloudtecnologia.certificados.model.entity.DetalhesAtualizacaoDT
 import com.dynns.cloudtecnologia.certificados.model.enums.StatusAtualizacaoEnum;
 import com.dynns.cloudtecnologia.certificados.model.enums.TipoLog;
 import com.dynns.cloudtecnologia.certificados.utils.CertificadoUtils;
+import com.dynns.cloudtecnologia.certificados.utils.DataUtils;
 import com.dynns.cloudtecnologia.certificados.utils.FilesUtils;
 import com.dynns.cloudtecnologia.certificados.view.telas.BarraProgresso;
 import com.dynns.cloudtecnologia.certificados.view.telas.DetalhesAtualizacao;
@@ -29,16 +30,21 @@ public class CertificadoExtrator {
 
     BarraProgresso progresso;
     String caminhoPasta;
+    boolean isProcessarVencidos;
 
     private final CertificadoController certificadoController;
     private final ConfiguracaoCertificadoController configuracaoCertificadoController;
     private final LogCertificadoController logCertificadoController;
+    
+    private static final String MSG_SENHA_INCORRETA = "A Senha do Certificado não confere com a senha do Instalador!";
 
-    public CertificadoExtrator(String caminhoPasta) {
+
+    public CertificadoExtrator(String caminhoPasta,boolean isProcessarVencidos) {
         this.certificadoController = new CertificadoController();
         this.configuracaoCertificadoController = new ConfiguracaoCertificadoController();
         this.logCertificadoController = new LogCertificadoController();
         this.caminhoPasta = caminhoPasta;
+        this.isProcessarVencidos = isProcessarVencidos;
     }
 
     public void processarCertificadosPasta() {
@@ -77,7 +83,8 @@ public class CertificadoExtrator {
                         } catch (ParseException ex) {
                             detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), null, StatusAtualizacaoEnum.ERRO_DE_PROCESSAMENTO));
                         }
-                        if (Objects.nonNull(dtVencimento)) {
+                        if (Objects.nonNull(dtVencimento)) {                        
+                             
                             Certificado certificado = new Certificado();
                             certificado.setNome(certificadoPfx.getName());
                             certificado.setAlias(infoCert.getAlias());
@@ -88,13 +95,29 @@ public class CertificadoExtrator {
                             certificado.setExpira(0);
                             certificado.setCertificadoByte(FilesUtils.fileTobyte(new File(certificadoPfx.getAbsolutePath())));
 
-                            if (!certificadoController.certificadoExists(certificado)) {
-                                certificadoController.save(certificado);
-                                progresso.atualizarBarra(cont, "SUCESSO AO SALVAR NO BANCO: " + certificado.getNome());
-                                detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_NOVO));
-                            } else {
-                                detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_JA_EXISTE));
-                            }
+                            if(isCertificadoVencido(dtVencimento)){
+                                if(isProcessarVencidos){
+                                    if (!certificadoController.certificadoExists(certificado)) {
+                                        certificadoController.save(certificado);
+                                        progresso.atualizarBarra(cont, "SUCESSO AO SALVAR NO BANCO: " + certificado.getNome());
+                                        detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_NOVO));
+                                    } else {
+                                      detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_JA_EXISTE));
+                                    }
+                                }else{
+                                    progresso.atualizarBarra(cont, "CERTIFICADO IGNORADO: " + certificado.getNome());
+                                    detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_VENCIDO));                                   
+                                }                                
+                            }else{
+                                if (!certificadoController.certificadoExists(certificado)) {
+                                    certificadoController.save(certificado);
+                                    progresso.atualizarBarra(cont, "SUCESSO AO SALVAR NO BANCO: " + certificado.getNome());
+                                    detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_NOVO));
+                                } else {
+                                    detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), certificado.getDataVencimento(), StatusAtualizacaoEnum.CERTIFICADO_JA_EXISTE));
+                                }
+                            }  
+                            
                         }
                     } else {
                         detalhesAtualizacaoList.add(new DetalhesAtualizacaoDTO(pathCertificado, certificadoPfx.getName(), null, StatusAtualizacaoEnum.SENHA_DIVERGENTE));
@@ -146,5 +169,13 @@ public class CertificadoExtrator {
             JOptionPane.showMessageDialog(null, "A PASTA INFORMADA É INVÁLIDA OU ESSE COMPUTADOR"
                     + " NÃO POSSUI ACESSO À ELA!");
         }
+    }
+    
+    private boolean isCertificadoVencido(final Date dataVencimento){
+        int diferencaEmDias = 0;
+        String dataAtual = DataUtils.formataParaBD(new Date());
+        String dataVencimentoStr = DataUtils.formataParaBD(dataVencimento);
+        diferencaEmDias = DataUtils.retornarDiferencaEmDias(dataAtual, dataVencimentoStr);        
+        return diferencaEmDias < 0? true : false;
     }
 }
