@@ -24,7 +24,6 @@ public class CertificadoDAO implements ICertificado {
     private static final String COLUNA_DATA_VENCIMENTO = "dtVencimento";
     private static final String COLUNA_HORA_VENCIMENTO = "hrVencimento";
     private static final String COLUNA_IMG_CERTIFICADO = "imagemCertificado";
-
     private static final String MSG_SENHA_INCORRETA = "A Senha do Certificado não confere com a senha do Instalador!";
 
     @Override

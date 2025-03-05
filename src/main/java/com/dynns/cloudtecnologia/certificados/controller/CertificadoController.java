@@ -121,8 +121,8 @@ public class CertificadoController {
         return certificadoDAO.certificadoExists(certificado);
     }
 
-    public void processarCertificadosPasta(String caminhoPasta) {
-        ProcessoExtrator processoExtrator = new ProcessoExtrator(caminhoPasta);
+    public void processarCertificadosPasta(String caminhoPasta, boolean isProcessarVencidos) {
+        ProcessoExtrator processoExtrator = new ProcessoExtrator(caminhoPasta,isProcessarVencidos);
         Thread threadExtrator = new Thread(processoExtrator);
         threadExtrator.setName("Thread threadUpdatCerts");
         threadExtrator.start();
@@ -135,27 +135,25 @@ public class CertificadoController {
         threadEnvCert.start();
     }
 
-    /*
-    Classe para executar thread dentro do CertificadoExtrator
-     */
+
     public class ProcessoExtrator implements Runnable {
 
-        private final String caminhoPasta;
+        private final String caminhoPasta;        
+        private boolean isProcessarVencidos;
 
-        public ProcessoExtrator(String caminhoPasta) {
+        public ProcessoExtrator(String caminhoPasta, boolean isProcessarVencidos) {
             this.caminhoPasta = caminhoPasta;
+            this.isProcessarVencidos = isProcessarVencidos;
         }
 
         @Override
         public void run() {
-            CertificadoExtrator extrator = new CertificadoExtrator(caminhoPasta);
+            CertificadoExtrator extrator = new CertificadoExtrator(caminhoPasta,isProcessarVencidos);
             extrator.processarCertificadosPasta();
         }
     }
 
-    /*
-    Classe para executar thread Deletar Vencidos
-     */
+
     public class ProcessoDeletarVencidos implements Runnable {
 
         @Override

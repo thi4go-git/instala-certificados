@@ -9,8 +9,10 @@ create table configuracao_certificado (
   smtp_port_email varchar,
   tls_email varchar,
   assunto_email varchar,
-  mensagem_padrao_email varchar
+  mensagem_padrao_email varchar,
+  processar_vencidos BOOLEAN DEFAULT FALSE
 );
+
 
 -- Tabela configuracao_certificado:
 insert into configuracao_certificado 
