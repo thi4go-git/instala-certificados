@@ -1,4 +1,4 @@
-############################## MENSAGEM PADRÃO EMAIL ##############################
+####### MENSAGEM PADRÃO EMAIL #######
 Prezado cliente,
 
 Esperamos que esta mensagem o encontre bem. Gostaríamos de lembrar sobre a 
