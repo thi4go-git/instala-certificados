@@ -48,7 +48,7 @@ public class ConfiguracaoCertificadoDAO implements IConfiguracaoCertificado {
                 }
             }
         } catch (SQLException ex) {
-            throw new GeralException("Erro ao obter ConfiguracaoCertificado");
+            throw new GeralException("Erro ao obter ConfiguracaoCertificado "+ex.getMessage());
         }
         throw new GeralException("Configuração Certificado não Localizada");
     }

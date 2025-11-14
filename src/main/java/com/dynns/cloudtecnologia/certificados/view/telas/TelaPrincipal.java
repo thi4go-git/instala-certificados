@@ -59,7 +59,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setEnabled(true);
         this.setVisible(true);
         this.setResizable(false);
-        this.version.setText("Version: 2024.07.04");
+        this.version.setText("Version: 2025.11.01");
         this.infoRodape.setText("Contato: thi4go19@gmail.com | 62-981204102");
     }
 
